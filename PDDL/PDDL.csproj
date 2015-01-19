@@ -53,6 +53,7 @@
     <Compile Include="Symbols\Symbol.cs" />
     <Compile Include="Symbols\Comment.cs" />
     <Compile Include="Symbols\Whitespace.cs" />
+    <Compile Include="Tokenizer\PddlTokenizer.cs" />
     <Compile Include="Tokenizer\Tokens\Letters.cs" />
     <Compile Include="Tokenizer\Tokens\Parenthesis.cs" />
     <Compile Include="Tokenizer\Tokens\Token.cs" />
