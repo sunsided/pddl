@@ -4,9 +4,9 @@ using JetBrains.Annotations;
 namespace PDDL.Tokenizer.Symbols
 {
     /// <summary>
-    /// Class Keyword. This class cannot be inherited.
+    /// Class Keyword.
     /// </summary>
-    sealed class Keyword : Symbol
+    abstract class Keyword : Symbol
     {
         /// <summary>
         /// Gets the value.
@@ -21,7 +21,7 @@ namespace PDDL.Tokenizer.Symbols
         /// <param name="value">The value.</param>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> was <see langword="null"/></exception>
         /// <exception cref="ArgumentException"><paramref name="value"/> was empty or whitespace-only</exception>
-        public Keyword([NotNull] string value)
+        protected Keyword([NotNull] string value)
         {
             if (ReferenceEquals(value, null)) throw new ArgumentNullException("value", "value was null");
             if (String.IsNullOrWhiteSpace(value)) throw new ArgumentException("value must not be empty or whitespace only", "value");
