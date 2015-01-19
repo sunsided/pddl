@@ -53,13 +53,12 @@
     <Compile Include="Symbols\Symbol.cs" />
     <Compile Include="Symbols\Comment.cs" />
     <Compile Include="Symbols\Whitespace.cs" />
+    <Compile Include="Tokenizer\Tokens\Token.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Tokenizer\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
