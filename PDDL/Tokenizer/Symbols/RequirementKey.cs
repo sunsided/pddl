@@ -25,7 +25,7 @@ namespace PDDL.Tokenizer.Symbols
         public RequirementKey([NotNull] string value)
         {
             if (ReferenceEquals(value, null)) throw new ArgumentNullException("value", "value was null");
-            if (!IsValid(value)) throw new ArgumentException("valid is an invalid requirement: " + value, "value");
+            if (!IsValid(value)) throw new ArgumentException("value is an invalid requirement: " + value, "value");
             Value = value;
         }
 
