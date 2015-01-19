@@ -26,5 +26,6 @@ obj/
 _ReSharper*/
 [Tt]est[Rr]esult*
 [Pp]ackages/*
+![Pp]ackages/repositories.config
 *.GhostDoc.xml
 Data/
