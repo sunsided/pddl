@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace PDDL.Tokenizer.Symbols
+namespace PDDL.Symbols
 {
     /// <summary>
     /// Class RequirementKey. This class cannot be inherited.

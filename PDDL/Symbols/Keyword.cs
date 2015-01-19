@@ -1,28 +1,30 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace PDDL.Tokenizer.Symbols
+namespace PDDL.Symbols
 {
     /// <summary>
-    /// Class Comment.
+    /// Class Keyword.
     /// </summary>
-    sealed class Comment : Symbol
+    abstract class Keyword : Symbol
     {
         /// <summary>
-        /// Gets the comment.
+        /// Gets the value.
         /// </summary>
-        /// <value>The comment.</value>
+        /// <value>The value.</value>
         [NotNull]
         public string Value { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Comment" /> class.
+        /// Initializes a new instance of the <see cref="Keyword" /> class.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <exception cref="ArgumentNullException"><paramref name="value"/> was <see langword="null"/></exception>
-        public Comment([NotNull] string value)
+        /// <exception cref="ArgumentException"><paramref name="value"/> was empty or whitespace-only</exception>
+        protected Keyword([NotNull] string value)
         {
             if (ReferenceEquals(value, null)) throw new ArgumentNullException("value", "value was null");
+            if (String.IsNullOrWhiteSpace(value)) throw new ArgumentException("value must not be empty or whitespace only", "value");
             Value = value;
         }
     }

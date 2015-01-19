@@ -2,7 +2,7 @@
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace PDDL.Tokenizer.Symbols
+namespace PDDL.Symbols
 {
     /// <summary>
     /// Class Name. This class cannot be inherited.

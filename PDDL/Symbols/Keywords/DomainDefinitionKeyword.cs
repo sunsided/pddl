@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace PDDL.Tokenizer.Symbols.Keywords
+namespace PDDL.Symbols.Keywords
 {
     /// <summary>
     /// Class DomainDefinitionKeyword. This class cannot be inherited.

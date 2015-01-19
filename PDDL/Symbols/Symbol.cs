@@ -1,4 +1,4 @@
-﻿namespace PDDL.Tokenizer.Symbols
+﻿namespace PDDL.Symbols
 {
     /// <summary>
     /// Class Symbol.
