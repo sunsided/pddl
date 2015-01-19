@@ -47,6 +47,7 @@
     <Compile Include="Tokenizer\Symbols\Keyword.cs" />
     <Compile Include="Tokenizer\Symbols\Parenthesis.cs" />
     <Compile Include="Tokenizer\Symbols\Symbol.cs" />
+    <Compile Include="Tokenizer\Symbols\Whitespace.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
