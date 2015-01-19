@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tokenizer\Symbols\Keywords\DefineKeyword.cs" />
+    <Compile Include="Tokenizer\Symbols\Keywords\DomainDefinitionKeyword.cs" />
     <Compile Include="Tokenizer\Symbols\Keywords\DefinitionTypeKeyword.cs" />
     <Compile Include="Tokenizer\Symbols\RequirementKey.cs" />
     <Compile Include="Tokenizer\Symbols\Name.cs" />
