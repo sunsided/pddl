@@ -9,7 +9,7 @@ namespace PDDL.Tests
         /// </summary>
         public static void Main()
         {
-            var main = new PddlTokenizerTests();
+            var main = new Pddl12TokenizerTests();
             main.FixtureSetUp();
             main.TokenizationOfSimpleDomainDoesNotFail();
         }

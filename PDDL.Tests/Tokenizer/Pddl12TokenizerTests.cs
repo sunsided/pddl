@@ -11,9 +11,12 @@ namespace PDDL.Tests.Tokenizer
 {
     /// <summary>
     /// Class PddlTokenizerTests.
+    /// <para>
+    /// Implements test for the <see cref="Pddl12Tokenizer"/> class.
+    /// </para>
     /// </summary>
     [TestFixture]
-    public class PddlTokenizerTests
+    public class Pddl12TokenizerTests
     {
         /// <summary>
         /// The domain definition
