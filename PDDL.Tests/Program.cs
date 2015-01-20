@@ -240,7 +240,9 @@ namespace PDDL.Tests
 
             Parser<ITerm> term = name.Token().Or<ITerm>(variable);
 
-            Parser<IAtomicFormula> atomicFormula = (
+            #region literal(term)
+
+            Parser<IAtomicFormula> atomicFormulaTerm = (
                 from open in op
                from p in predicate
                from terms in term.Many()
@@ -248,27 +250,56 @@ namespace PDDL.Tests
                select new AtomicFormula(p, terms.ToList())
                ).Token();
 
-            Parser<ILiteral> positiveLiteral = (
-                from af in atomicFormula
+            Parser<ILiteral> positiveLiteralTerm = (
+                from af in atomicFormulaTerm
                 select new Literal(af.Name, af.Parameters, true))
                 .Token();
 
-            Parser<ILiteral> negativeLiteral = (
+            Parser<ILiteral> negativeLiteralTerm = (
                 from open in op
                 from keyword in Parse.String("not").Token()
-                from af in atomicFormula
+                from af in atomicFormulaTerm
                 from close in cp
                 select new Literal(af.Name, af.Parameters, false))
                 .Token();
 
-            Parser<ILiteral> literal = positiveLiteral.Or(negativeLiteral);
+            Parser<ILiteral> literalTerm = positiveLiteralTerm.Or(negativeLiteralTerm);
+
+            #endregion
+
+            #region literal(name)
+
+            Parser<IAtomicFormula> atomicFormulaName = (
+                from open in op
+                from p in predicate
+                from terms in name.Token().Many()
+                from close in cp
+                select new AtomicFormula(p, terms.ToList())
+               ).Token();
+
+            Parser<ILiteral> positiveLiteralName = (
+                from af in atomicFormulaName
+                select new Literal(af.Name, af.Parameters, true))
+                .Token();
+
+            Parser<ILiteral> negativeLiteralName = (
+                from open in op
+                from keyword in Parse.String("not").Token()
+                from af in atomicFormulaName
+                from close in cp
+                select new Literal(af.Name, af.Parameters, false))
+                .Token();
+
+            Parser<ILiteral> literalName = positiveLiteralName.Or(negativeLiteralName);
+
+            #endregion
 
             Parser<IGoalDescription> atomicGoalDescription =
-                (from af in atomicFormula
+                (from af in atomicFormulaTerm
                     select new AtomicGoalDescription(af));
 
             Parser<IGoalDescription> literalGoalDesccription =
-                (from l in literal
+                (from l in literalTerm
                  select new LiteralGoalDescription(l));
 
             var gdi = new ParserInjector<IGoalDescription>();
@@ -288,6 +319,15 @@ namespace PDDL.Tests
             // TODO add :disjunctive-preconditions goals
             // TODO add :existential-preconditions goals
             // TODO add :universal-preconditions goals
+
+            var timelessDef = (
+               from open in op
+               from keyword in Parse.String(":timeless").Token()
+               from literals in literalName.Many()
+               from close in cp
+               select literals
+               ).Token();
+            Assert.AreEqual(3, timelessDef.Parse("(:timeless (on earth) (under sky) (not (beneath ocean)))").Count());
 
             string result = comment.Parse(domainDefinition);
 
