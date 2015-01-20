@@ -1,8 +1,10 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using PDDL.Tests.Tokenizer;
+using Sprache;
 
 namespace PDDL.Tests
 {
@@ -28,6 +30,17 @@ namespace PDDL.Tests
             var resources = assembly.GetManifestResourceNames();
             var domainFileName = resources.FirstOrDefault(name => name.Contains("DWR-operators.pddl"));
             var domainDefinition = LoadNamedResourceString(assembly, domainFileName);
+
+            Parser<string> eol = Parse.String("\r\n").Return(Environment.NewLine)
+                                .Or(Parse.Char('\n').Return(Environment.NewLine));
+            Parser<string> comment = (
+                from semicolon in Parse.Char(';')
+                from text in Parse.AnyChar.Until(eol).Text()
+                select ";" + text
+                )
+                .Token();
+
+            var result = comment.Parse(domainDefinition);
 
         }
 
