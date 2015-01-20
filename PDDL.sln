@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PDDL", "PDDL\PDDL.csproj", "{42893896-6ECC-460D-9738-2BD5E871204B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PDDL.Tests", "PDDL.Tests\PDDL.Tests.csproj", "{76D231E4-6E31-4F4A-AE59-4774857DF721}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{42893896-6ECC-460D-9738-2BD5E871204B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42893896-6ECC-460D-9738-2BD5E871204B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42893896-6ECC-460D-9738-2BD5E871204B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76D231E4-6E31-4F4A-AE59-4774857DF721}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76D231E4-6E31-4F4A-AE59-4774857DF721}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76D231E4-6E31-4F4A-AE59-4774857DF721}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76D231E4-6E31-4F4A-AE59-4774857DF721}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

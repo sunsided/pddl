@@ -1,14 +1,11 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-
-[assembly: InternalsVisibleTo("PDDL.Tests")]
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PDDL#")]
-[assembly: AssemblyDescription("Planning Domain Definition Language Parser")]
+[assembly: AssemblyTitle("PDDL# Unit Tests")]
+[assembly: AssemblyDescription("Unit Tests for the Planning Domain Definition Language Parser")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("PDDL#")]
@@ -22,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("e0337373-290d-4178-9949-ac7872e93140")]
+[assembly: Guid("a1a7f9c2-09b7-43f1-9d03-8f496c793b06")]
 
 // Version information for an assembly consists of the following four values:
 //
