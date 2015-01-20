@@ -83,28 +83,38 @@ namespace PDDL.Tests
             Assert.AreEqual("?a - object", variable.Parse("?a").ToString());
             try { variable.Parse("a"); Assert.Fail(); } catch (ParseException) {}
             
-            // types are just names
-            var typeDefinition = (
+            // this injector is used to decouple the recursive grammar construction
+            var tpi = new ParserInjector<IType>();
+
+            // simple name type definition
+            Parser<IType> typeDefinition = (
                 from value in name
                 select new CustomType(value)
                 ).Token();
 
-            var eitherTypeDefinition = (
+            // (either <type>+) definition
+            Parser<IType> eitherTypeDefinition = (
                 from open in op
                 from keyword in Parse.String("either").Token()
-                from types in typeDefinition.AtLeastOnce().Token()
+                from types in tpi.Parser.AtLeastOnce().Token()
                 from close in cp
-                select types.ToList()
-                ).Token();
-            var fluentTypeDefinition = (
-                from open in op
-                from keyword in Parse.String("fluent").Token()
-                from t in typeDefinition
-                from close in cp
-                select t
+                select new EitherType(types.ToList())
                 ).Token();
             
-            var lol = eitherTypeDefinition.Parse("(either foo bar frobnik)");
+            // (fluent <type>) definition
+            Parser<IType> fluentTypeDefinition = (
+                from open in op
+                from keyword in Parse.String("fluent").Token()
+                from t in tpi.Parser
+                from close in cp
+                select new FluentType(t)
+                ).Token();
+
+            // final parser for types
+            Parser<IType> type = typeDefinition.Or(eitherTypeDefinition).Or(fluentTypeDefinition);
+            tpi.Parser = type;
+
+            var lol = type.Parse("(fluent (either foo bar frobnik))");
             Debugger.Break();
             // typed lists of variables are just many variables
             /*
@@ -138,6 +148,18 @@ namespace PDDL.Tests
            */
             string result = comment.Parse(domainDefinition);
 
+        }
+        /// <summary>
+        /// Class ParserInjector. This class cannot be inherited.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        sealed class ParserInjector<T>
+        {
+            /// <summary>
+            /// Gets or sets the parser.
+            /// </summary>
+            /// <value>The parser.</value>
+            public Parser<T> Parser { get; set; }
         }
 
         /// <summary>
