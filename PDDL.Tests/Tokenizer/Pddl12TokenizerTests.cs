@@ -58,42 +58,25 @@ namespace PDDL.Tests.Tokenizer
             {
                 var domainFileName = resources.FirstOrDefault(name => name.Contains("DWR-operators.pddl"));
                 if (ReferenceEquals(domainFileName, null)) throw new InvalidOperationException("Require test data could not be found.");
-                _domainDefinition = LoadNamedResourceString(assembly, domainFileName);
+                _domainDefinition = Program.LoadNamedResourceString(assembly, domainFileName);
                 if (String.IsNullOrWhiteSpace(_domainDefinition)) Assert.Fail("Domain definition could not be loaded");
             }
 
             {
                 var problemFileName = resources.FirstOrDefault(name => name.Contains("DWR-pb1.pddl"));
                 if (ReferenceEquals(problemFileName, null)) throw new InvalidOperationException("Require test data could not be found.");
-                _problem1 = LoadNamedResourceString(assembly, problemFileName);
+                _problem1 = Program.LoadNamedResourceString(assembly, problemFileName);
                 if (String.IsNullOrWhiteSpace(_problem1)) Assert.Fail("Problem definition could not be loaded");
             }
 
             {
                 var problemFileName = resources.FirstOrDefault(name => name.Contains("DWR-pb2.pddl"));
                 if (ReferenceEquals(problemFileName, null)) throw new InvalidOperationException("Require test data could not be found.");
-                _problem2 = LoadNamedResourceString(assembly, problemFileName);
+                _problem2 = Program.LoadNamedResourceString(assembly, problemFileName);
                 if (String.IsNullOrWhiteSpace(_problem2)) Assert.Fail("Problem definition could not be loaded");
             }
         }
-
-        /// <summary>
-        /// Loads the named resource string.
-        /// </summary>
-        /// <param name="assembly">The assembly.</param>
-        /// <param name="domainFileName">Name of the domain file.</param>
-        private static string LoadNamedResourceString(Assembly assembly, string domainFileName)
-        {
-            using (var stream = assembly.GetManifestResourceStream(domainFileName))
-            {
-                Debug.Assert(stream != null, "stream != null");
-                using (var reader = new StreamReader(stream))
-                {
-                    return reader.ReadToEnd();
-                }
-            }
-        }
-
+        
         /// <summary>
         /// Tests the tokenization of a simple domain and succeeds if the
         /// call does not fail.
