@@ -12,10 +12,10 @@ namespace PDDL.Model.Pddl12
     public interface IType
     {
         /// <summary>
-        /// Gets the value.
+        /// Gets the name.
         /// </summary>
-        /// <value>The value.</value>
+        /// <value>The name.</value>
         [NotNull]
-        string Value { get; }
+        string Name { get; }
     }
 }

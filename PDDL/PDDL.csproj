@@ -42,6 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Pddl12\AtomicFormula.cs" />
+    <Compile Include="Model\Pddl12\Literal.cs" />
+    <Compile Include="Model\Pddl12\Name.cs" />
     <Compile Include="Model\Pddl12\ILiteral.cs" />
     <Compile Include="Model\Pddl12\IDomain.cs" />
     <Compile Include="Model\Pddl12\IType.cs" />
@@ -56,6 +59,7 @@
     <Compile Include="Model\Pddl12\IParameter.cs" />
     <Compile Include="Model\Pddl12\IConstant.cs" />
     <Compile Include="Model\Pddl12\IVariable.cs" />
+    <Compile Include="Model\Pddl12\Parameter.cs" />
     <Compile Include="Model\Pddl12\Types\TypeBase.cs" />
     <Compile Include="Model\Pddl12\Types\Typed.cs" />
     <Compile Include="Model\Pddl12\Types\Object.cs" />

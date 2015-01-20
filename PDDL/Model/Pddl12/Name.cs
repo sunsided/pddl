@@ -1,40 +1,45 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12.Types
+namespace PDDL.Model.Pddl12
 {
     /// <summary>
-    /// Class TypeBase.
+    /// Class Name. This class cannot be inherited.
     /// </summary>
-    public abstract class TypeBase : IType
+    public sealed class Name : IName
     {
         /// <summary>
         /// Gets the value.
         /// </summary>
         /// <value>The value.</value>
-        public string Name { get; private set; }
+        [NotNull]
+        public string Value { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Typed"/> class.
+        /// Initializes a new instance of the <see cref="Name"/> class.
         /// </summary>
-        /// <param name="name">The name.</param>
-        /// <exception cref="ArgumentNullException">The value of 'name' cannot be null. </exception>
-        /// <exception cref="ArgumentException">The type name must not be empty</exception>
-        protected TypeBase([NotNull] string name)
+        /// <param name="value">The value.</param>
+        /// <exception cref="ArgumentNullException">The value of 'value' cannot be null. </exception>
+        /// <exception cref="ArgumentException">value must not be empty or whitespace only and not contain invalid characters</exception>
+        public Name([NotNull] string value)
         {
-            if (ReferenceEquals(name, null)) throw new ArgumentNullException("name", "type name must not be null");
-            if (String.IsNullOrWhiteSpace(name)) throw new ArgumentException("The type name must not be empty", "name");
-            Name = name;
+            if (ReferenceEquals(value, null)) throw new ArgumentNullException("value", "value was null");
+            if (String.IsNullOrWhiteSpace(value)) throw new ArgumentException("value must not be empty or whitespace only", "value");
+            
+            // TODO: join types?
+            if (!Symbols.Name.IsValid(value)) throw new ArgumentException("value contained invalid characters", "value");
+            Value = value;
         }
 
+
         /// <summary>
-        /// Determines whether the specified <see cref="Typed" /> is equal to this instance.
+        /// Determines whether the specified <see cref="Name" /> is equal to this instance.
         /// </summary>
         /// <param name="other">The object to compare with the current object.</param>
-        /// <returns><see langword="true" /> if the specified <see cref="Typed" /> is equal to this instance; otherwise, <see langword="false" />.</returns>
-        private bool Equals([NotNull] TypeBase other)
+        /// <returns><see langword="true" /> if the specified <see cref="Name" /> is equal to this instance; otherwise, <see langword="false" />.</returns>
+        private bool Equals([NotNull] Name other)
         {
-            return String.Equals(Name, other.Name, StringComparison.OrdinalIgnoreCase);
+            return string.Equals(Value, other.Value, StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>
@@ -46,7 +51,7 @@ namespace PDDL.Model.Pddl12.Types
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj is TypeBase && Equals((TypeBase)obj);
+            return obj is Name && Equals((Name) obj);
         }
 
         /// <summary>
@@ -55,7 +60,7 @@ namespace PDDL.Model.Pddl12.Types
         /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
         public override int GetHashCode()
         {
-            return Name.GetHashCode();
+            return Value.ToLowerInvariant().GetHashCode();
         }
 
         /// <summary>
@@ -64,7 +69,7 @@ namespace PDDL.Model.Pddl12.Types
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         public override string ToString()
         {
-            return Name;
+            return Value;
         }
     }
 }
