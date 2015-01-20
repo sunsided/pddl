@@ -9,7 +9,7 @@ namespace PDDL.Model.Pddl12
     ///     Contains the name of an object, domain, problem, etc.
     /// </para>
     /// </summary>
-    public interface IName : IEquatable<string>
+    public interface IName : ITerm, IEquatable<string>
     {
         /// <summary>
         /// Gets the value.

@@ -110,13 +110,17 @@ namespace PDDL.Tests
                     select n
                     ).Token();
 
+            Parser<IVariable> variable = (
+                from n in variableName
+                select new Variable(n));
+
             var typedListVariable = (
                 from vns in variableName.AtLeastOnce() // TODO This grammar always allows :typing requirement - change grammar if this is not explicitly required
                 from t in Parse.Char('-').Token().Then(_ => type).Token().Optional()
                 select vns.Select(vn => new Variable(vn, t.IsDefined ? t.Get() : DefaultType.Default))
                 )
                 .Many()
-                .Select(groupedPerType => groupedPerType.SelectMany(variable => variable));
+                .Select(groupedPerType => groupedPerType.SelectMany(v => v));
 
             // var lol = typedListVariable.Parse("?a ?b - foo ?c - bar ?other");
             // Debugger.Break();
@@ -232,6 +236,8 @@ namespace PDDL.Tests
             Assert.AreEqual(4, constantsDef.Parse("(:constants boat house - metal mountain sky - mother-nature)").Count());
 
             // TODO: implement domain-vars-def 
+
+            Parser<ITerm> term = name.Token().Or<ITerm>(variable);
 
             string result = comment.Parse(domainDefinition);
 

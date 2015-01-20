@@ -5,7 +5,7 @@ namespace PDDL.Model.Pddl12
     /// <summary>
     /// Interface IVariable
     /// </summary>
-    public interface IVariable
+    public interface IVariable : ITerm
     {
         /// <summary>
         /// Gets the name.
