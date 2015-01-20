@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
 using PDDL.Model.Pddl12;
+using PDDL.Model.Pddl12.Types;
 using Sprache;
 
 namespace PDDL.Tests
@@ -73,8 +74,14 @@ namespace PDDL.Tests
             Parser<string> predicate = nameDefinition;
 
             // variables are named by question marks followed with a regular name
-            Parser<string> variable = Parse.Char('?').Once().Concat(nameDefinition).Text().Token();
-            Assert.AreEqual("?a", variable.Parse("?a"));
+            Parser<IVariable> variable = (
+                from qm in Parse.Char('?')
+                from value in nameDefinition
+                let n = new Name(value)
+                select new Variable(n, DefaultType.Default)
+                ).Token();
+
+            Assert.AreEqual("?a - object", variable.Parse("?a").ToString());
             try { variable.Parse("a"); Assert.Fail(); } catch (ParseException) {}
             
             // types are just names
@@ -95,11 +102,13 @@ namespace PDDL.Tests
                 ).Token();
 
             // typed lists of variables are just many variables
+            /*
             Parser<IEnumerable<string>> typedListVariable = variable.Many().Token();
             Assert.AreEqual(3, typedListVariable.Parse("?a?b ?c").Count());
             Assert.AreEqual(1, typedListVariable.Parse("?a lol").Count());
             Assert.AreEqual(0, typedListVariable.Parse("lol ?a").Count());
-
+            */
+              
             /*
             var typedListVariable = Parse.Char('?').Once().Concat(name);
 
