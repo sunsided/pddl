@@ -213,6 +213,24 @@ namespace PDDL.Tests
                 ).Token();
             Assert.AreEqual(3, typesDef.Parse("(:types integer float - number physob)").Count());
 
+            var typedListConstant = (
+                from names in name.Token().AtLeastOnce() // TODO This grammar always allows :typing requirement - change grammar if this is not explicitly required
+                from t in Parse.Char('-').Token().Then(_ => type).Token().Optional()
+                select names.Select(vn => new Constant(vn, t.IsDefined ? t.Get() : DefaultType.Default))
+                )
+                .Many()
+                .Select(groupedPerType => groupedPerType.SelectMany(t => t));
+            Assert.AreEqual(3, typedListConstant.Parse("boat house - wood mountain").Count());
+
+            var constantsDef = (
+               from open in op
+               from keyword in Parse.String(":constants").Token()
+               from types in typedListConstant
+               from close in cp
+               select types
+               ).Token();
+            Assert.AreEqual(4, constantsDef.Parse("(:constants boat house - metal mountain sky - mother-nature)").Count());
+
             string result = comment.Parse(domainDefinition);
 
         }
