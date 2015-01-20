@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
+using PDDL.Model.Pddl12;
 using Sprache;
 
 namespace PDDL.Tests
@@ -49,13 +50,16 @@ namespace PDDL.Tests
 
             // define a name
             // letter followed by any alphanumeric, hyphen or underscore
-            Parser<string> name = Parse.Letter.AtLeastOnce()
+            Parser<string> nameDefinition = Parse.Letter.AtLeastOnce()
                 .Concat(
                     Parse.Char('-').Or(Parse.Char('_')).Or(Parse.LetterOrDigit).Many()
                 )
-                .Text()
-                .Token();
-            Assert.AreEqual("dock-worker-robot", name.Parse("dock-worker-robot"));
+                .Text();
+
+            Parser<IName> name = (from value in nameDefinition
+                select new Name(value));
+
+            Assert.AreEqual("dock-worker-robot", name.Parse("dock-worker-robot").ToString());
             Assert.AreEqual("a-b_c3", name.Parse("a-b_c3"));
             Assert.AreEqual("a123", name.Parse("a123"));
             Assert.AreEqual("a---", name.Parse("a---"));
@@ -66,15 +70,15 @@ namespace PDDL.Tests
             try { name.Parse("#a"); Assert.Fail(); } catch (ParseException) { }
 
             // predicates are just names
-            Parser<string> predicate = name;
+            Parser<string> predicate = nameDefinition;
 
             // variables are named by question marks followed with a regular name
-            Parser<string> variable = Parse.Char('?').Once().Concat(name).Text().Token();
+            Parser<string> variable = Parse.Char('?').Once().Concat(nameDefinition).Text().Token();
             Assert.AreEqual("?a", variable.Parse("?a"));
             try { variable.Parse("a"); Assert.Fail(); } catch (ParseException) {}
             
             // types are just names
-            var type = name;
+            var type = nameDefinition;
             var eitherType = (
                 from open in op
                 from keyword in Parse.String("either").Token()
