@@ -47,6 +47,7 @@
     <Compile Include="Model\Pddl12\Goals\LiteralGoalDescription.cs" />
     <Compile Include="Model\Pddl12\Goals\AtomicGoalDescription.cs" />
     <Compile Include="Model\Pddl12\Goals\GoalBase.cs" />
+    <Compile Include="Model\Pddl12\Variable.cs" />
     <Compile Include="Model\Pddl12\Null\NullGoalDescription.cs" />
     <Compile Include="Model\Pddl12\Literal.cs" />
     <Compile Include="Model\Pddl12\Name.cs" />
@@ -62,7 +63,6 @@
     <Compile Include="Model\Pddl12\IPrecondition.cs" />
     <Compile Include="Model\Pddl12\IAtomicFormula.cs" />
     <Compile Include="Model\Pddl12\IParameter.cs" />
-    <Compile Include="Model\Pddl12\IConstant.cs" />
     <Compile Include="Model\Pddl12\IVariable.cs" />
     <Compile Include="Model\Pddl12\Parameter.cs" />
     <Compile Include="Model\Pddl12\Null\NullPrecondition.cs" />

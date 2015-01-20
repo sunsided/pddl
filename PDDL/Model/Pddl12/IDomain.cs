@@ -35,7 +35,7 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <value>The constants.</value>
         [NotNull]
-        IReadOnlyList<IConstant> Constants { get; }
+        IReadOnlyList<IVariable> Constants { get; }
 
         /// <summary>
         /// Gets the predicate definitions.
