@@ -64,8 +64,12 @@ namespace PDDL.Tests.Tokenizer
                 var tokens = tokenizer.Tokenize(reader);
                 Assert.NotNull(tokens, "tokens != null");
 
-                var sum = tokens.Count();
-                Assert.Greater(sum, 0, "at least one token expected");
+                // dump the tokens
+                foreach (var token in tokens)
+                {
+                    Trace.WriteLine(token);
+                }
+                Trace.Flush();
             }
         }
     }
