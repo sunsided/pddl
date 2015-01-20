@@ -133,13 +133,21 @@ namespace PDDL.Tests
                 select new Predicate(value))
                 .Token();
 
-            var atomicFormulaSkeleton = (
+            Parser<IAtomicFormulaSkeleton> atomicFormulaSkeleton = (
                 from open in op
                 from p in predicate
                 from variables in typedListVariable
                 from close in cp
                 select new AtomicFormulaSkeleton(p, variables.ToList()))
                 .Token();
+
+            Parser<IEnumerable<IAtomicFormulaSkeleton>> predicatesDef = (
+                from open in op
+                from keyword in Parse.String(":predicates").Token()
+                from skeletons in atomicFormulaSkeleton.AtLeastOnce()
+                from close in cp
+                select skeletons
+                ).Token();
 
             /*
             Parser<IList<string>> predicateDef = (
