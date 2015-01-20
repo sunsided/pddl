@@ -69,10 +69,7 @@ namespace PDDL.Tests
             try { name.Parse("-a"); Assert.Fail(); } catch (ParseException) { }
             try { name.Parse("_a"); Assert.Fail(); } catch (ParseException) { }
             try { name.Parse("#a"); Assert.Fail(); } catch (ParseException) { }
-
-            // predicates are just names
-            Parser<string> predicate = nameDefinition;
-
+            
             // this injector is used to decouple the recursive grammar construction
             var tpi = new ParserInjector<IType>();
 
@@ -105,20 +102,7 @@ namespace PDDL.Tests
             tpi.Parser = type;
 
             // var lol = type.Parse("(fluent (either foo bar frobnik))");
-
-            /*
-            // variables are named by question marks followed with a regular name
-            Parser<IVariable> defaultTypeVariable = (
-                from qm in Parse.Char('?')
-                from value in name
-                select new Variable(value, DefaultType.Default)
-                ).Token();
-
-            Assert.AreEqual("?a - object", defaultTypeVariable.Parse("?a").ToString());
-            try { defaultTypeVariable.Parse("a"); Assert.Fail(); }
-            catch (ParseException) { }
-            */
-
+            
             // typed lists of variables are just many variables
             Parser<IName> variableName =
                 (
@@ -126,23 +110,25 @@ namespace PDDL.Tests
                     select n
                     ).Token();
 
-            Parser<IEnumerable<IVariable>> typedListVariable = (
-                from vns in variableName.AtLeastOnce()
+            var typedListVariable = (
+                from vns in variableName.AtLeastOnce() // TODO This grammar always allows :typing requirement - change grammar if this is not explicitly required
                 from t in Parse.Char('-').Token().Then(_ => type).Token().Optional()
-                let variables = from vn in vns
-                    select new Variable(vn, t.IsDefined ? t.Get() : DefaultType.Default)
-                select variables
+                select vns.Select(vn => new Variable(vn, t.IsDefined ? t.Get() : DefaultType.Default))
                 )
                 .Many()
                 .Select(groupedPerType => groupedPerType.SelectMany(variable => variable));
 
-            Debugger.Break();
-/*
+            // var lol = typedListVariable.Parse("?a ?b - foo ?c - bar ?other");
+            // Debugger.Break();
+
 
             Assert.AreEqual(3, typedListVariable.Parse("?a?b ?c").Count());
             Assert.AreEqual(1, typedListVariable.Parse("?a lol").Count());
             Assert.AreEqual(0, typedListVariable.Parse("lol ?a").Count());
-              */
+
+
+            // predicates are just names
+            Parser<string> predicate = nameDefinition;
             /*
             var typedListVariable = Parse.Char('?').Once().Concat(name);
 
