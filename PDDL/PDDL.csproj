@@ -42,6 +42,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Pddl12\IDomain.cs" />
+    <Compile Include="Model\Pddl12\IType.cs" />
+    <Compile Include="Model\Pddl12\IName.cs" />
+    <Compile Include="Model\Pddl12\IRequirement.cs" />
+    <Compile Include="Model\Pddl12\IAction.cs" />
+    <Compile Include="Model\Pddl12\IEffect.cs" />
+    <Compile Include="Model\Pddl12\IGoalDescription.cs" />
+    <Compile Include="Model\Pddl12\IOperator.cs" />
+    <Compile Include="Model\Pddl12\IPrecondition.cs" />
+    <Compile Include="Model\Pddl12\IPredicate.cs" />
+    <Compile Include="Model\Pddl12\IParameter.cs" />
+    <Compile Include="Model\Pddl12\IConstant.cs" />
+    <Compile Include="Model\Pddl12\IVariable.cs" />
+    <Compile Include="Model\Pddl12\Types\TypeBase.cs" />
+    <Compile Include="Model\Pddl12\Types\Typed.cs" />
+    <Compile Include="Model\Pddl12\Types\Object.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Symbols\Keywords\DefineKeyword.cs" />
     <Compile Include="Symbols\Keywords\DomainDefinitionKeyword.cs" />
