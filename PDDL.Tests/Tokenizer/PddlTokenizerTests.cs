@@ -57,7 +57,7 @@ namespace PDDL.Tests.Tokenizer
         [Test]
         public void TokenizationOfSimpleDomainDoesNotFail()
         {
-            var tokenizer = new PddlTokenizer();
+            var tokenizer = new Pddl12Tokenizer();
 
             using (var reader = new StringReader(_domainDefinition))
             {
