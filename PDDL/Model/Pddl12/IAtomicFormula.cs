@@ -4,9 +4,12 @@ using JetBrains.Annotations;
 namespace PDDL.Model.Pddl12
 {
     /// <summary>
-    /// Interface IPredicate
+    /// Interface IAtomicFormula
+    /// <para>
+    ///     Atomic formulae are used to describe predicates and goals, as well as effects.
+    /// </para>
     /// </summary>
-    public interface IPredicate
+    public interface IAtomicFormula
     {
         /// <summary>
         /// Gets the name.

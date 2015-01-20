@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using JetBrains.Annotations;
-using PDDL.Model.Pddl12.Types;
 
 namespace PDDL.Model.Pddl12
 {
@@ -24,7 +23,7 @@ namespace PDDL.Model.Pddl12
         IReadOnlyList<IRequirement> Requirements { get; }
 
         /// <summary>
-        /// Gets the types.
+        /// Gets the type definitions.
         /// </summary>
         /// <remarks>Uses the <c>:typing</c> requirement.</remarks>
         /// <value>The types.</value>
@@ -37,5 +36,19 @@ namespace PDDL.Model.Pddl12
         /// <value>The constants.</value>
         [NotNull]
         IReadOnlyList<IConstant> Constants { get; }
+
+        /// <summary>
+        /// Gets the predicate definitions.
+        /// </summary>
+        /// <value>The predicates.</value>
+        [NotNull]
+        IReadOnlyList<IAtomicFormula> Predicates { get; }
+
+        /// <summary>
+        /// Gets the timeless literals.
+        /// </summary>
+        /// <value>The timeless literals.</value>
+        [NotNull]
+        IReadOnlyList<ILiteral> Timeless { get; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12.Types
+namespace PDDL.Model.Pddl12
 {
     /// <summary>
     /// Interface IPrecondition

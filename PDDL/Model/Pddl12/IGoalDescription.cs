@@ -1,4 +1,7 @@
-﻿namespace PDDL.Model.Pddl12.Types
+﻿using System.Collections.Generic;
+using JetBrains.Annotations;
+
+namespace PDDL.Model.Pddl12
 {
     /// <summary>
     /// Interface IGoalDescription
@@ -9,6 +12,47 @@
     /// </summary>
     public interface IGoalDescription
     {
-        // TODO: missing
+    }
+
+    /// <summary>
+    /// Interface IAtomicGoalDescription
+    /// </summary>
+    public interface IAtomicGoalDescription : IGoalDescription
+    {
+        /// <summary>
+        /// Gets the condition.
+        /// </summary>
+        /// <value>The condition.</value>
+        [NotNull]
+        IAtomicFormula Condition { get; }
+    }
+
+    /// <summary>
+    /// Interface ILiteralGoalDescription
+    /// </summary>
+    public interface ILiteralGoalDescription : IGoalDescription
+    {
+        /// <summary>
+        /// Gets the literal.
+        /// </summary>
+        /// <value>The literal.</value>
+        [NotNull]
+        ILiteral Literal { get; }
+    }
+
+    /// <summary>
+    /// Interface IConjunctionGoalDescription
+    /// <para>
+    ///     Combines multiple goals using an <c>and</c> relationship.
+    /// </para>
+    /// </summary>
+    public interface IConjunctionGoalDescription : IGoalDescription
+    {
+        /// <summary>
+        /// Gets the goals.
+        /// </summary>
+        /// <value>The goals.</value>
+        [NotNull]
+        IReadOnlyList<IGoalDescription> Goals { get; }
     }
 }
