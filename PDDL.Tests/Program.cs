@@ -49,7 +49,8 @@ namespace PDDL.Tests
             // define a name
             // letter followed by any alphanumeric, hyphen or underscore
             Parser<string> name = Parse.Letter.AtLeastOnce()
-                .Concat(Parse.Char('-').Or(Parse.Char('_').Or(Parse.LetterOrDigit)).Many()
+                .Concat(
+                Parse.Char('-').Or(Parse.Char('_')).Or(Parse.LetterOrDigit).Many()
                 )
                 .Text()
                 .Token();
@@ -70,6 +71,23 @@ namespace PDDL.Tests
             Parser<string> variable = Parse.Char('?').Once().Concat(name).Text().Token();
             Assert.AreEqual("?a", variable.Parse("?a"));
             try { variable.Parse("a"); Assert.Fail(); } catch (ParseException) {}
+            
+            // types are just names
+            var type = name;
+            var eitherType = (
+                from open in op
+                from keyword in Parse.String("either").Token()
+                from types in type.AtLeastOnce().Token()
+                from close in cp
+                select types.ToList()
+                ).Token();
+            var fluentType = (
+                from open in op
+                from keyword in Parse.String("fluent").Token()
+                from types in type.AtLeastOnce().Token()
+                from close in cp
+                select types.ToList()
+                ).Token();
 
             // typed lists of variables are just many variables
             Parser<IEnumerable<string>> typedListVariable = variable.Many().Token();
