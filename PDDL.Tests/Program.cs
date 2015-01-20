@@ -84,7 +84,11 @@ namespace PDDL.Tests
             try { variable.Parse("a"); Assert.Fail(); } catch (ParseException) {}
             
             // types are just names
-            var typeDefinition = name.Token();
+            var typeDefinition = (
+                from value in name
+                select new CustomType(value)
+                ).Token();
+
             var eitherTypeDefinition = (
                 from open in op
                 from keyword in Parse.String("either").Token()
@@ -99,7 +103,7 @@ namespace PDDL.Tests
                 from close in cp
                 select t
                 ).Token();
-
+            
             var lol = eitherTypeDefinition.Parse("(either foo bar frobnik)");
             Debugger.Break();
             // typed lists of variables are just many variables
