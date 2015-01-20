@@ -115,7 +115,7 @@ namespace PDDL.Tests
                 from n in variableName
                 select new Variable(n));
 
-            var typedListVariable = (
+            Parser<IEnumerable<IVariable>> typedListVariable = (
                 from vns in variableName.AtLeastOnce() // TODO This grammar always allows :typing requirement - change grammar if this is not explicitly required
                 from t in Parse.Char('-').Token().Then(_ => type).Token().Optional()
                 select vns.Select(vn => new Variable(vn, t.IsDefined ? t.Get() : DefaultType.Default))
@@ -141,7 +141,7 @@ namespace PDDL.Tests
             Parser<IAtomicFormulaSkeleton> atomicFormulaSkeleton = (
                 from open in op
                 from p in predicate
-                from variables in typedListVariable
+                from variables in typedListVariable.Token()
                 from close in cp
                 select new AtomicFormulaSkeleton(p, variables.ToList()))
                 .Token();
@@ -331,6 +331,27 @@ namespace PDDL.Tests
 
             // TODO: add :domain-axioms
             // TODO: add :action-expansions
+
+            var actionFunctor = name.Token();
+
+            var actionPreconditions = (
+                from keyword in Parse.String(":precondition").Token()
+                from precondition in goalDescription
+                select precondition
+                ).Token();
+
+            var actionParameters = (
+                from keyword in Parse.String(":parameters").Token()
+                from variables in typedListVariable.Token()
+                select variables
+                ).Token();
+
+            /*
+            var actionDef =(
+                from open in op
+                from keyword in Parse.String(":action").Token()
+                from 
+                )*/
 
             string result = comment.Parse(domainDefinition);
 
