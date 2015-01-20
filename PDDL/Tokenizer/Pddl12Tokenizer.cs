@@ -37,11 +37,9 @@ namespace PDDL.Tokenizer
             new HyphenTokenizer(),
 
             // we may need these later
-            /*
             new LettersTokenizer(), 
             new DigitsTokenizer(), 
-            new UnderscoreTokenizer(), 
-            */
+            new UnderscoreTokenizer(),
         };
 
         /// <summary>

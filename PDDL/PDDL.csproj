@@ -54,6 +54,7 @@
     <Compile Include="Symbols\Comment.cs" />
     <Compile Include="Symbols\Whitespace.cs" />
     <Compile Include="Tokenizer\Tokenizers\CommentTokenizer.cs" />
+    <Compile Include="Tokenizer\Tokenizers\SpecificSymbolTokenizer.cs" />
     <Compile Include="Tokenizer\Tokenizers\WhitespaceTokenizer.cs" />
     <Compile Include="Tokenizer\Tokenizers\ParenthesisTokenizer.cs" />
     <Compile Include="Tokenizer\Tokenizers\QuestionMarkTokenizer.cs" />
