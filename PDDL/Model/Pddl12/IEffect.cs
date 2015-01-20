@@ -8,6 +8,11 @@ namespace PDDL.Model.Pddl12
     /// </summary>
     public interface IEffect
     {
+        /// <summary>
+        /// Gets the list type.
+        /// </summary>
+        /// <value>The list type.</value>
+        ListType Type { get; }
     }
 
     /// <summary>
