@@ -15,7 +15,7 @@ namespace PDDL.Model.Pddl12.Types
         public string Name { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Typed"/> class.
+        /// Initializes a new instance of the <see cref="CustomType"/> class.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <exception cref="ArgumentNullException">The value of 'name' cannot be null. </exception>
@@ -28,10 +28,10 @@ namespace PDDL.Model.Pddl12.Types
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="Typed" /> is equal to this instance.
+        /// Determines whether the specified <see cref="CustomType" /> is equal to this instance.
         /// </summary>
         /// <param name="other">The object to compare with the current object.</param>
-        /// <returns><see langword="true" /> if the specified <see cref="Typed" /> is equal to this instance; otherwise, <see langword="false" />.</returns>
+        /// <returns><see langword="true" /> if the specified <see cref="CustomType" /> is equal to this instance; otherwise, <see langword="false" />.</returns>
         private bool Equals([NotNull] TypeBase other)
         {
             return String.Equals(Name, other.Name, StringComparison.OrdinalIgnoreCase);
