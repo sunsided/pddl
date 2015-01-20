@@ -43,5 +43,14 @@ namespace PDDL.Model.Pddl12
             : this(name, Types.DefaultType.Default)
         {
         }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+        public override string ToString()
+        {
+            return String.Format("?{0} - {1}", Name, Type);
+        }
     }
 }
