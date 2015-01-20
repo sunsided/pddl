@@ -59,10 +59,10 @@ namespace PDDL.Model.Pddl12
     public interface IFluentType : IType
     {
         /// <summary>
-        /// Gets the name.
+        /// Gets the fluent type.
         /// </summary>
-        /// <value>The name.</value>
+        /// <value>The fluent type.</value>
         [NotNull]
-        IName Name { get; }
+        IType Type { get; }
     }
 }
