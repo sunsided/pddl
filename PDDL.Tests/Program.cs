@@ -285,6 +285,10 @@ namespace PDDL.Tests
             var goalDescription = literalGoalDesccription.Or(atomicGoalDescription).Or(conjunctionGoalDescription);
             gdi.Parser = goalDescription;
 
+            // TODO add :disjunctive-preconditions goals
+            // TODO add :existential-preconditions goals
+            // TODO add :universal-preconditions goals
+
             string result = comment.Parse(domainDefinition);
 
         }
