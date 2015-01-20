@@ -57,6 +57,12 @@
     <EmbeddedResource Include="..\Data\DWR\DWR-operators.pddl">
       <Link>TestData\DWR-operators.pddl</Link>
     </EmbeddedResource>
+    <EmbeddedResource Include="..\Data\DWR\DWR-pb1.pddl">
+      <Link>TestData\DWR-pb1.pddl</Link>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Data\DWR\DWR-pb2.pddl">
+      <Link>TestData\DWR-pb2.pddl</Link>
+    </EmbeddedResource>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
