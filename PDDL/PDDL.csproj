@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Pddl12\Action.cs" />
     <Compile Include="Model\Pddl12\AtomicFormula.cs" />
     <Compile Include="Model\Pddl12\Effects\NegativeEffect.cs" />
     <Compile Include="Model\Pddl12\ListType.cs" />

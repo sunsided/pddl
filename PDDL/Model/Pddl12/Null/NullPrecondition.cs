@@ -24,7 +24,7 @@ namespace PDDL.Model.Pddl12.Null
         /// </summary>
         /// <value>The default.</value>
         [NotNull]
-        public NullPrecondition Default { get { return _default; } }
+        public static NullPrecondition Default { get { return _default; } }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NullPrecondition" /> class.
