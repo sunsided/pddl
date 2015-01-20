@@ -39,8 +39,9 @@ namespace PDDL.Tests
             // comments start with a semicolon and run until the eol
             Parser<string> comment = 
                 Parse.Char(';').Once()
-                .Concat(Parse.AnyChar.Until(eol))
+                .Concat(Parse.AnyChar.Until(Parse.LineTerminator))
                 .Text();
+            Assert.AreEqual("; aww yeah", comment.Parse("; aww yeah"));
 
             // parentheses
             Parser<char> op = Parse.Char('(').Token();
