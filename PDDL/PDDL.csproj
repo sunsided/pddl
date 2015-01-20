@@ -49,10 +49,7 @@
     <Compile Include="Symbols\RequirementKey.cs" />
     <Compile Include="Symbols\Name.cs" />
     <Compile Include="Symbols\Keyword.cs" />
-    <Compile Include="Symbols\Parenthesis.cs" />
     <Compile Include="Symbols\Symbol.cs" />
-    <Compile Include="Symbols\Comment.cs" />
-    <Compile Include="Symbols\Whitespace.cs" />
     <Compile Include="Tokenizer\Tokenizers\CommentTokenizer.cs" />
     <Compile Include="Tokenizer\Tokenizers\SpecificSymbolTokenizer.cs" />
     <Compile Include="Tokenizer\Tokenizers\WhitespaceTokenizer.cs" />
