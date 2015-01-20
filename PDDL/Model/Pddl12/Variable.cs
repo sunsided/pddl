@@ -40,7 +40,7 @@ namespace PDDL.Model.Pddl12
         /// <param name="name">The name.</param>
         /// <exception cref="ArgumentNullException">The value of 'name' cannot be null.</exception>
         public Variable(IName name)
-            : this(name, Types.Object.Default)
+            : this(name, Types.DefaultType.Default)
         {
         }
     }

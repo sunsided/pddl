@@ -78,7 +78,7 @@
     <Compile Include="Model\Pddl12\Precondition.cs" />
     <Compile Include="Model\Pddl12\Types\TypeBase.cs" />
     <Compile Include="Model\Pddl12\Types\CustomType.cs" />
-    <Compile Include="Model\Pddl12\Types\Object.cs" />
+    <Compile Include="Model\Pddl12\Types\DefaultType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Symbols\Keywords\DefineKeyword.cs" />
     <Compile Include="Symbols\Keywords\DomainDefinitionKeyword.cs" />

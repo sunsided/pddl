@@ -1,6 +1,6 @@
 ﻿using System;
 using JetBrains.Annotations;
-using Object = PDDL.Model.Pddl12.Types.Object;
+using Object = PDDL.Model.Pddl12.Types.DefaultType;
 
 namespace PDDL.Model.Pddl12
 {
