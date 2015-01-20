@@ -43,6 +43,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Pddl12\AtomicFormula.cs" />
+    <Compile Include="Model\Pddl12\Goals\ConjunctionGoalDescription.cs" />
+    <Compile Include="Model\Pddl12\Goals\LiteralGoalDescription.cs" />
+    <Compile Include="Model\Pddl12\Goals\AtomicGoalDescription.cs" />
+    <Compile Include="Model\Pddl12\Goals\GoalBase.cs" />
+    <Compile Include="Model\Pddl12\Goals\NullGoalDescription.cs" />
     <Compile Include="Model\Pddl12\Literal.cs" />
     <Compile Include="Model\Pddl12\Name.cs" />
     <Compile Include="Model\Pddl12\ILiteral.cs" />
