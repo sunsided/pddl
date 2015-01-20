@@ -19,7 +19,7 @@ namespace PDDL.Model.Pddl12
         /// Gets the parameters.
         /// </summary>
         /// <value>The parameters.</value>
-        public IReadOnlyList<IVariable> Parameters { get; private set; }
+        public IReadOnlyList<ITerm> Parameters { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AtomicFormulaSkeleton"/> class.
@@ -27,7 +27,7 @@ namespace PDDL.Model.Pddl12
         /// <param name="name">The name.</param>
         /// <param name="parameters">The parameters.</param>
         /// <exception cref="ArgumentNullException">The value of 'name' and 'parameters' cannot be null. </exception>
-        public AtomicFormula([NotNull] IName name, [NotNull] IReadOnlyList<IVariable> parameters)
+        public AtomicFormula([NotNull] IName name, [NotNull] IReadOnlyList<ITerm> parameters)
         {
             if (ReferenceEquals(name, null)) throw new ArgumentNullException("name", "name must not be null");
             if (ReferenceEquals(parameters, null)) throw new ArgumentNullException("parameters", "type must not be null");
@@ -42,7 +42,7 @@ namespace PDDL.Model.Pddl12
         /// <param name="name">The name.</param>
         /// <exception cref="ArgumentNullException">The value of 'name' and 'parameters' cannot be null.</exception>
         public AtomicFormula([NotNull] IName name)
-            : this(name, new IVariable[0])
+            : this(name, new ITerm[0])
         {
         }
 

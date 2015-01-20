@@ -23,6 +23,6 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <value>The parameters.</value>
         [NotNull]
-        IReadOnlyList<IVariable> Parameters { get; }
+        IReadOnlyList<ITerm> Parameters { get; }
     }
 }
