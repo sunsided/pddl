@@ -30,12 +30,73 @@ namespace PDDL.Tokenizer
             while (input.HasData())
             {
                 Token token;
+                if (TryReadWhitespace(input, out token)) yield return token;
                 if (TryReadComment(input, out token)) yield return token;
+                if (TryReadParenthesis(input, out token)) yield return token;
             }
 
             throw new NotImplementedException();
         }
-        
+
+        /// <summary>
+        /// Tries to read a parenthesis.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="token">The token.</param>
+        /// <returns><see langword="true" /> if the token could be read, <see langword="false" /> otherwise.</returns>
+        /// <exception cref="System.ArgumentNullException">input;The reader was null.</exception>
+        private static bool TryReadParenthesis([NotNull] TextReader input, out Token token)
+        {
+            if (ReferenceEquals(input, null)) throw new ArgumentNullException("input", "The reader was null.");
+
+            token = default(Comment);
+
+            // attempt to read the opening parenthesis
+            if ((char) input.Peek() == '(')
+            {
+                token = new Parenthesis(Parenthesis.Type.Open);
+            }
+
+            // attempt to read the closing parenthesis
+            if ((char)input.Peek() == ')')
+            {
+                token = new Parenthesis(Parenthesis.Type.Close);
+            }
+
+            return (token != null);
+        }
+
+        /// <summary>
+        /// Tries to read whitespace.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="token">The token.</param>
+        /// <returns><see langword="true" /> if the token could be read, <see langword="false" /> otherwise.</returns>
+        /// <exception cref="System.ArgumentNullException">input;The reader was null.</exception>
+        private static bool TryReadWhitespace([NotNull] TextReader input, out Token token)
+        {
+            if (ReferenceEquals(input, null)) throw new ArgumentNullException("input", "The reader was null.");
+
+            token = default(Comment);
+
+            // attempt to eat as much whitespace as possible
+            var count = 0;
+            while (input.HasData() && Char.IsWhiteSpace((char) input.Peek()))
+            {
+                // choke the whitespace
+                input.Read();
+                ++count;
+            }
+
+            // if we read anything, export the whitespace token
+            var readAnything = count > 0;
+            if (readAnything)
+            {
+                token = new Whitespace(count);
+            }
+            return readAnything;
+        }
+
         /// <summary>
         /// Tries to read a comment.
         /// </summary>
