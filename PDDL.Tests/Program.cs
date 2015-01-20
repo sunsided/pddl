@@ -329,6 +329,9 @@ namespace PDDL.Tests
                ).Token();
             Assert.AreEqual(3, timelessDef.Parse("(:timeless (on earth) (under sky) (not (beneath ocean)))").Count());
 
+            // TODO: add :domain-axioms
+            // TODO: add :action-expansions
+
             string result = comment.Parse(domainDefinition);
 
         }
