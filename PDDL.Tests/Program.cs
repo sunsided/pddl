@@ -195,6 +195,24 @@ namespace PDDL.Tests
                 ).Token();
             Assert.AreEqual(3, requirementsDef.Parse("(:requirements :strips :equality :typing)").Count());
 
+            var typedListType = (
+                from names in name.Token().AtLeastOnce() // TODO This grammar always allows :typing requirement - change grammar if this is not explicitly required
+                from t in Parse.Char('-').Token().Then(_ => type).Token().Optional()
+                select names.Select(vn => new CustomType(vn, t.IsDefined ? t.Get() : DefaultType.Default))
+                )
+                .Many()
+                .Select(groupedPerType => groupedPerType.SelectMany(t => t));
+            Assert.AreEqual(3, typedListType.Parse("integer float - number physob").Count());
+
+            var typesDef = (
+                from open in op
+                from keyword in Parse.String(":types").Token()
+                from types in typedListType
+                from close in cp
+                select types
+                ).Token();
+            Assert.AreEqual(3, typesDef.Parse("(:types integer float - number physob)").Count());
+
             string result = comment.Parse(domainDefinition);
 
         }

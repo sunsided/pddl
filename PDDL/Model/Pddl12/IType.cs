@@ -22,7 +22,7 @@ namespace PDDL.Model.Pddl12
     ///     given the <c>:typing</c> requirement.
     /// </para>
     /// </summary>
-    public interface IPlainType : IType
+    public interface ICustomType : IType
     {
         /// <summary>
         /// Gets the name.
@@ -30,6 +30,13 @@ namespace PDDL.Model.Pddl12
         /// <value>The name.</value>
         [NotNull]
         IName Name { get; }
+
+        /// <summary>
+        /// Gets or sets the parent type.
+        /// </summary>
+        /// <value>The parent type.</value>
+        [NotNull]
+        IType Parent { get; }
     }
 
     /// <summary>
