@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Text;
 using JetBrains.Annotations;
 using PDDL.Tokenizer.Tokens;
@@ -23,6 +24,7 @@ namespace PDDL.Tokenizer
         /// <returns>A sequence of tokens.</returns>
         /// <exception cref="ArgumentNullException">The value of 'input' cannot be null. </exception>
         /// <exception cref="IOException">An I/O error occurs. </exception>
+        /// <exception cref="ArgumentException">An invalid character was encountered. </exception>
         [NotNull]
         public IEnumerable<Token> Tokenize([NotNull] TextReader input)
         {
@@ -31,14 +33,41 @@ namespace PDDL.Tokenizer
             while (input.HasData())
             {
                 Token token;
-                if (TryReadWhitespace(input, out token)) yield return token;
-                if (TryReadComment(input, out token)) yield return token;
-                if (TryReadParenthesis(input, out token)) yield return token;
-                if (TryReadColon(input, out token)) yield return token;
-                if (TryReadLetters(input, out token)) yield return token;
+                if (TryReadWhitespace(input, out token))
+                {
+                    yield return token;
+                    continue;
+                }
+                if (TryReadComment(input, out token))
+                {
+                    yield return token;
+                    continue;
+                }
+                if (TryReadParenthesis(input, out token))
+                {
+                    yield return token;
+                    continue;
+                }
+                if (TryReadColon(input, out token))
+                {
+                    yield return token;
+                    continue;
+                }
+                if (TryReadLetters(input, out token))
+                {
+                    yield return token;
+                    continue;
+                }
+
+                // if we reach this state, then an invalid character was encountered int he stream
+                if (input.Peek() >= 0)
+                {
+                    throw new ArgumentException("Encountered an invalid character: '" + (char) input.Read() + "'");
+                }
+                break;
             }
 
-            throw new NotImplementedException();
+            throw new NotImplementedException("This is the end.");
         }
 
         /// <summary>
@@ -58,7 +87,7 @@ namespace PDDL.Tokenizer
             var sb = new StringBuilder();
             while (Char.IsLetter((char)input.Peek()))
             {
-                sb.Append(input.Read());
+                sb.Append((char)input.Read());
             }
 
             // create the token, if possible
