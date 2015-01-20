@@ -29,7 +29,7 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <value>The name.</value>
         [NotNull]
-        string Name { get; }
+        IName Name { get; }
     }
 
     /// <summary>
@@ -63,6 +63,6 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <value>The name.</value>
         [NotNull]
-        string Name { get; }
+        IName Name { get; }
     }
 }

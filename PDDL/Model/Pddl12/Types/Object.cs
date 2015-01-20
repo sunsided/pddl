@@ -27,7 +27,7 @@ namespace PDDL.Model.Pddl12.Types
         /// <summary>
         /// Initializes a new instance of the <see cref="Object"/> class.
         /// </summary>
-        public Object() : base("Object")
+        public Object() : base(new Name("object"))
         { }
     }
 }

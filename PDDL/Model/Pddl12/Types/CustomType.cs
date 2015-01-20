@@ -14,7 +14,8 @@ namespace PDDL.Model.Pddl12.Types
         /// <param name="name">The name.</param>
         /// <exception cref="ArgumentNullException">The value of 'name' cannot be null. </exception>
         /// <exception cref="ArgumentException">The type name must not be empty</exception>
-        public CustomType([NotNull] string name) : base(name)
+        public CustomType([NotNull] IName name)
+            : base(name)
         {
         }
     }

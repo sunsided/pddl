@@ -23,18 +23,18 @@ namespace PDDL.Tests.Model
                                                            new Requirement(":typing")
                                                        };
 
-            var location = new CustomType("location");
-            var pile = new CustomType("pile");
-            var robot = new CustomType("robot");
-            var crane = new CustomType("crane");
-            var container = new CustomType("container");
+            var location = new CustomType(new Name("location"));
+            var pile = new CustomType(new Name("pile"));
+            var robot = new CustomType(new Name("robot"));
+            var crane = new CustomType(new Name("crane"));
+            var container = new CustomType(new Name("container"));
             IReadOnlyList<IType> types = new[]
                                          {
-                                             new CustomType("location"),
-                                             new CustomType("pile"),
-                                             new CustomType("robot"),
-                                             new CustomType("crane"),
-                                             new CustomType("container")
+                                             location,
+                                             pile,
+                                             robot,
+                                             crane,
+                                             container
                                          };
 
             IReadOnlyList<IVariable> constants = new IVariable[0];
