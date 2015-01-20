@@ -44,7 +44,7 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <value>The effect.</value>
         [NotNull]
-        IAtomicFormula Effects { get; }
+        IAtomicFormulaSkeleton Effects { get; }
     }
 
     /// <summary>
@@ -60,6 +60,6 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <value>The negated effect.</value>
         [NotNull]
-        IAtomicFormula Effects { get; }
+        IAtomicFormulaSkeleton Effects { get; }
     }
 }

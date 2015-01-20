@@ -42,7 +42,7 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <value>The predicates.</value>
         [NotNull]
-        IReadOnlyList<IAtomicFormula> Predicates { get; }
+        IReadOnlyList<IAtomicFormulaSkeleton> Predicates { get; }
 
         /// <summary>
         /// Gets the timeless literals.

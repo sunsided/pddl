@@ -4,25 +4,25 @@ using JetBrains.Annotations;
 namespace PDDL.Model.Pddl12
 {
     /// <summary>
-    /// Interface IAtomicFormula
+    /// Interface IAtomicFormulaSkeleton
     /// <para>
     ///     Atomic formulae are used to describe predicates and goals, as well as effects.
     /// </para>
     /// </summary>
-    public interface IAtomicFormula
+    public interface IAtomicFormulaSkeleton
     {
         /// <summary>
         /// Gets the name.
         /// </summary>
         /// <value>The name.</value>
         [NotNull]
-        IName Name { get; }
+        IPredicate Name { get; }
 
         /// <summary>
         /// Gets the parameters.
         /// </summary>
         /// <value>The parameters.</value>
         [NotNull]
-        IReadOnlyList<IParameter> Parameters { get; }
+        IReadOnlyList<IVariable> Parameters { get; }
     }
 }

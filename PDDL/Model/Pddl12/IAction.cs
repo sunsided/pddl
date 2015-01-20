@@ -13,7 +13,7 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <value>The parameters.</value>
         [NotNull]
-        IReadOnlyList<IParameter> Parameters { get; }
+        IReadOnlyList<IVariable> Parameters { get; }
 
         /// <summary>
         /// Gets the precondition.

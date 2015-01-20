@@ -39,7 +39,7 @@ namespace PDDL.Tests.Model
 
             IReadOnlyList<IVariable> constants = new IVariable[0];
 
-            IReadOnlyList<IAtomicFormula> predicates = new[]
+            IReadOnlyList<IAtomicFormulaSkeleton> predicates = new[]
                                                        {
                                                            CreatePredicate("adjacent", "?l1", location, "?l2", location),
                                                            CreatePredicate("attached", "?r", robot, "?l", location),
@@ -73,12 +73,12 @@ namespace PDDL.Tests.Model
         /// <param name="param2">The param2.</param>
         /// <param name="type2">The type2.</param>
         /// <returns>AtomicFormula.</returns>
-        private static AtomicFormula CreatePredicate([NotNull] string name, [NotNull]  string param1, [NotNull] IType type1, [NotNull] string param2, [NotNull] IType type2)
+        private static AtomicFormulaSkeleton CreatePredicate([NotNull] string name, [NotNull]  string param1, [NotNull] IType type1, [NotNull] string param2, [NotNull] IType type2)
         {
-            return new AtomicFormula(new Name(name), new[]
+            return new AtomicFormulaSkeleton(new Predicate(name), new[]
                                                      {
-                                                         new Parameter(new Name(param1), type1),
-                                                         new Parameter(new Name(param2), type2),
+                                                         new Variable(new Name(param1), type1), 
+                                                         new Variable(new Name(param2), type2),
                                                      });
         }
 
@@ -89,11 +89,11 @@ namespace PDDL.Tests.Model
         /// <param name="param1">The param1.</param>
         /// <param name="type1">The type1.</param>
         /// <returns>AtomicFormula.</returns>
-        private static AtomicFormula CreatePredicate([NotNull] string name, [NotNull]  string param1, [NotNull] IType type1)
+        private static AtomicFormulaSkeleton CreatePredicate([NotNull] string name, [NotNull]  string param1, [NotNull] IType type1)
         {
-            return new AtomicFormula(new Name(name), new[]
+            return new AtomicFormulaSkeleton(new Predicate(name), new[]
                                                      {
-                                                         new Parameter(new Name(param1), type1)
+                                                         new Variable(new Name(param1), type1)
                                                      });
         }
     }

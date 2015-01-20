@@ -6,7 +6,7 @@ namespace PDDL.Model.Pddl12
     /// <summary>
     /// Class Name. This class cannot be inherited.
     /// </summary>
-    public sealed class Name : IName
+    public class Name : IName
     {
         /// <summary>
         /// Gets the value.

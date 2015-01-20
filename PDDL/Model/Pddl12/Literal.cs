@@ -3,6 +3,8 @@ using JetBrains.Annotations;
 
 namespace PDDL.Model.Pddl12
 {
+#if Enabled
+
     /// <summary>
     /// Class Literal.
     /// </summary>
@@ -36,4 +38,5 @@ namespace PDDL.Model.Pddl12
         /// <value><c>true</c> if the atomic is positive.</value>
         public bool Positive { get; private set; }
     }
+#endif
 }

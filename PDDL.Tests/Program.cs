@@ -128,19 +128,19 @@ namespace PDDL.Tests
 
 
             // predicates are just names
-            Parser<string> predicate = nameDefinition;
-            /*
-            var typedListVariable = Parse.Char('?').Once().Concat(name);
+            Parser<IPredicate> predicate = (
+                from value in nameDefinition
+                select new Predicate(value))
+                .Token();
 
             var atomicFormulaSkeleton = (
                 from open in op
-                from wp1 in Parse.WhiteSpace.Many()
                 from p in predicate
-                from wp2 in Parse.WhiteSpace.AtLeastOnce()
                 from variables in typedListVariable
                 from close in cp
-                select p)
+                select new AtomicFormulaSkeleton(p, variables.ToList()))
                 .Token();
+
             /*
             Parser<IList<string>> predicateDef = (
                 from open in op

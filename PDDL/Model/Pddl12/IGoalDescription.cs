@@ -24,7 +24,7 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <value>The condition.</value>
         [NotNull]
-        IAtomicFormula Condition { get; }
+        IAtomicFormulaSkeleton Condition { get; }
     }
 
     /// <summary>
