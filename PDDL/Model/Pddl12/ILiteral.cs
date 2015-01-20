@@ -8,7 +8,7 @@ namespace PDDL.Model.Pddl12
     ///     Literals are used to describe positive and negative predicates and goals, as well as effects.
     /// </para>
     /// </summary>
-    public interface ILiteral : IAtomicFormulaSkeleton
+    public interface ILiteral : IAtomicFormula
     {
         /// <summary>
         /// Determines if the atomic is positive.

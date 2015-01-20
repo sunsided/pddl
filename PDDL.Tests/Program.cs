@@ -231,6 +231,8 @@ namespace PDDL.Tests
                ).Token();
             Assert.AreEqual(4, constantsDef.Parse("(:constants boat house - metal mountain sky - mother-nature)").Count());
 
+            // TODO: implement domain-vars-def 
+
             string result = comment.Parse(domainDefinition);
 
         }

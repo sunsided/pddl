@@ -3,8 +3,6 @@ using JetBrains.Annotations;
 
 namespace PDDL.Model.Pddl12
 {
-#if Enabled
-
     /// <summary>
     /// Class Literal.
     /// </summary>
@@ -16,7 +14,8 @@ namespace PDDL.Model.Pddl12
         /// <param name="name">The name.</param>
         /// <param name="parameters">The parameters.</param>
         /// <param name="positive">if set to <see langword="true" />, the atomic formula is positive.</param>
-        public Literal([NotNull] IName name, [NotNull] IReadOnlyList<IParameter> parameters, bool positive) : base(name, parameters)
+        public Literal([NotNull] IName name, [NotNull] IReadOnlyList<IVariable> parameters, bool positive)
+            : base(name, parameters)
         {
             Positive = positive;
         }
@@ -38,5 +37,4 @@ namespace PDDL.Model.Pddl12
         /// <value><c>true</c> if the atomic is positive.</value>
         public bool Positive { get; private set; }
     }
-#endif
 }
