@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Remoting.Messaging;
-using PDDL.Tests.Tokenizer;
+using NUnit.Framework;
 using Sprache;
 
 namespace PDDL.Tests
@@ -55,20 +53,29 @@ namespace PDDL.Tests
                 )
                 .Text()
                 .Token();
+            Assert.AreEqual("dock-worker-robot", name.Parse("dock-worker-robot"));
+            Assert.AreEqual("a-b_c3", name.Parse("a-b_c3"));
+            Assert.AreEqual("a123", name.Parse("a123"));
+            Assert.AreEqual("a---", name.Parse("a---"));
+            try { name.Parse("?a"); Assert.Fail(); } catch (ParseException) { }
+            try { name.Parse("3a"); Assert.Fail(); } catch (ParseException) { }
+            try { name.Parse("-a"); Assert.Fail(); } catch (ParseException) { }
+            try { name.Parse("_a"); Assert.Fail(); } catch (ParseException) { }
+            try { name.Parse("#a"); Assert.Fail(); } catch (ParseException) { }
 
             // predicates are just names
             Parser<string> predicate = name;
 
             // variables are named by question marks followed with a regular name
             Parser<string> variable = Parse.Char('?').Once().Concat(name).Text().Token();
+            Assert.AreEqual("?a", variable.Parse("?a"));
+            try { variable.Parse("a"); Assert.Fail(); } catch (ParseException) {}
 
             // typed lists of variables are just many variables
-            var typedListVariable = variable.Many().Token();
-            
-            // TODO: add :typing extension
-
-            var lol = typedListVariable.Parse("?a ?b?c");
-            Debugger.Break();
+            Parser<IEnumerable<string>> typedListVariable = variable.Many().Token();
+            Assert.AreEqual(3, typedListVariable.Parse("?a?b ?c").Count());
+            Assert.AreEqual(1, typedListVariable.Parse("?a lol").Count());
+            Assert.AreEqual(0, typedListVariable.Parse("lol ?a").Count());
 
             /*
             var typedListVariable = Parse.Char('?').Once().Concat(name);
