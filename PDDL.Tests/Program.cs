@@ -126,13 +126,15 @@ namespace PDDL.Tests
                     select n
                     ).Token();
 
-            var typedListVariable = (
+            Parser<IEnumerable<IVariable>> typedListVariable = (
                 from vns in variableName.AtLeastOnce()
-                from t in Parse.Char('-').Token().Then(_ => type).Optional()
+                from t in Parse.Char('-').Token().Then(_ => type).Token().Optional()
                 let variables = from vn in vns
                     select new Variable(vn, t.IsDefined ? t.Get() : DefaultType.Default)
                 select variables
-                );
+                )
+                .Many()
+                .Select(groupedPerType => groupedPerType.SelectMany(variable => variable));
 
             Debugger.Break();
 /*
