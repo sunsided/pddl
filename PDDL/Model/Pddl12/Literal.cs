@@ -14,7 +14,7 @@ namespace PDDL.Model.Pddl12
         /// <param name="name">The name.</param>
         /// <param name="parameters">The parameters.</param>
         /// <param name="positive">if set to <see langword="true" />, the atomic formula is positive.</param>
-        public Literal([NotNull] IName name, [NotNull] IReadOnlyList<IVariable> parameters, bool positive)
+        public Literal([NotNull] IName name, [NotNull] IReadOnlyList<ITerm> parameters, bool positive)
             : base(name, parameters)
         {
             Positive = positive;

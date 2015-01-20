@@ -239,6 +239,29 @@ namespace PDDL.Tests
 
             Parser<ITerm> term = name.Token().Or<ITerm>(variable);
 
+            Parser<IAtomicFormula> atomicFormula = (
+                from open in op
+               from p in predicate
+               from terms in term.Many()
+               from close in cp
+               select new AtomicFormula(p, terms.ToList())
+               ).Token();
+
+            Parser<ILiteral> positiveLiteral = (
+                from af in atomicFormula
+                select new Literal(af.Name, af.Parameters, true))
+                .Token();
+
+            Parser<ILiteral> negativeLiteral = (
+                from open in op
+                from keyword in Parse.String("not").Token()
+                from af in atomicFormula
+                from close in cp
+                select new Literal(af.Name, af.Parameters, false))
+                .Token();
+
+            Parser<ILiteral> literal = positiveLiteral.Or(negativeLiteral);
+
             string result = comment.Parse(domainDefinition);
 
         }
