@@ -76,9 +76,8 @@ namespace PDDL.Tests
             // variables are named by question marks followed with a regular name
             Parser<IVariable> variable = (
                 from qm in Parse.Char('?')
-                from value in nameDefinition
-                let n = new Name(value)
-                select new Variable(n, DefaultType.Default)
+                from value in name
+                select new Variable(value, DefaultType.Default)
                 ).Token();
 
             Assert.AreEqual("?a - object", variable.Parse("?a").ToString());
