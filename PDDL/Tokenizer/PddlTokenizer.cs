@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Net;
 using System.Text;
 using JetBrains.Annotations;
 using PDDL.Tokenizer.Tokens;
@@ -58,6 +57,26 @@ namespace PDDL.Tokenizer
                     yield return token;
                     continue;
                 }
+                if (TryReadHyphen(input, out token))
+                {
+                    yield return token;
+                    continue;
+                }
+                if (TryReadUnderscore(input, out token))
+                {
+                    yield return token;
+                    continue;
+                }
+                if (TryReadQuestionMark(input, out token))
+                {
+                    yield return token;
+                    continue;
+                }
+                if (TryReadDigits(input, out token))
+                {
+                    yield return token;
+                    continue;
+                }
 
                 // if we reach this state, then an invalid character was encountered int he stream
                 if (input.Peek() >= 0)
@@ -66,8 +85,6 @@ namespace PDDL.Tokenizer
                 }
                 break;
             }
-
-            throw new NotImplementedException("This is the end.");
         }
 
         /// <summary>
@@ -97,6 +114,32 @@ namespace PDDL.Tokenizer
         }
 
         /// <summary>
+        /// Tries to read digits.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="token">The token.</param>
+        /// <returns><see langword="true" /> if the token could be read, <see langword="false" /> otherwise.</returns>
+        /// <exception cref="System.ArgumentNullException">input;The reader was null.</exception>
+        private static bool TryReadDigits([NotNull] TextReader input, out Token token)
+        {
+            if (ReferenceEquals(input, null)) throw new ArgumentNullException("input", "The reader was null.");
+
+            token = default(Comment);
+
+            // attempt to read the opening parenthesis
+            var sb = new StringBuilder();
+            while (Char.IsDigit((char)input.Peek()))
+            {
+                sb.Append((char)input.Read());
+            }
+
+            // create the token, if possible
+            if (sb.Length > 0) token = new Digits(sb.ToString());
+
+            return (token != null);
+        }
+
+        /// <summary>
         /// Tries to read a colon.
         /// </summary>
         /// <param name="input">The input.</param>
@@ -109,15 +152,77 @@ namespace PDDL.Tokenizer
 
             token = default(Comment);
 
-            // attempt to read the opening parenthesis
-            if ((char)input.Peek() == ':')
+            if (input.ReadAndChokeIf(':'))
             {
-                input.Read();
                 token = new Colon();
             }
 
             return (token != null);
         }
+        
+        /// <summary>
+        /// Tries to read a hyphen.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="token">The token.</param>
+        /// <returns><see langword="true" /> if the token could be read, <see langword="false" /> otherwise.</returns>
+        /// <exception cref="System.ArgumentNullException">input;The reader was null.</exception>
+        private static bool TryReadHyphen([NotNull] TextReader input, out Token token)
+        {
+            if (ReferenceEquals(input, null)) throw new ArgumentNullException("input", "The reader was null.");
+
+            token = default(Comment);
+
+            if (input.ReadAndChokeIf('-'))
+            {
+                token = new Hyphen();
+            }
+
+            return (token != null);
+        }
+
+        /// <summary>
+        /// Tries to read an underscore.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="token">The token.</param>
+        /// <returns><see langword="true" /> if the token could be read, <see langword="false" /> otherwise.</returns>
+        /// <exception cref="System.ArgumentNullException">input;The reader was null.</exception>
+        private static bool TryReadUnderscore([NotNull] TextReader input, out Token token)
+        {
+            if (ReferenceEquals(input, null)) throw new ArgumentNullException("input", "The reader was null.");
+
+            token = default(Comment);
+
+            if (input.ReadAndChokeIf('_'))
+            {
+                token = new Underscore();
+            }
+
+            return (token != null);
+        }
+
+        /// <summary>
+        /// Tries to read a question mark.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="token">The token.</param>
+        /// <returns><see langword="true" /> if the token could be read, <see langword="false" /> otherwise.</returns>
+        /// <exception cref="System.ArgumentNullException">input;The reader was null.</exception>
+        private static bool TryReadQuestionMark([NotNull] TextReader input, out Token token)
+        {
+            if (ReferenceEquals(input, null)) throw new ArgumentNullException("input", "The reader was null.");
+
+            token = default(Comment);
+
+            if (input.ReadAndChokeIf('?'))
+            {
+                token = new QuestionMark();
+            }
+
+            return (token != null);
+        }
+
 
         /// <summary>
         /// Tries to read a parenthesis.

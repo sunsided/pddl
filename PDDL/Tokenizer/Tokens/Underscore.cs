@@ -1,9 +1,9 @@
 ﻿namespace PDDL.Tokenizer.Tokens
 {
     /// <summary>
-    /// Class Colon. This class cannot be inherited.
+    /// Class Underscore. This class cannot be inherited.
     /// </summary>
-    sealed class Colon : Token
+    sealed class Underscore : Token
     {
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
@@ -11,7 +11,7 @@
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         public override string ToString()
         {
-            return ":";
+            return "_";
         }
     }
 }

@@ -55,6 +55,10 @@
     <Compile Include="Symbols\Whitespace.cs" />
     <Compile Include="Tokenizer\PddlTokenizer.cs" />
     <Compile Include="Tokenizer\ReaderExtensions.cs" />
+    <Compile Include="Tokenizer\Tokens\Digits.cs" />
+    <Compile Include="Tokenizer\Tokens\QuestionMark.cs" />
+    <Compile Include="Tokenizer\Tokens\Underscore.cs" />
+    <Compile Include="Tokenizer\Tokens\Hyphen.cs" />
     <Compile Include="Tokenizer\Tokens\Comment.cs" />
     <Compile Include="Tokenizer\Tokens\Letters.cs" />
     <Compile Include="Tokenizer\Tokens\Colon.cs" />
