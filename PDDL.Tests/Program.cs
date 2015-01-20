@@ -50,7 +50,7 @@ namespace PDDL.Tests
             // letter followed by any alphanumeric, hyphen or underscore
             Parser<string> name = Parse.Letter.AtLeastOnce()
                 .Concat(
-                Parse.Char('-').Or(Parse.Char('_')).Or(Parse.LetterOrDigit).Many()
+                    Parse.Char('-').Or(Parse.Char('_')).Or(Parse.LetterOrDigit).Many()
                 )
                 .Text()
                 .Token();
@@ -84,9 +84,9 @@ namespace PDDL.Tests
             var fluentType = (
                 from open in op
                 from keyword in Parse.String("fluent").Token()
-                from types in type.AtLeastOnce().Token()
+                from t in type
                 from close in cp
-                select types.ToList()
+                select t
                 ).Token();
 
             // typed lists of variables are just many variables
