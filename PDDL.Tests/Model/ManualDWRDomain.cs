@@ -37,7 +37,7 @@ namespace PDDL.Tests.Model
                                              container
                                          };
 
-            IReadOnlyList<IVariable> constants = new IVariable[0];
+            IReadOnlyList<IConstant> constants = new IConstant[0];
 
             IReadOnlyList<IAtomicFormulaSkeleton> predicates = new[]
                                                        {

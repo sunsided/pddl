@@ -32,7 +32,7 @@ namespace PDDL.Model.Pddl12
         /// Gets the constants.
         /// </summary>
         /// <value>The constants.</value>
-        public IReadOnlyList<IVariable> Constants { get; private set; }
+        public IReadOnlyList<IConstant> Constants { get; private set; }
 
         /// <summary>
         /// Gets the predicate definitions.
@@ -56,7 +56,7 @@ namespace PDDL.Model.Pddl12
         /// <param name="predicates">The predicates.</param>
         /// <param name="timeless">The timeless.</param>
         /// <exception cref="ArgumentNullException">None of the arguments may be null. </exception>
-        public Domain([NotNull] IName name, [NotNull] IReadOnlyList<IRequirement> requirements, [NotNull] IReadOnlyList<IType> types, [NotNull] IReadOnlyList<IVariable> constants, [NotNull] IReadOnlyList<IAtomicFormulaSkeleton> predicates, [NotNull] IReadOnlyList<ILiteral> timeless)
+        public Domain([NotNull] IName name, [NotNull] IReadOnlyList<IRequirement> requirements, [NotNull] IReadOnlyList<IType> types, [NotNull] IReadOnlyList<IConstant> constants, [NotNull] IReadOnlyList<IAtomicFormulaSkeleton> predicates, [NotNull] IReadOnlyList<ILiteral> timeless)
         {
             if (ReferenceEquals(name, null)) throw new ArgumentNullException("name", "name must not be null");
             if (ReferenceEquals(requirements, null)) throw new ArgumentNullException("requirements", "requirements must not be null");
