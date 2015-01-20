@@ -23,5 +23,14 @@ namespace PDDL.Tokenizer.Tokens
             if (length <= 0) throw new ArgumentOutOfRangeException("length", length, "length must be positive");
             Length = length;
         }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+        public override string ToString()
+        {
+            return String.Empty.PadLeft(Length);
+        }
     }
 }

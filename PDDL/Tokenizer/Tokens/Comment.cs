@@ -25,5 +25,14 @@ namespace PDDL.Tokenizer.Tokens
             if (ReferenceEquals(value, null)) throw new ArgumentNullException("value", "value was null");
             Value = value;
         }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+        public override string ToString()
+        {
+            return Value;
+        }
     }
 }

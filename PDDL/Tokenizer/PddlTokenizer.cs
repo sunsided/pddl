@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using JetBrains.Annotations;
 using PDDL.Tokenizer.Tokens;
 
@@ -33,9 +34,60 @@ namespace PDDL.Tokenizer
                 if (TryReadWhitespace(input, out token)) yield return token;
                 if (TryReadComment(input, out token)) yield return token;
                 if (TryReadParenthesis(input, out token)) yield return token;
+                if (TryReadColon(input, out token)) yield return token;
+                if (TryReadLetters(input, out token)) yield return token;
             }
 
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Tries to read letters.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="token">The token.</param>
+        /// <returns><see langword="true" /> if the token could be read, <see langword="false" /> otherwise.</returns>
+        /// <exception cref="System.ArgumentNullException">input;The reader was null.</exception>
+        private static bool TryReadLetters([NotNull] TextReader input, out Token token)
+        {
+            if (ReferenceEquals(input, null)) throw new ArgumentNullException("input", "The reader was null.");
+
+            token = default(Comment);
+
+            // attempt to read the opening parenthesis
+            var sb = new StringBuilder();
+            while (Char.IsLetter((char)input.Peek()))
+            {
+                sb.Append(input.Read());
+            }
+
+            // create the token, if possible
+            if (sb.Length > 0) token = new Letters(sb.ToString());
+
+            return (token != null);
+        }
+
+        /// <summary>
+        /// Tries to read a colon.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="token">The token.</param>
+        /// <returns><see langword="true" /> if the token could be read, <see langword="false" /> otherwise.</returns>
+        /// <exception cref="System.ArgumentNullException">input;The reader was null.</exception>
+        private static bool TryReadColon([NotNull] TextReader input, out Token token)
+        {
+            if (ReferenceEquals(input, null)) throw new ArgumentNullException("input", "The reader was null.");
+
+            token = default(Comment);
+
+            // attempt to read the opening parenthesis
+            if ((char)input.Peek() == ':')
+            {
+                input.Read();
+                token = new Colon();
+            }
+
+            return (token != null);
         }
 
         /// <summary>
@@ -52,13 +104,13 @@ namespace PDDL.Tokenizer
             token = default(Comment);
 
             // attempt to read the opening parenthesis
-            if ((char) input.Peek() == '(')
+            if (input.ReadAndChokeIf('('))
             {
                 token = new Parenthesis(Parenthesis.Type.Open);
             }
 
             // attempt to read the closing parenthesis
-            if ((char)input.Peek() == ')')
+            if (input.ReadAndChokeIf(')'))
             {
                 token = new Parenthesis(Parenthesis.Type.Close);
             }

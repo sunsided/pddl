@@ -57,7 +57,7 @@
     <Compile Include="Tokenizer\ReaderExtensions.cs" />
     <Compile Include="Tokenizer\Tokens\Comment.cs" />
     <Compile Include="Tokenizer\Tokens\Letters.cs" />
-    <Compile Include="Tokenizer\Tokens\Semicolon.cs" />
+    <Compile Include="Tokenizer\Tokens\Colon.cs" />
     <Compile Include="Tokenizer\Tokens\Parenthesis.cs" />
     <Compile Include="Tokenizer\Tokens\Token.cs" />
     <Compile Include="Tokenizer\Tokens\Whitespace.cs" />
