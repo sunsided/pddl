@@ -59,7 +59,6 @@
     <Compile Include="Model\Pddl12\IAction.cs" />
     <Compile Include="Model\Pddl12\IEffect.cs" />
     <Compile Include="Model\Pddl12\IGoalDescription.cs" />
-    <Compile Include="Model\Pddl12\IOperator.cs" />
     <Compile Include="Model\Pddl12\IPrecondition.cs" />
     <Compile Include="Model\Pddl12\IAtomicFormula.cs" />
     <Compile Include="Model\Pddl12\IParameter.cs" />
