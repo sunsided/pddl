@@ -26,21 +26,36 @@ namespace PDDL.Tests
 
         private static void Sprache()
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            var resources = assembly.GetManifestResourceNames();
-            var domainFileName = resources.FirstOrDefault(name => name.Contains("DWR-operators.pddl"));
-            var domainDefinition = LoadNamedResourceString(assembly, domainFileName);
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            string[] resources = assembly.GetManifestResourceNames();
+            string domainFileName = resources.FirstOrDefault(fileName => fileName.Contains("DWR-operators.pddl"));
+            string domainDefinition = LoadNamedResourceString(assembly, domainFileName);
 
+            // line ending
             Parser<string> eol = Parse.String("\r\n").Return(Environment.NewLine)
                                 .Or(Parse.Char('\n').Return(Environment.NewLine));
-            Parser<string> comment = (
-                from semicolon in Parse.Char(';')
-                from text in Parse.AnyChar.Until(eol).Text()
-                select ";" + text
-                )
-                .Token();
+            
+            // comments start with a semicolon and run until the eol
+            Parser<string> comment = 
+                Parse.Char(';').Once()
+                .Concat(Parse.AnyChar.Until(eol))
+                .Text();
 
-            var result = comment.Parse(domainDefinition);
+            // parentheses
+            Parser<char> op = Parse.Char('(');
+            Parser<char> cp = Parse.Char(')');
+
+            // define a name
+            // letter followed by any alphanumeric, hyphen or underscore
+            Parser<string> name = Parse.Letter.AtLeastOnce()
+                .Concat(Parse.Char('-').Or(Parse.Char('_').Or(Parse.LetterOrDigit)).Many()
+                )
+                .Text();
+            
+            //var name = Parse.Letter.AtLeastOnce()
+            //    .Then(Parse.LetterOrDigit.Or(Parse.Char('-')).Or(Parse.Char(_)));
+           
+            string result = comment.Parse(domainDefinition);
 
         }
 
@@ -51,10 +66,10 @@ namespace PDDL.Tests
         /// <param name="domainFileName">Name of the domain file.</param>
         public static string LoadNamedResourceString(Assembly assembly, string domainFileName)
         {
-            using (var stream = assembly.GetManifestResourceStream(domainFileName))
+            using (Stream stream = assembly.GetManifestResourceStream(domainFileName))
             {
                 Debug.Assert(stream != null, "stream != null");
-                using (var reader = new StreamReader(stream))
+                using (StreamReader reader = new StreamReader(stream))
                 {
                     return reader.ReadToEnd();
                 }
