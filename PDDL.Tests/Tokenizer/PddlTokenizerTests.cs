@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using NUnit.Framework;
+using PDDL.Tokenizer;
 
 namespace PDDL.Tests.Tokenizer
 {
@@ -56,7 +57,16 @@ namespace PDDL.Tests.Tokenizer
         [Test]
         public void TokenizationOfSimpleDomainDoesNotFail()
         {
-            
+            var tokenizer = new PddlTokenizer();
+
+            using (var reader = new StringReader(_domainDefinition))
+            {
+                var tokens = tokenizer.Tokenize(reader);
+                Assert.NotNull(tokens, "tokens != null");
+
+                var sum = tokens.Count();
+                Assert.Greater(sum, 0, "at least one token expected");
+            }
         }
     }
 }
