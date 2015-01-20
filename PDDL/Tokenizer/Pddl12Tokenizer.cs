@@ -13,7 +13,7 @@ namespace PDDL.Tokenizer
     /// Implements a tokenizer for the PDDL 1.2 syntax.
     /// </para>
     /// </summary>
-    sealed class Pddl12Tokenizer
+    class Pddl12Tokenizer : IPddlTokenizer
     {
         /// <summary>
         /// The tokenizers to be used
@@ -51,7 +51,7 @@ namespace PDDL.Tokenizer
         /// <exception cref="IOException">An I/O error occurs. </exception>
         /// <exception cref="ArgumentException">An invalid character was encountered. </exception>
         [NotNull]
-        public IEnumerable<Token> Tokenize([NotNull] TextReader input)
+        public IEnumerable<Token> Tokenize(TextReader input)
         {
             if (ReferenceEquals(input, null)) throw new ArgumentNullException("input", "The reader was null.");
 
