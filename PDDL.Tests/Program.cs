@@ -148,17 +148,53 @@ namespace PDDL.Tests
                 from close in cp
                 select skeletons
                 ).Token();
+            Assert.AreEqual(2, predicatesDef.Parse("(:predicates (foo ?a ?b) (bar))").Count());
 
-            /*
-            Parser<IList<string>> predicateDef = (
+            var extensionDef = (
                 from open in op
-                from colon in Parse.Char(':')
-                from whitespace in Parse.WhiteSpace.Many()
-                from skeleton in atomicFormulaSkeleton
+                from keyword in Parse.String(":extends").Token()
+                from names in name.Token().AtLeastOnce()
                 from close in cp
-                select skeleton
+                select names
                 ).Token();
-           */
+            Assert.AreEqual(4, extensionDef.Parse("(:extends a b c d)").Count());
+
+            var validRequirements = 
+                (from value in
+                Parse.String(":strips")
+                .Or(Parse.String(":typing"))
+                .Or(Parse.String(":disjunctive-preconditions"))
+                .Or(Parse.String(":equality"))
+                .Or(Parse.String(":existential-preconditions"))
+                .Or(Parse.String(":universal-preconditions"))
+                .Or(Parse.String(":quantified-preconditions"))
+                .Or(Parse.String(":conditional-effects"))
+                .Or(Parse.String(":action-expansions"))
+                .Or(Parse.String(":foreach-expansions"))
+                .Or(Parse.String(":dag-expansions"))
+                .Or(Parse.String(":domain-axioms"))
+
+                .Or(Parse.String(":subgoal-through-axioms"))
+                .Or(Parse.String(":safety-constraints"))
+                .Or(Parse.String(":expression-evaluation"))
+                .Or(Parse.String(":fluents"))
+                .Or(Parse.String(":open-world"))
+                .Or(Parse.String(":true-negation"))
+                .Or(Parse.String(":adl"))
+                .Or(Parse.String(":ucpop"))
+                .Text()
+                select new Requirement(value)
+                ).Token();
+
+            var requirementsDef = (
+                from open in op
+                from keyword in Parse.String(":requirements").Token()
+                from keys in validRequirements.Many()
+                from close in cp
+                select keys
+                ).Token();
+            Assert.AreEqual(3, requirementsDef.Parse("(:requirements :strips :equality :typing)").Count());
+
             string result = comment.Parse(domainDefinition);
 
         }
