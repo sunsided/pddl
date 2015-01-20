@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System;
+using JetBrains.Annotations;
 
 namespace PDDL.Model.Pddl12
 {
@@ -8,7 +9,7 @@ namespace PDDL.Model.Pddl12
     ///     Contains the name of an object, domain, problem, etc.
     /// </para>
     /// </summary>
-    public interface IName
+    public interface IName : IEquatable<string>
     {
         /// <summary>
         /// Gets the value.
