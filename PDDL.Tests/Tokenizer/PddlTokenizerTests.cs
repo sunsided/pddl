@@ -67,7 +67,8 @@ namespace PDDL.Tests.Tokenizer
                 // dump the tokens
                 foreach (var token in tokens)
                 {
-                    Trace.Write(token);
+                    if (token is PDDL.Tokenizer.Tokens.Whitespace) continue;
+                    Trace.WriteLine(token);
                 }
                 Trace.Flush();
             }

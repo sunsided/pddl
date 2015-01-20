@@ -56,6 +56,7 @@
     <Compile Include="Tokenizer\PddlTokenizer.cs" />
     <Compile Include="Tokenizer\ReaderExtensions.cs" />
     <Compile Include="Tokenizer\Tokens\Digits.cs" />
+    <Compile Include="Tokenizer\Tokens\Literal.cs" />
     <Compile Include="Tokenizer\Tokens\QuestionMark.cs" />
     <Compile Include="Tokenizer\Tokens\Underscore.cs" />
     <Compile Include="Tokenizer\Tokens\Hyphen.cs" />

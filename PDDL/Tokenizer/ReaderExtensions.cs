@@ -35,7 +35,8 @@ namespace PDDL.Tokenizer
         public static bool ReadAndChokeIf([NotNull] this TextReader reader, char @is)
         {
             if (ReferenceEquals(reader, null)) throw new ArgumentNullException("reader", "The reader was null.");
-            if (reader.Peek() == @is)
+            var value = reader.Peek();
+            if (value >= 0 && (char)value == @is)
             {
                 reader.Read();
                 return true;

@@ -52,6 +52,11 @@ namespace PDDL.Tokenizer
                     yield return token;
                     continue;
                 }
+                if (TryReadLiteral(input, out token))
+                {
+                    yield return token;
+                    continue;
+                }
                 if (TryReadLetters(input, out token))
                 {
                     yield return token;
@@ -85,6 +90,48 @@ namespace PDDL.Tokenizer
                 }
                 break;
             }
+        }
+
+        /// <summary>
+        /// Tries to read names.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <param name="token">The token.</param>
+        /// <returns><see langword="true" /> if the token could be read, <see langword="false" /> otherwise.</returns>
+        /// <exception cref="System.ArgumentNullException">input;The reader was null.</exception>
+        private static bool TryReadLiteral([NotNull] TextReader input, out Token token)
+        {
+            if (ReferenceEquals(input, null)) throw new ArgumentNullException("input", "The reader was null.");
+
+            token = default(Comment);
+
+            var sb = new StringBuilder();
+            // the first character has to be a letter, so if it is not,
+            // skip the rest.
+            var value = input.Peek();
+            if (value <= 0 || !Char.IsLetter((char) value)) return false;
+            
+            // now consume, as long as there are any letters, digits, hyphens or underscores
+            while (value >= 0)
+            {
+                if (Char.IsLetterOrDigit((char) value) || (char) value == '_' || (char) value == '-')
+                {
+                    sb.Append((char) input.Read());
+                }
+                else
+                {
+                    // stop if there is a mismatch
+                    break;
+                }
+
+                // peek forward
+                value = input.Peek();
+            }
+
+            // create the token, if possible
+            Debug.Assert(sb.Length > 0, "sb.Length > 0");
+            token = new Literal(sb.ToString());
+            return true;
         }
 
         /// <summary>
