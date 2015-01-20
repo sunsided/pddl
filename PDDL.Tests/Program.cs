@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
 using PDDL.Model.Pddl12;
+using PDDL.Model.Pddl12.Goals;
 using PDDL.Model.Pddl12.Types;
 using Sprache;
 
@@ -261,6 +262,28 @@ namespace PDDL.Tests
                 .Token();
 
             Parser<ILiteral> literal = positiveLiteral.Or(negativeLiteral);
+
+            Parser<IGoalDescription> atomicGoalDescription =
+                (from af in atomicFormula
+                    select new AtomicGoalDescription(af));
+
+            Parser<IGoalDescription> literalGoalDesccription =
+                (from l in literal
+                 select new LiteralGoalDescription(l));
+
+            var gdi = new ParserInjector<IGoalDescription>();
+
+            Parser<IGoalDescription> conjunctionGoalDescription =
+                (
+                    from open in op
+                    from keyword in Parse.String("and").Token()
+                    from goals in gdi.Parser.Many()
+                    from close in cp
+                    select new ConjunctionGoalDescription(goals.ToArray())
+                    ).Token();
+
+            var goalDescription = literalGoalDesccription.Or(atomicGoalDescription).Or(conjunctionGoalDescription);
+            gdi.Parser = goalDescription;
 
             string result = comment.Parse(domainDefinition);
 
