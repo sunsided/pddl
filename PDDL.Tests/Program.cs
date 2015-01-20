@@ -85,7 +85,7 @@ namespace PDDL.Tests
             try { variable.Parse("a"); Assert.Fail(); } catch (ParseException) {}
             
             // types are just names
-            var typeDefinition = nameDefinition.Token();
+            var typeDefinition = name.Token();
             var eitherTypeDefinition = (
                 from open in op
                 from keyword in Parse.String("either").Token()
