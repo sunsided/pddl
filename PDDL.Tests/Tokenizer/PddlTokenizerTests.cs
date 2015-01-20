@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using JetBrains.Annotations;
 using NUnit.Framework;
 
 namespace PDDL.Tests.Tokenizer
@@ -14,22 +15,38 @@ namespace PDDL.Tests.Tokenizer
     public class PddlTokenizerTests
     {
         /// <summary>
+        /// The domain definition
+        /// </summary>
+        // ReSharper disable once NotNullMemberIsNotInitialized
+        [NotNull] private string _domainDefinition;
+
+        /// <summary>
         /// Sets up the test fixture.
         /// </summary>
+        /// <exception cref="InvalidOperationException">Require test data could not be found.</exception>
+        /// <exception cref="FileLoadException">A file that was found could not be loaded. </exception>
+        /// <exception cref="FileNotFoundException">Test data file was not found. </exception>
+        /// <exception cref="BadImageFormatException">Current assembly is not a valid assembly. </exception>
+        /// <exception cref="NotImplementedException">Resource length is greater than <see cref="F:System.Int64.MaxValue" />.</exception>
+        /// <exception cref="OutOfMemoryException">There is insufficient memory to allocate a buffer for the returned string. </exception>
+        /// <exception cref="IOException">An I/O error occurs. </exception>
         [TestFixtureSetUp]
         public void FixtureSetUp()
         {
             var assembly = Assembly.GetExecutingAssembly();
             var resources = assembly.GetManifestResourceNames();
-            var domainFileName = resources.First(name => name.Contains("DWR-operators.pddl"));
+            var domainFileName = resources.FirstOrDefault(name => name.Contains("DWR-operators.pddl"));
+            if (ReferenceEquals(domainFileName, null)) throw new InvalidOperationException("Require test data could not be found.");
             using (var stream = assembly.GetManifestResourceStream(domainFileName))
             {
                 Debug.Assert(stream != null, "stream != null");
                 using (var reader = new StreamReader(stream))
                 {
-                    var lol = reader.ReadToEnd();
+                    _domainDefinition = reader.ReadToEnd();
                 }
             }
+
+            if (String.IsNullOrWhiteSpace(_domainDefinition)) Assert.Fail("Domain definition could not be loaded");
         }
 
         /// <summary>
@@ -39,8 +56,7 @@ namespace PDDL.Tests.Tokenizer
         [Test]
         public void TokenizationOfSimpleDomainDoesNotFail()
         {
-            var resources = Assembly.GetExecutingAssembly().GetManifestResourceNames();
-            var lol = Assembly.GetExecutingAssembly().GetManifestResourceStream("PDDL.Tests.Tokenizer.TestData.DWR-operators.pddl");
+            
         }
     }
 }
