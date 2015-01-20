@@ -9,6 +9,13 @@ namespace PDDL.Model.Pddl12
     public interface IAction
     {
         /// <summary>
+        /// Gets the functor.
+        /// </summary>
+        /// <value>The functor.</value>
+        [NotNull]
+        IName Functor { get; }
+
+        /// <summary>
         /// Gets the parameters.
         /// </summary>
         /// <value>The parameters.</value>
