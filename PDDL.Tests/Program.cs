@@ -85,22 +85,24 @@ namespace PDDL.Tests
             try { variable.Parse("a"); Assert.Fail(); } catch (ParseException) {}
             
             // types are just names
-            var type = nameDefinition;
-            var eitherType = (
+            var typeDefinition = nameDefinition.Token();
+            var eitherTypeDefinition = (
                 from open in op
                 from keyword in Parse.String("either").Token()
-                from types in type.AtLeastOnce().Token()
+                from types in typeDefinition.AtLeastOnce().Token()
                 from close in cp
                 select types.ToList()
                 ).Token();
-            var fluentType = (
+            var fluentTypeDefinition = (
                 from open in op
                 from keyword in Parse.String("fluent").Token()
-                from t in type
+                from t in typeDefinition
                 from close in cp
                 select t
                 ).Token();
 
+            var lol = eitherTypeDefinition.Parse("(either foo bar frobnik)");
+            Debugger.Break();
             // typed lists of variables are just many variables
             /*
             Parser<IEnumerable<string>> typedListVariable = variable.Many().Token();
