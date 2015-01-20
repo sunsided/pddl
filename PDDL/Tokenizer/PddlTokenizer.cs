@@ -29,13 +29,13 @@ namespace PDDL.Tokenizer
 
             while (input.HasData())
             {
-                Comment token;
+                Token token;
                 if (TryReadComment(input, out token)) yield return token;
             }
 
             throw new NotImplementedException();
         }
-
+        
         /// <summary>
         /// Tries to read a comment.
         /// </summary>
@@ -43,7 +43,7 @@ namespace PDDL.Tokenizer
         /// <param name="token">The token.</param>
         /// <returns><see langword="true" /> if the token could be read, <see langword="false" /> otherwise.</returns>
         /// <exception cref="System.ArgumentNullException">input;The reader was null.</exception>
-        private static bool TryReadComment([NotNull] TextReader input, out Comment token)
+        private static bool TryReadComment([NotNull] TextReader input, out Token token)
         {
             if (ReferenceEquals(input, null)) throw new ArgumentNullException("input", "The reader was null.");
 
