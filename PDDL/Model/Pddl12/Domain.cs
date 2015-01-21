@@ -66,7 +66,7 @@ namespace PDDL.Model.Pddl12
             if (ReferenceEquals(timeless, null)) throw new ArgumentNullException("timeless", "timeless must not be null");
 
             Name = name;
-            Requirements = requirements;
+            Requirements = requirements.Count == 0 ? new IRequirement[] { new Requirement(":strips") } : requirements;
             Types = types;
             Constants = constants;
             Predicates = predicates;
