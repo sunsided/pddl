@@ -48,7 +48,7 @@ namespace PDDL.Tests.Parser
         }
 
         [Test]
-        public void NamesAreCorreclyParsed()
+        public void NamesAreCorrectlyParsed()
         {
             Assert.AreEqual("robot-worker-domain", Pddl12Grammar.NameDefinition.Parse("robot-worker-domain"));
             Assert.AreEqual("robot-3", Pddl12Grammar.NameDefinition.Parse("robot-3"));
@@ -60,11 +60,12 @@ namespace PDDL.Tests.Parser
         }
 
         [Test]
-        public void NameNonTokensAreCorreclyParsed()
+        public void NameNonTokensAreCorrectlyParsed()
         {
             Assert.AreEqual("robot-worker-domain", Pddl12Grammar.NameNonToken.Parse("robot-worker-domain").Value);
             Assert.AreEqual("robot-3", Pddl12Grammar.NameNonToken.Parse("robot-3").Value);
             Assert.AreEqual("robot_", Pddl12Grammar.NameNonToken.Parse("robot_").Value);
+            Assert.AreEqual("a", Pddl12Grammar.NameNonToken.Parse("a").Value);
 
             Assert.Throws<ParseException>(() => Pddl12Grammar.NameNonToken.Parse("-robot"));
             Assert.Throws<ParseException>(() => Pddl12Grammar.NameNonToken.Parse("3robot"));
@@ -140,6 +141,21 @@ namespace PDDL.Tests.Parser
 
             Assert.IsInstanceOf<ICustomType>(fluent.Type);
             Assert.AreEqual("speaker", ((ICustomType)fluent.Type).Name);
+        }
+
+        [Test]
+        public void TypedListsWithEitherBaseType()
+        {
+            var type = _grammar.TypedListOfType.Parse("something - (either rock paper scissor)").ToArray();
+            Assert.AreEqual(1, type.Length);
+
+            Assert.IsInstanceOf<ICustomType>(type[0]);
+
+            Assert.AreEqual("something", ((ICustomType)type[0]).Name);
+
+            Assert.IsInstanceOf<IEitherType>(((ICustomType)type[0]).Parent);
+
+            Assert.AreEqual(3, ((IEitherType)((ICustomType)type[0]).Parent).Types.Count);
         }
     }
 }
