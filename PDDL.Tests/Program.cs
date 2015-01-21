@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using NUnit.Framework;
 using PDDL.Model.Pddl12;
 using PDDL.Model.Pddl12.Effects;
@@ -344,10 +345,12 @@ namespace PDDL.Tests
 
             var actionParameters = (
                 from keyword in Parse.String(":parameters").Token()
+                from open in op
                 from variables in typedListVariable.Token()
+                from close in cp
                 select variables
                 ).Token();
-
+            Assert.AreEqual(3, actionParameters.Parse(":parameters (?r - robot ?from ?to - location)").Count());
 
 
             Parser<IEffect> positiveEffect =
@@ -390,10 +393,11 @@ namespace PDDL.Tests
                 // action-def body following
                 from precs in actionPreconditions
                 from e in effectDef
+                from close in cp
                 select new Action(functor, parameters.ToList(), e)
                 ).Token();
 
-            var domainDef =
+            Parser<IDomain> domainDef =
                 (
                     from open in op
                     from domainKeyword in Parse.String("domain").Token()
@@ -407,6 +411,8 @@ namespace PDDL.Tests
                     from timeless in timelessDef.Optional()
                     // structure-def following
                     from actions in actionDef.Many()
+
+                    // bundle and go
                     let ex = Wrap(extensions) 
                     let dr = Wrap(requirements)
                     let ty = Wrap(types)
@@ -424,8 +430,39 @@ namespace PDDL.Tests
                     from closeDefine in cp
                     select domain
                     );
-            
-            string result = comment.Parse(domainDefinition);
+
+            domainDefinition = RemoveAllComments(domainDefinition);
+            var result = defineDef.Parse(domainDefinition);
+        }
+
+        /// <summary>
+        /// Removes all comments.
+        /// </summary>
+        /// <param name="source">The source.</param>
+        /// <returns>System.String.</returns>
+        private static string RemoveAllComments(string source)
+        {
+            var sb = new StringBuilder();
+            using (var reader = new StringReader(source))
+            {
+                string line;
+                while (null != (line = reader.ReadLine()))
+                {
+                    // check for semicolons and, if none found, simply register the line
+                    var index = line.IndexOf(';');
+                    if (index < 0)
+                    {
+                        sb.AppendLine(line);
+                        continue;
+                    }
+
+                    // if a semicolon was found, read until there and replace it with a single whitespace
+                    // (as per language description)
+                    sb.Append(line.Substring(0, index));
+                    sb.AppendLine(" ");
+                }
+            }
+            return sb.ToString();
         }
 
         /// <summary>
