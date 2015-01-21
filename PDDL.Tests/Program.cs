@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using NUnit.Framework;
-using PDDL.Model.Pddl12;
-using PDDL.Model.Pddl12.Effects;
-using PDDL.Model.Pddl12.Goals;
-using PDDL.Model.Pddl12.Types;
+using PDDL.Parser;
 using Sprache;
-using Action = PDDL.Model.Pddl12.Action;
 
 namespace PDDL.Tests
 {
@@ -38,10 +31,10 @@ namespace PDDL.Tests
             string domainFileName = resources.FirstOrDefault(fileName => fileName.Contains("DWR-operators.pddl"));
             string domainDefinition = LoadNamedResourceString(assembly, domainFileName);
 
-            
+            var grammar = new Pddl12Grammar();
 
             domainDefinition = RemoveAllComments(domainDefinition);
-            var result = defineDef.Parse(domainDefinition);
+            var result = grammar.DefineDefinition.Parse(domainDefinition);
         }
 
         /// <summary>

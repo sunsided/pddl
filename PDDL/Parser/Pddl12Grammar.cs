@@ -18,13 +18,38 @@ namespace PDDL.Parser
         /// </summary>
         public Pddl12Grammar()
         {
-            ConstructGrammar();
+            // TODO: implement domain-vars-def 
+            // TODO add :disjunctive-preconditions goals
+            // TODO add :existential-preconditions goals
+            // TODO add :universal-preconditions goals
+            // TODO: add :domain-axioms
+            // TODO: add :action-expansions
+
+            Type = CreateTypeDefinition();
+            TypedListOfVariable = CreateTypedListOfVariable();
+            AtomicFormulaSkeleton = CreateAtomicFormulaSkeleton();
+            PredicatesDefinition = CreatePredicatesDefinition();
+            ExtensionDefinition = CreateExtensionDefinition();
+            RequirementsDefinition = CreateRequirementsDefinition();
+            TypedListOfType = CreateTypedListOfType();
+            TypesDefinition = CreateTypesDefinition();
+            TypedListOfConstant = CreateTypedListOfConstant();
+            ConstantsDefinition = CreateConstantsDefinition();
+
+            LiteralOfTerm = CreateLiteralOfTerm();
+            LiteralOfName = CreateLiteralOfName();
+            GoalDescription = CreateGoalDescription();
+            TimelessDefinition = CreateTimelessDefinition();
+            Effect = CreateEffect();
+            ActionDefinition = CreateActionDefinition();
+            DomainDefinition = CreateDomainDefinition();
+            DefineDefinition = CreateDefineDefinition();
         }
 
         /// <summary>
         /// Comments start with a semicolon and run until the eol
         /// </summary>
-        private static readonly Parser<string> _comment =
+        internal static readonly Parser<string> Comment =
             Parse.Char(';').Once()
             .Concat(Parse.AnyChar.Until(Parse.LineTerminator))
             .Text();
@@ -58,12 +83,12 @@ namespace PDDL.Parser
         /// <summary>
         /// The type
         /// </summary>
-        internal Parser<IType> Type;
+        internal readonly Parser<IType> Type;
 
         /// <summary>
         /// The valid requirements
         /// </summary>
-        internal static Parser<IRequirement> ValidRequirements =
+        internal readonly static Parser<IRequirement> ValidRequirements =
                 (from value in
                      Parse.String(":strips")
                      .Or(Parse.String(":typing"))
@@ -107,14 +132,14 @@ namespace PDDL.Parser
                 ).Token();
 
         /// <summary>
-        /// <typed list (variable)>
+        /// typed list (variable)
         /// </summary>
-        internal Parser<IEnumerable<IVariable>> TypedListOfVariable;
+        internal readonly Parser<IEnumerable<IVariable>> TypedListOfVariable;
 
         /// <summary>
         /// The predicate
         /// </summary>
-        internal static Parser<IPredicate> Predicate = (
+        internal readonly static Parser<IPredicate> Predicate = (
                 from value in NameDefinition
                 select new Predicate(value))
                 .Token();
@@ -122,83 +147,68 @@ namespace PDDL.Parser
         /// <summary>
         /// The atomic formula skeleton
         /// </summary>
-        internal Parser<IAtomicFormulaSkeleton> AtomicFormulaSkeleton;
-
-        internal Parser<IEnumerable<IAtomicFormulaSkeleton>> PredicatesDefinition;
-
-        internal Parser<IEnumerable<IName>> ExtensionDefinition;
-
-        internal Parser<IEnumerable<IRequirement>> RequirementsDefinition;
-
-        internal Parser<IEnumerable<IType>> TypedListOfType;
-
-        internal Parser<IEnumerable<IType>> TypesDefinition;
+        internal readonly Parser<IAtomicFormulaSkeleton> AtomicFormulaSkeleton;
 
         /// <summary>
-        /// Constructs the grammar.
+        /// The predicates definition
         /// </summary>
-        private void ConstructGrammar()
-        {
-            Type = CreateTypeDefinition();
-            TypedListOfVariable = CreateTypedListOfVariable();
-            AtomicFormulaSkeleton = CreateAtomicFormulaSkeleton();
-            PredicatesDefinition = CreatePredicatesDefinition();
-            ExtensionDefinition = CreateExtensionDefinition();
-            RequirementsDefinition = CreateRequirementsDefinition();
-            TypedListOfType = CreateTypedListOfType();
+        internal readonly Parser<IEnumerable<IAtomicFormulaSkeleton>> PredicatesDefinition;
 
-            TypesDefinition = CreateTypesDefinition();
+        /// <summary>
+        /// The extension definition
+        /// </summary>
+        internal readonly Parser<IEnumerable<IName>> ExtensionDefinition;
 
-            var typedListConstant = (
-                from names in NameNonToken.Token().AtLeastOnce() // TODO This grammar always allows :typing requirement - change grammar if this is not explicitly required
-                from t in Parse.Char('-').Token().Then(_ => Type).Token().Optional()
-                select names.Select(vn => new Constant(vn, t.IsDefined ? t.Get() : DefaultType.Default))
-                )
-                .Many()
-                .Select(groupedPerType => groupedPerType.SelectMany(t => t));
+        /// <summary>
+        /// The requirements definition
+        /// </summary>
+        internal readonly Parser<IEnumerable<IRequirement>> RequirementsDefinition;
 
-            Parser<IEnumerable<IConstant>> constantsDef = (
-               from open in OpeningParenthesis
-               from keyword in Parse.String(":constants").Token()
-               from types in typedListConstant
-               from close in ClosingParenthesis
-               select types
-               ).Token();
+        /// <summary>
+        /// The typed list of type
+        /// </summary>
+        internal readonly Parser<IEnumerable<IType>> TypedListOfType;
 
-            // TODO: implement domain-vars-def 
+        /// <summary>
+        /// The types definition
+        /// </summary>
+        internal readonly Parser<IEnumerable<IType>> TypesDefinition;
 
-            Parser<ITerm> term = NameNonToken.Token().Or<ITerm>(Variable);
+        /// <summary>
+        /// The typed list of constant
+        /// </summary>
+        internal readonly Parser<IEnumerable<IConstant>> TypedListOfConstant;
 
-            #region literal(term)
+        /// <summary>
+        /// The constants definition
+        /// </summary>
+        internal readonly Parser<IEnumerable<IConstant>> ConstantsDefinition;
 
-            Parser<IAtomicFormula> atomicFormulaTerm = (
+        /// <summary>
+        /// The term
+        /// </summary>
+        internal static readonly Parser<ITerm> Term = NameNonToken.Token().Or<ITerm>(Variable);
+
+        /// <summary>
+        /// The atomic formula of term
+        /// </summary>
+        internal static Parser<IAtomicFormula> AtomicFormulaOfTerm = (
                 from open in OpeningParenthesis
                 from p in Predicate
-                from terms in term.Many()
+                from terms in Term.Many()
                 from close in ClosingParenthesis
                 select new AtomicFormula(p, terms.ToList())
                ).Token();
 
-            Parser<ILiteral> positiveLiteralTerm = (
-                from af in atomicFormulaTerm
-                select new Literal(af.Name, af.Parameters, true))
-                .Token();
+        /// <summary>
+        /// The literal of term
+        /// </summary>
+        internal readonly Parser<ILiteral> LiteralOfTerm;
 
-            Parser<ILiteral> negativeLiteralTerm = (
-                from open in OpeningParenthesis
-                from keyword in Parse.String("not").Token()
-                from af in atomicFormulaTerm
-                from close in ClosingParenthesis
-                select new Literal(af.Name, af.Parameters, false))
-                .Token();
-
-            Parser<ILiteral> literalTerm = positiveLiteralTerm.Or(negativeLiteralTerm);
-
-            #endregion
-
-            #region literal(name)
-
-            Parser<IAtomicFormula> atomicFormulaName = (
+        /// <summary>
+        /// The atomic formula of name
+        /// </summary>
+        internal static Parser<IAtomicFormula> AtomicFormulaOfName = (
                 from open in OpeningParenthesis
                 from p in Predicate
                 from terms in NameNonToken.Token().Many()
@@ -206,65 +216,98 @@ namespace PDDL.Parser
                 select new AtomicFormula(p, terms.ToList())
                ).Token();
 
-            Parser<ILiteral> positiveLiteralName = (
-                from af in atomicFormulaName
-                select new Literal(af.Name, af.Parameters, true))
-                .Token();
+        /// <summary>
+        /// The literal of name
+        /// </summary>
+        internal readonly Parser<ILiteral> LiteralOfName;
 
-            Parser<ILiteral> negativeLiteralName = (
+        /// <summary>
+        /// The goal description
+        /// </summary>
+        internal readonly Parser<IGoalDescription> GoalDescription;
+
+        /// <summary>
+        /// The timeless definition
+        /// </summary>
+        internal readonly Parser<IEnumerable<ILiteral>> TimelessDefinition;
+
+        /// <summary>
+        /// The action definition
+        /// </summary>
+        internal readonly Parser<Action> ActionDefinition;
+
+        /// <summary>
+        /// The domain definition
+        /// </summary>
+        internal readonly Parser<IDomain> DomainDefinition;
+
+        /// <summary>
+        /// The effect
+        /// </summary>
+        internal readonly Parser<IEffect> Effect;
+
+        /// <summary>
+        /// The define definition
+        /// </summary>
+        internal readonly Parser<IDomain> DefineDefinition;
+
+        /// <summary>
+        /// Creates the define definition.
+        /// </summary>
+        /// <returns>Parser&lt;IDomain&gt;.</returns>
+        private Parser<IDomain> CreateDefineDefinition()
+        {
+            return (
+                from openDefine in OpeningParenthesis
+                from defineKeyword in Parse.String("define").Token()
+                from domain in DomainDefinition
+                from closeDefine in ClosingParenthesis
+                select domain
+                );
+        }
+
+        /// <summary>
+        /// Creates the domain definition.
+        /// </summary>
+        /// <returns>Parser&lt;Domain&gt;.</returns>
+        private Parser<Domain> CreateDomainDefinition()
+        {
+            return (
                 from open in OpeningParenthesis
-                from keyword in Parse.String("not").Token()
-                from af in atomicFormulaName
+                from domainKeyword in Parse.String("domain").Token()
+                from domainName in NameNonToken.Token()
                 from close in ClosingParenthesis
-                select new Literal(af.Name, af.Parameters, false))
-                .Token();
+                from extensions in ExtensionDefinition.Optional()
+                from requirements in RequirementsDefinition.Optional()
+                from types in TypesDefinition.Optional()
+                from constants in ConstantsDefinition.Optional()
+                from predicates in PredicatesDefinition.Optional()
+                from timeless in TimelessDefinition.Optional()
+                // structure-def following
+                from actions in ActionDefinition.Many()
 
-            Parser<ILiteral> literalName = positiveLiteralName.Or(negativeLiteralName);
+                // bundle and go
+                let ex = Wrap(extensions)
+                let dr = Wrap(requirements)
+                let ty = Wrap(types)
+                let co = Wrap(constants)
+                let pr = Wrap(predicates)
+                let tl = Wrap(timeless)
+                select new Domain(domainName, dr, ty, co, pr, tl)
+                );
+        }
 
-            #endregion
-
-            Parser<IGoalDescription> atomicGoalDescription =
-                (from af in atomicFormulaTerm
-                 select new AtomicGoalDescription(af));
-
-            Parser<IGoalDescription> literalGoalDesccription =
-                (from l in literalTerm
-                 select new LiteralGoalDescription(l));
-
-            var gdi = new ParserInjector<IGoalDescription>();
-
-            Parser<IGoalDescription> conjunctionGoalDescription =
-                (
-                    from open in OpeningParenthesis
-                    from keyword in Parse.String("and").Token()
-                    from goals in gdi.Parser.Many()
-                    from close in ClosingParenthesis
-                    select new ConjunctionGoalDescription(goals.ToArray())
-                    ).Token();
-
-            var goalDescription = literalGoalDesccription.Or(atomicGoalDescription).Or(conjunctionGoalDescription);
-            gdi.Parser = goalDescription;
-
-            // TODO add :disjunctive-preconditions goals
-            // TODO add :existential-preconditions goals
-            // TODO add :universal-preconditions goals
-
-            var timelessDef = (
-               from open in OpeningParenthesis
-               from keyword in Parse.String(":timeless").Token()
-               from literals in literalName.Many()
-               from close in ClosingParenthesis
-               select literals
-               ).Token();
-
-            // TODO: add :domain-axioms
-            // TODO: add :action-expansions
-
+        /// <summary>
+        /// Creates the action definition.
+        /// </summary>
+        /// <returns>Parser&lt;Action&gt;.</returns>
+        private Parser<Action> CreateActionDefinition()
+        {
             var actionFunctor = NameNonToken.Token();
 
             var actionPreconditions = (
                 from keyword in Parse.String(":precondition").Token()
-                from precondition in goalDescription
+                from precondition in GoalDescription
                 select precondition
                 ).Token();
 
@@ -284,35 +327,9 @@ namespace PDDL.Parser
                 select variables
                 ).Token();
 
-            Parser<IEffect> positiveEffect =
-               (from af in atomicFormulaTerm
-                select new PositiveEffect(af)).Token();
-
-            Parser<IEffect> negativeEffect =
-                 (
-                 from open in OpeningParenthesis
-                 from keyword in Parse.String("not").Token()
-                 from af in atomicFormulaTerm
-                 from close in ClosingParenthesis
-                 select new NegativeEffect(af)).Token();
-
-            var edi = new ParserInjector<IEffect>();
-
-            Parser<IEffect> conjunctionEffect =
-                (
-                    from open in OpeningParenthesis
-                    from keyword in Parse.String("and").Token()
-                    from effects in edi.Parser.Many()
-                    from close in ClosingParenthesis
-                    select new ConjunctionEffect(effects.ToArray())
-                    ).Token();
-
-            var effect = positiveEffect.Or(negativeEffect).Or(conjunctionEffect);
-            edi.Parser = effect;
-
-            Parser<IEffect> effectDef = (
+            var effectDef = (
                 from keyword in Parse.String(":effect").Token()
-                from e in effect.Token()
+                from e in Effect.Token()
                 select e
                 ).Token();
 
@@ -327,46 +344,177 @@ namespace PDDL.Parser
                 from e in effectDef.Optional()
                 from close in ClosingParenthesis
                 select new Action(functor, parameters.ToList(), (e.IsDefined ? e.Get() : NullEffect.Default))
-                {
-                    Variables = Wrap(vars)
-                }
+                       {
+                           Variables = Wrap(vars)
+                       }
                 ).Token();
 
-            Parser<IDomain> domainDef =
-                (
-                    from open in OpeningParenthesis
-                    from domainKeyword in Parse.String("domain").Token()
-                    from domainName in NameNonToken.Token()
-                    from close in ClosingParenthesis
-                    from extensions in ExtensionDefinition.Optional()
-                    from requirements in RequirementsDefinition.Optional()
-                    from types in TypesDefinition.Optional()
-                    from constants in constantsDef.Optional()
-                    from predicates in PredicatesDefinition.Optional()
-                    from timeless in timelessDef.Optional()
-                    // structure-def following
-                    from actions in actionDef.Many()
-
-                    // bundle and go
-                    let ex = Wrap(extensions)
-                    let dr = Wrap(requirements)
-                    let ty = Wrap(types)
-                    let co = Wrap(constants)
-                    let pr = Wrap(predicates)
-                    let tl = Wrap(timeless)
-                    select new Domain(domainName, dr, ty, co, pr, tl)
-                    );
-
-            var defineDef =
-                (
-                    from openDefine in OpeningParenthesis
-                    from defineKeyword in Parse.String("define").Token()
-                    from domain in domainDef
-                    from closeDefine in ClosingParenthesis
-                    select domain
-                    );
+            return actionDef;
         }
 
+        /// <summary>
+        /// The effect parser injector
+        /// </summary>
+        private readonly ParserInjector<IEffect> _effectParserInjector = new ParserInjector<IEffect>();
+
+        /// <summary>
+        /// Creates the effect.
+        /// </summary>
+        /// <returns>Parser&lt;IEffect&gt;.</returns>
+        private Parser<IEffect> CreateEffect()
+        {
+            Parser<IEffect> positiveEffect =
+                (from af in AtomicFormulaOfTerm
+                    select new PositiveEffect(af)).Token();
+
+            Parser<IEffect> negativeEffect =
+                (
+                    from open in OpeningParenthesis
+                    from keyword in Parse.String("not").Token()
+                    from af in AtomicFormulaOfTerm
+                    from close in ClosingParenthesis
+                    select new NegativeEffect(af)).Token();
+
+            Parser<IEffect> conjunctionEffect =
+                (
+                    from open in OpeningParenthesis
+                    from keyword in Parse.String("and").Token()
+                    from effects in _effectParserInjector.Parser.Many()
+                    from close in ClosingParenthesis
+                    select new ConjunctionEffect(effects.ToArray())
+                    ).Token();
+
+            var effect = positiveEffect.Or(negativeEffect).Or(conjunctionEffect);
+            _effectParserInjector.Parser = effect;
+            return effect;
+        }
+
+        /// <summary>
+        /// Creates the timeless definition.
+        /// </summary>
+        /// <returns>Parser&lt;IEnumerable&lt;ILiteral&gt;&gt;.</returns>
+        private Parser<IEnumerable<ILiteral>> CreateTimelessDefinition()
+        {
+            return (
+                from open in OpeningParenthesis
+                from keyword in Parse.String(":timeless").Token()
+                from literals in LiteralOfName.Many()
+                from close in ClosingParenthesis
+                select literals
+                ).Token();
+        }
+
+        private readonly ParserInjector<IGoalDescription> _goalParserInjector = new ParserInjector<IGoalDescription>();
+
+        /// <summary>
+        /// Creates the goal description.
+        /// </summary>
+        /// <returns>Parser&lt;IGoalDescription&gt;.</returns>
+        private Parser<IGoalDescription> CreateGoalDescription()
+        {
+            Parser<IGoalDescription> atomicGoalDescription =
+                (from af in AtomicFormulaOfTerm
+                    select new AtomicGoalDescription(af));
+
+            Parser<IGoalDescription> literalGoalDesccription =
+                (from l in LiteralOfTerm
+                    select new LiteralGoalDescription(l));
+            
+            Parser<IGoalDescription> conjunctionGoalDescription =
+                (
+                    from open in OpeningParenthesis
+                    from keyword in Parse.String("and").Token()
+                    from goals in _goalParserInjector.Parser.Many()
+                    from close in ClosingParenthesis
+                    select new ConjunctionGoalDescription(goals.ToArray())
+                    ).Token();
+
+            var goalDescription = literalGoalDesccription.Or(atomicGoalDescription).Or(conjunctionGoalDescription);
+            _goalParserInjector.Parser = goalDescription;
+            return goalDescription;
+        }
+
+        /// <summary>
+        /// Creates the literal(name)
+        /// </summary>
+        /// <returns>Parser&lt;ILiteral&gt;.</returns>
+        private static Parser<ILiteral> CreateLiteralOfName()
+        {
+            Parser<ILiteral> positiveLiteralName = (
+                from af in AtomicFormulaOfName
+                select new Literal(af.Name, af.Parameters, true))
+                .Token();
+
+            Parser<ILiteral> negativeLiteralName = (
+                from open in OpeningParenthesis
+                from keyword in Parse.String("not").Token()
+                from af in AtomicFormulaOfName
+                from close in ClosingParenthesis
+                select new Literal(af.Name, af.Parameters, false))
+                .Token();
+
+            Parser<ILiteral> literalName = positiveLiteralName.Or(negativeLiteralName);
+            return literalName;
+        }
+
+        /// <summary>
+        /// Creates the literal of term.
+        /// </summary>
+        /// <returns>Parser&lt;ILiteral&gt;.</returns>
+        private static Parser<ILiteral> CreateLiteralOfTerm()
+        {
+            Parser<ILiteral> positiveLiteralTerm = (
+                from af in AtomicFormulaOfTerm
+                select new Literal(af.Name, af.Parameters, true))
+                .Token();
+
+            Parser<ILiteral> negativeLiteralTerm = (
+                from open in OpeningParenthesis
+                from keyword in Parse.String("not").Token()
+                from af in AtomicFormulaOfTerm
+                from close in ClosingParenthesis
+                select new Literal(af.Name, af.Parameters, false))
+                .Token();
+
+            Parser<ILiteral> literalTerm = positiveLiteralTerm.Or(negativeLiteralTerm);
+            return literalTerm;
+        }
+
+        /// <summary>
+        /// Creates the constants definition.
+        /// </summary>
+        /// <returns>Parser&lt;IEnumerable&lt;IConstant&gt;&gt;.</returns>
+        private Parser<IEnumerable<IConstant>> CreateConstantsDefinition()
+        {
+            return (
+                from open in OpeningParenthesis
+                from keyword in Parse.String(":constants").Token()
+                from types in TypedListOfConstant
+                from close in ClosingParenthesis
+                select types
+                ).Token();
+        }
+
+        /// <summary>
+        /// Creates the typed list of constant.
+        /// </summary>
+        /// <returns>Parser&lt;IEnumerable&lt;Constant&gt;&gt;.</returns>
+        private Parser<IEnumerable<Constant>> CreateTypedListOfConstant()
+        {
+            return (
+                from names in NameNonToken.Token().AtLeastOnce() // TODO This grammar always allows :typing requirement - change grammar if this is not explicitly required
+                from t in Parse.Char('-').Token().Then(_ => Type).Token().Optional()
+                select names.Select(vn => new Constant(vn, t.IsDefined ? t.Get() : DefaultType.Default))
+                )
+                .Many()
+                // ReSharper disable once PossibleMultipleEnumeration
+                .Select(groupedPerType => groupedPerType.SelectMany(t => t));
+        }
+
+        /// <summary>
+        /// Creates the types definition.
+        /// </summary>
+        /// <returns>Parser&lt;IEnumerable&lt;IType&gt;&gt;.</returns>
         private Parser<IEnumerable<IType>> CreateTypesDefinition()
         {
             return (
@@ -378,6 +526,10 @@ namespace PDDL.Parser
                 ).Token();
         }
 
+        /// <summary>
+        /// Creates the type list (type)
+        /// </summary>
+        /// <returns>Parser&lt;IEnumerable&lt;CustomType&gt;&gt;.</returns>
         private Parser<IEnumerable<CustomType>> CreateTypedListOfType()
         {
             return (
@@ -386,9 +538,14 @@ namespace PDDL.Parser
                 select names.Select(vn => new CustomType(vn, t.IsDefined ? t.Get() : DefaultType.Default))
                 )
                 .Many()
+                // ReSharper disable once PossibleMultipleEnumeration
                 .Select(groupedPerType => groupedPerType.SelectMany(t => t));
         }
 
+        /// <summary>
+        /// Creates the requirements definition.
+        /// </summary>
+        /// <returns>Parser&lt;IEnumerable&lt;IRequirement&gt;&gt;.</returns>
         private static Parser<IEnumerable<IRequirement>> CreateRequirementsDefinition()
         {
             return (
@@ -400,6 +557,10 @@ namespace PDDL.Parser
                 ).Token();
         }
 
+        /// <summary>
+        /// Creates the extension definition.
+        /// </summary>
+        /// <returns>Parser&lt;IEnumerable&lt;IName&gt;&gt;.</returns>
         private static Parser<IEnumerable<IName>> CreateExtensionDefinition()
         {
             return (
@@ -411,6 +572,10 @@ namespace PDDL.Parser
                 ).Token();
         }
 
+        /// <summary>
+        /// Creates the predicates definition.
+        /// </summary>
+        /// <returns>Parser&lt;IEnumerable&lt;IAtomicFormulaSkeleton&gt;&gt;.</returns>
         private Parser<IEnumerable<IAtomicFormulaSkeleton>> CreatePredicatesDefinition()
         {
             return (
@@ -438,7 +603,7 @@ namespace PDDL.Parser
         }
 
         /// <summary>
-        /// Creates the <typed list (variable)>
+        /// Creates the typed list (variable)
         /// </summary>
         /// <returns>Parser&lt;IEnumerable&lt;Variable&gt;&gt;.</returns>
         private Parser<IEnumerable<Variable>> CreateTypedListOfVariable()
@@ -449,6 +614,7 @@ namespace PDDL.Parser
                 select vns.Select(vn => new Variable(vn, t.IsDefined ? t.Get() : DefaultType.Default))
                 )
                 .Many()
+                // ReSharper disable once PossibleMultipleEnumeration
                 .Select(groupedPerType => groupedPerType.SelectMany(v => v));
         }
 
