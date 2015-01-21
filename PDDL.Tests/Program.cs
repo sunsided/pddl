@@ -10,6 +10,7 @@ using PDDL.Model.Pddl12.Effects;
 using PDDL.Model.Pddl12.Goals;
 using PDDL.Model.Pddl12.Types;
 using Sprache;
+using Action = PDDL.Model.Pddl12.Action;
 
 namespace PDDL.Tests
 {
@@ -102,7 +103,7 @@ namespace PDDL.Tests
             // final parser for types
             Parser<IType> type = typeDefinition.Or(eitherTypeDefinition).Or(fluentTypeDefinition);
             tpi.Parser = type;
-
+            
             // var lol = type.Parse("(fluent (either foo bar frobnik))");
             
             // typed lists of variables are just many variables
@@ -192,7 +193,7 @@ namespace PDDL.Tests
                 select new Requirement(value)
                 ).Token();
 
-            var requirementsDef = (
+            Parser<IEnumerable<IRequirement>> requirementsDef = (
                 from open in op
                 from keyword in Parse.String(":requirements").Token()
                 from keys in validRequirements.Many()
@@ -210,7 +211,7 @@ namespace PDDL.Tests
                 .Select(groupedPerType => groupedPerType.SelectMany(t => t));
             Assert.AreEqual(3, typedListType.Parse("integer float - number physob").Count());
 
-            var typesDef = (
+            Parser<IEnumerable<IType>> typesDef = (
                 from open in op
                 from keyword in Parse.String(":types").Token()
                 from types in typedListType
@@ -228,7 +229,7 @@ namespace PDDL.Tests
                 .Select(groupedPerType => groupedPerType.SelectMany(t => t));
             Assert.AreEqual(3, typedListConstant.Parse("boat house - wood mountain").Count());
 
-            var constantsDef = (
+            Parser<IEnumerable<IConstant>> constantsDef = (
                from open in op
                from keyword in Parse.String(":constants").Token()
                from types in typedListConstant
@@ -381,16 +382,63 @@ namespace PDDL.Tests
                 select e
                 ).Token();
 
-            /*
-            var actionDef =(
+            var actionDef = (
                 from open in op
                 from keyword in Parse.String(":action").Token()
-                from 
-                )*/
+                from functor in actionFunctor
+                from parameters in actionParameters
+                // action-def body following
+                from precs in actionPreconditions
+                from e in effectDef
+                select new Action(functor, parameters.ToList(), e)
+                ).Token();
 
+            var domainDef =
+                (
+                    from open in op
+                    from domainKeyword in Parse.String("domain").Token()
+                    from domainName in name.Token()
+                    from close in cp
+                    from extensions in extensionDef.Optional()
+                    from requirements in requirementsDef.Optional()
+                    from types in typesDef.Optional()
+                    from constants in constantsDef.Optional()
+                    from predicates in predicatesDef.Optional()
+                    from timeless in timelessDef.Optional()
+                    // structure-def following
+                    from actions in actionDef.Many()
+                    let ex = Wrap(extensions) 
+                    let dr = Wrap(requirements)
+                    let ty = Wrap(types)
+                    let co = Wrap(constants)
+                    let pr = Wrap(predicates)
+                    let tl = Wrap(timeless)
+                    select new Domain(domainName, dr, ty, co, pr, tl)
+                    );
+
+            var defineDef =
+                (
+                    from openDefine in op
+                    from defineKeyword in Parse.String("define").Token()
+                    from domain in domainDef
+                    from closeDefine in cp
+                    select domain
+                    );
+            
             string result = comment.Parse(domainDefinition);
-
         }
+
+        /// <summary>
+        /// Wraps the specified option.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="option">The option.</param>
+        /// <returns>IReadOnlyList&lt;T&gt;.</returns>
+        static IReadOnlyList<T> Wrap<T>(IOption<IEnumerable<T>> option)
+        {
+            return option.IsDefined ? option.Get().ToList().AsReadOnly() : (IReadOnlyList<T>) new T[0];
+        }
+
         /// <summary>
         /// Class ParserInjector. This class cannot be inherited.
         /// </summary>
