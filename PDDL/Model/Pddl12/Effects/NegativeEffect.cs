@@ -12,14 +12,14 @@ namespace PDDL.Model.Pddl12.Effects
         /// Gets the effect.
         /// </summary>
         /// <value>The effect.</value>
-        public IAtomicFormulaSkeleton Effects { get; private set; }
+        public IAtomicFormula Effects { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NegativeEffect"/> class.
         /// </summary>
         /// <param name="effects">The effects.</param>
         /// <exception cref="ArgumentNullException">The value of 'effects' cannot be null. </exception>
-        public NegativeEffect([NotNull] IAtomicFormulaSkeleton effects)
+        public NegativeEffect([NotNull] IAtomicFormula effects)
             : base(ListType.Remove)
         {
             if (ReferenceEquals(effects, null)) throw new ArgumentNullException("effects", "effects must not be null");

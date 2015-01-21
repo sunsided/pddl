@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
 using PDDL.Model.Pddl12;
+using PDDL.Model.Pddl12.Effects;
 using PDDL.Model.Pddl12.Goals;
 using PDDL.Model.Pddl12.Types;
 using Sprache;
@@ -344,6 +345,40 @@ namespace PDDL.Tests
                 from keyword in Parse.String(":parameters").Token()
                 from variables in typedListVariable.Token()
                 select variables
+                ).Token();
+
+
+
+            Parser<IEffect> positiveEffect =
+               (from af in atomicFormulaTerm
+                select new PositiveEffect(af)).Token();
+
+            Parser<IEffect> negativeEffect =
+                 (
+                 from open in op
+                 from keyword in Parse.String("not").Token()
+                 from af in atomicFormulaTerm
+                 from close in cp
+                  select new NegativeEffect(af)).Token();
+
+            var edi = new ParserInjector<IEffect>();
+
+            Parser<IEffect> conjunctionEffect =
+                (
+                    from open in op
+                    from keyword in Parse.String("and").Token()
+                    from effects in edi.Parser.Many()
+                    from close in cp
+                    select new ConjunctionEffect(effects.ToArray())
+                    ).Token();
+
+            var effect = positiveEffect.Or(negativeEffect).Or(conjunctionEffect);
+            edi.Parser = effect;
+
+            Parser<IEffect> effectDef = (
+                from keyword in Parse.String(":effect").Token()
+                from e in effect.Token()
+                select e
                 ).Token();
 
             /*
