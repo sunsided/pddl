@@ -352,6 +352,14 @@ namespace PDDL.Tests
                 ).Token();
             Assert.AreEqual(3, actionParameters.Parse(":parameters (?r - robot ?from ?to - location)").Count());
 
+            var actionVars = (
+                from keyword in Parse.String(":vars").Token()
+                from open in op
+                from variables in typedListVariable.Token()
+                from close in cp
+                select variables
+                ).Token();
+            Assert.AreEqual(3, actionVars.Parse(":vars (?r - robot ?from ?to - location)").Count());
 
             Parser<IEffect> positiveEffect =
                (from af in atomicFormulaTerm
@@ -391,10 +399,14 @@ namespace PDDL.Tests
                 from functor in actionFunctor
                 from parameters in actionParameters
                 // action-def body following
-                from precs in actionPreconditions
-                from e in effectDef
+                from vars in actionVars.Optional()
+                from precs in actionPreconditions.Optional()
+                from e in effectDef.Optional()
                 from close in cp
-                select new Action(functor, parameters.ToList(), e)
+                select new Action(functor, parameters.ToList(), e.IsDefined ? e.Get() : NullEffect.Default)
+                       {
+                           Variables = Wrap(vars)
+                       }
                 ).Token();
 
             Parser<IDomain> domainDef =

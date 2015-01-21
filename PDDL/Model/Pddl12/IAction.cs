@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 
 namespace PDDL.Model.Pddl12
@@ -34,5 +35,12 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <value>The effect.</value>
         IEffect Effect { get; }
+
+        /// <summary>
+        /// Gets othe variables (<c>:vars</c>).
+        /// </summary>
+        /// <value>The variables.</value>
+        [NotNull]
+        IReadOnlyList<IVariable> Variables { get; }
     }
 }

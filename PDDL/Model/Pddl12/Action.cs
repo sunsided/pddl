@@ -11,6 +11,11 @@ namespace PDDL.Model.Pddl12
     public class Action : IAction
     {
         /// <summary>
+        /// The variables (<c>:vars</c>)
+        /// </summary>
+        private IReadOnlyList<IVariable> _variables = new IVariable[0];
+
+        /// <summary>
         /// Gets the functor.
         /// </summary>
         /// <value>The functor.</value>
@@ -33,6 +38,22 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <value>The effect.</value>
         public IEffect Effect { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the variables (<c>:vars</c>).
+        /// </summary>
+        /// <value>The variables.</value>
+        /// <exception cref="ArgumentNullException">The value of 'value' cannot be null. </exception>
+        [NotNull]
+        public IReadOnlyList<IVariable> Variables
+        {
+            get { return _variables; }
+            set
+            {
+                if (ReferenceEquals(value, null)) throw new ArgumentNullException("value");
+                _variables = value;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Action" /> class.
