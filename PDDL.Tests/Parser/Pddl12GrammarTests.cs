@@ -1,0 +1,145 @@
+﻿using System;
+using System.Linq;
+using JetBrains.Annotations;
+using NUnit.Framework;
+using PDDL.Model.Pddl12;
+using PDDL.Model.Pddl12.Types;
+using PDDL.Parser;
+using Sprache;
+
+namespace PDDL.Tests.Parser
+{
+    /// <summary>
+    /// Class Pddl12GrammarTests.
+    /// </summary>
+    [TestFixture]
+    public class Pddl12GrammarTests
+    {
+        /// <summary>
+        /// The grammar
+        /// </summary>
+        [NotNull]
+        private readonly Pddl12Grammar _grammar = new Pddl12Grammar();
+
+        /// <summary>
+        /// Comments are correctly parsed when at the appropriate position
+        /// </summary>
+        [Test]
+        public void CommentsAreRecognized()
+        {
+            var result = Pddl12Grammar.Comment.Parse("; one two three" + Environment.NewLine + "this is not a comment");
+            Assert.AreEqual("; one two three", result);
+
+            Assert.Throws<ParseException>(() => Pddl12Grammar.Comment.Parse("not a comment"));
+        }
+
+        [Test]
+        public void OpeningParenthesisIsParsed()
+        {
+            Assert.AreEqual("(", Pddl12Grammar.OpeningParenthesis.Parse("(").ToString());
+            Assert.AreEqual("(", Pddl12Grammar.OpeningParenthesis.Parse("   ( ").ToString());
+        }
+
+        [Test]
+        public void ClosingParenthesisIsParsed()
+        {
+            Assert.AreEqual(")", Pddl12Grammar.ClosingParenthesis.Parse(")").ToString());
+            Assert.AreEqual(")", Pddl12Grammar.ClosingParenthesis.Parse("   ) ").ToString());
+        }
+
+        [Test]
+        public void NamesAreCorreclyParsed()
+        {
+            Assert.AreEqual("robot-worker-domain", Pddl12Grammar.NameDefinition.Parse("robot-worker-domain"));
+            Assert.AreEqual("robot-3", Pddl12Grammar.NameDefinition.Parse("robot-3"));
+            Assert.AreEqual("robot_", Pddl12Grammar.NameDefinition.Parse("robot_"));
+
+            Assert.Throws<ParseException>(() => Pddl12Grammar.NameDefinition.Parse("-robot"));
+            Assert.Throws<ParseException>(() => Pddl12Grammar.NameDefinition.Parse("3robot"));
+            Assert.Throws<ParseException>(() => Pddl12Grammar.NameDefinition.Parse("_robot"));
+        }
+
+        [Test]
+        public void NameNonTokensAreCorreclyParsed()
+        {
+            Assert.AreEqual("robot-worker-domain", Pddl12Grammar.NameNonToken.Parse("robot-worker-domain").Value);
+            Assert.AreEqual("robot-3", Pddl12Grammar.NameNonToken.Parse("robot-3").Value);
+            Assert.AreEqual("robot_", Pddl12Grammar.NameNonToken.Parse("robot_").Value);
+
+            Assert.Throws<ParseException>(() => Pddl12Grammar.NameNonToken.Parse("-robot"));
+            Assert.Throws<ParseException>(() => Pddl12Grammar.NameNonToken.Parse("3robot"));
+            Assert.Throws<ParseException>(() => Pddl12Grammar.NameNonToken.Parse("_robot"));
+        }
+
+        [Test]
+        public void TypeNamesAreCorrectlyParsed()
+        {
+            var type = _grammar.Type.Parse("integer - number");
+            Assert.IsInstanceOf<ICustomType>(type);
+            Assert.AreEqual("integer", ((ICustomType)type).Name);
+
+            Assert.IsInstanceOf<DefaultType>(((ICustomType)type).Parent);
+        }
+
+        [Test]
+        public void TypeListsAreCorrectlyParsed()
+        {
+            var type = _grammar.TypedListOfType.Parse("float integer - number moon - rock something").ToArray();
+            Assert.AreEqual(4, type.Length);
+
+            Assert.IsInstanceOf<ICustomType>(type[0]);
+            Assert.IsInstanceOf<ICustomType>(type[1]);
+            Assert.IsInstanceOf<ICustomType>(type[2]);
+            Assert.IsInstanceOf<ICustomType>(type[3]);
+
+            Assert.AreEqual("float", ((ICustomType)type[0]).Name);
+            Assert.AreEqual("integer", ((ICustomType)type[1]).Name);
+            Assert.AreEqual("moon", ((ICustomType)type[2]).Name);
+            Assert.AreEqual("something", ((ICustomType)type[3]).Name);
+
+            Assert.IsInstanceOf<ICustomType>(((ICustomType)type[0]).Parent);
+            Assert.IsInstanceOf<ICustomType>(((ICustomType)type[1]).Parent);
+            Assert.IsInstanceOf<ICustomType>(((ICustomType)type[2]).Parent);
+
+            Assert.AreEqual("number", ((ICustomType)((ICustomType)type[0]).Parent).Name);
+            Assert.AreEqual("number", ((ICustomType)((ICustomType)type[1]).Parent).Name);
+            Assert.AreEqual("rock", ((ICustomType)((ICustomType)type[2]).Parent).Name);
+
+            Assert.IsInstanceOf<DefaultType>(((ICustomType)type[3]).Parent);
+        }
+
+        [Test]
+        public void EitherTypeIsCorrectlyParsed()
+        {
+            var type = _grammar.Type.Parse("(either rocket something)");
+
+            Assert.IsInstanceOf<IEitherType>(type);
+
+            var either = ((IEitherType) type).Types;
+            Assert.AreEqual(2, either.Count);
+
+            Assert.IsInstanceOf<ICustomType>(either[0]);
+            Assert.IsInstanceOf<ICustomType>(either[1]);
+
+            Assert.AreEqual("rocket", ((ICustomType)either[0]).Name);
+            Assert.AreEqual("something", ((ICustomType)either[1]).Name);
+
+            // these are only type names, so default base type is implied
+            Assert.IsInstanceOf<DefaultType>(((ICustomType)either[0]).Parent);
+            Assert.IsInstanceOf<DefaultType>(((ICustomType)either[1]).Parent);
+        }
+
+        [Test]
+        public void FluentTypeIsCorrectlyParsed()
+        {
+            var type = _grammar.Type.Parse("(fluent speaker)");
+
+            Assert.IsInstanceOf<IFluentType>(type);
+
+            var fluent = ((IFluentType)type);
+
+            Assert.IsInstanceOf<ICustomType>(fluent.Type);
+            Assert.AreEqual("speaker", ((ICustomType)fluent.Type).Name);
+        }
+    }
+}

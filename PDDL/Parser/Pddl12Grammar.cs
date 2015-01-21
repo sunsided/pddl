@@ -100,7 +100,7 @@ namespace PDDL.Parser
                      .Or(Parse.String(":conditional-effects"))
                      .Or(Parse.String(":action-expansions"))
                      .Or(Parse.String(":foreach-expansions"))
-                     .Or(Parse.String(":dag-expansions"))
+                     .Or(Parse.String(":dag-expaeinsions"))
                      .Or(Parse.String(":domain-axioms"))
 
                      .Or(Parse.String(":subgoal-through-axioms"))
