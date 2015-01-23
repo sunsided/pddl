@@ -21,7 +21,7 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <value>The parameters.</value>
         [NotNull]
-        IReadOnlyList<IVariable> Parameters { get; }
+        IReadOnlyList<IVariableDefinition> Parameters { get; }
 
         /// <summary>
         /// Gets the precondition.
@@ -41,6 +41,6 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <value>The variables.</value>
         [NotNull]
-        IReadOnlyList<IVariable> Variables { get; }
+        IReadOnlyList<IVariableDefinition> Variables { get; }
     }
 }

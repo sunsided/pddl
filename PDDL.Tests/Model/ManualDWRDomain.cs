@@ -77,8 +77,8 @@ namespace PDDL.Tests.Model
         {
             return new AtomicFormulaSkeleton(new Predicate(name), new[]
                                                      {
-                                                         new Variable(new Name(param1), type1), 
-                                                         new Variable(new Name(param2), type2),
+                                                         new VariableDefinition(new Name(param1), type1), 
+                                                         new VariableDefinition(new Name(param2), type2),
                                                      });
         }
 
@@ -93,7 +93,7 @@ namespace PDDL.Tests.Model
         {
             return new AtomicFormulaSkeleton(new Predicate(name), new[]
                                                      {
-                                                         new Variable(new Name(param1), type1)
+                                                         new VariableDefinition(new Name(param1), type1)
                                                      });
         }
     }

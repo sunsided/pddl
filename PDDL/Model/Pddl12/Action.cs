@@ -13,7 +13,7 @@ namespace PDDL.Model.Pddl12
         /// <summary>
         /// The variables (<c>:vars</c>)
         /// </summary>
-        private IReadOnlyList<IVariable> _variables = new IVariable[0];
+        private IReadOnlyList<IVariableDefinition> _variables = new IVariableDefinition[0];
 
         /// <summary>
         /// Gets the functor.
@@ -25,7 +25,7 @@ namespace PDDL.Model.Pddl12
         /// Gets the parameters.
         /// </summary>
         /// <value>The parameters.</value>
-        public IReadOnlyList<IVariable> Parameters { get; private set; }
+        public IReadOnlyList<IVariableDefinition> Parameters { get; private set; }
 
         /// <summary>
         /// Gets the precondition.
@@ -45,7 +45,7 @@ namespace PDDL.Model.Pddl12
         /// <value>The variables.</value>
         /// <exception cref="ArgumentNullException">The value of 'value' cannot be null. </exception>
         [NotNull]
-        public IReadOnlyList<IVariable> Variables
+        public IReadOnlyList<IVariableDefinition> Variables
         {
             get { return _variables; }
             set
@@ -72,7 +72,7 @@ namespace PDDL.Model.Pddl12
         /// effect;effect must not be null
         /// </exception>
         /// <exception cref="ArgumentNullException">The value of 'functor', 'parameters', 'precondition' and 'effect' cannot be null.</exception>
-        public Action([NotNull] IName functor, [NotNull] IReadOnlyList<IVariable> parameters, [NotNull] IPrecondition precondition, [NotNull] IEffect effect)
+        public Action([NotNull] IName functor, [NotNull] IReadOnlyList<IVariableDefinition> parameters, [NotNull] IPrecondition precondition, [NotNull] IEffect effect)
         {
             if (ReferenceEquals(functor, null)) throw new ArgumentNullException("functor", "functor must not be null");
             if (ReferenceEquals(parameters, null)) throw new ArgumentNullException("parameters", "parameters must not be null");
@@ -92,7 +92,7 @@ namespace PDDL.Model.Pddl12
         /// <param name="parameters">The parameters.</param>
         /// <param name="effect">The effect.</param>
         /// <exception cref="ArgumentNullException">The value of 'functor', 'parameters' and 'effect' cannot be null.</exception>
-        public Action([NotNull] IName functor, [NotNull] IReadOnlyList<IVariable> parameters, [NotNull] IEffect effect)
+        public Action([NotNull] IName functor, [NotNull] IReadOnlyList<IVariableDefinition> parameters, [NotNull] IEffect effect)
             : this(functor, parameters, NullPrecondition.Default, effect)
         {
         }
@@ -105,7 +105,7 @@ namespace PDDL.Model.Pddl12
         /// <param name="effect">The effect.</param>
         /// <exception cref="ArgumentNullException">The value of 'functor', 'precondition' and 'effect' cannot be null.</exception>
         public Action([NotNull] IName functor, [NotNull] IPrecondition precondition, [NotNull] IEffect effect)
-            : this(functor, new IVariable[0], precondition, effect)
+            : this(functor, new IVariableDefinition[0], precondition, effect)
         {
         }
 

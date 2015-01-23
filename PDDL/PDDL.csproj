@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Pddl12\IVariableDefinition.cs" />
     <Compile Include="Model\Pddl12\Null\NullEffect.cs" />
     <Compile Include="Model\Pddl12\ITerm.cs" />
     <Compile Include="Model\Pddl12\Action.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Model\Pddl12\Goals\GoalBase.cs" />
     <Compile Include="Model\Pddl12\Types\EitherType.cs" />
     <Compile Include="Model\Pddl12\Types\FluentType.cs" />
+    <Compile Include="Model\Pddl12\VariableDefinition.cs" />
     <Compile Include="Model\Pddl12\Variable.cs" />
     <Compile Include="Model\Pddl12\Null\NullGoalDescription.cs" />
     <Compile Include="Model\Pddl12\Literal.cs" />

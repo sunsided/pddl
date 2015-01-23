@@ -135,7 +135,7 @@ namespace PDDL.Parser
         /// <summary>
         /// typed list (variable)
         /// </summary>
-        internal readonly Parser<IEnumerable<IVariable>> TypedListOfVariable;
+        internal readonly Parser<IEnumerable<IVariableDefinition>> TypedListOfVariable;
 
         /// <summary>
         /// The predicate
@@ -607,12 +607,12 @@ namespace PDDL.Parser
         /// Creates the typed list (variable)
         /// </summary>
         /// <returns>Parser&lt;IEnumerable&lt;Variable&gt;&gt;.</returns>
-        private Parser<IEnumerable<Variable>> CreateTypedListOfVariable()
+        private Parser<IEnumerable<IVariableDefinition>> CreateTypedListOfVariable()
         {
             return (
                 from vns in VariableName.AtLeastOnce() // TODO This grammar always allows :typing requirement - change grammar if this is not explicitly required
                 from t in Parse.Char('-').Token().Then(_ => Type).Token().Optional()
-                select vns.Select(vn => new Variable(vn, t.IsDefined ? t.Get() : DefaultType.Default))
+                select vns.Select(vn => new VariableDefinition(vn, t.IsDefined ? t.Get() : DefaultType.Default))
                 )
                 .Many()
                 // ReSharper disable once PossibleMultipleEnumeration
