@@ -612,7 +612,7 @@ namespace PDDL.Parser
             return (
                 from vns in VariableName.AtLeastOnce() // TODO This grammar always allows :typing requirement - change grammar if this is not explicitly required
                 from t in Parse.Char('-').Token().Then(_ => Type).Token().Optional()
-                select vns.Select(vn => new VariableDefinition(vn, t.IsDefined ? t.Get() : DefaultType.Default))
+                select vns.Select(vn => new VariableDefinition(new Variable(vn), t.IsDefined ? t.Get() : DefaultType.Default))
                 )
                 .Many()
                 // ReSharper disable once PossibleMultipleEnumeration

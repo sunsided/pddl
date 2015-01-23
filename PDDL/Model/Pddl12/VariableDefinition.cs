@@ -13,7 +13,7 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <value>The name.</value>
         [NotNull]
-        public IName Name { get; private set; }
+        public IVariable Value { get; private set; }
 
         /// <summary>
         /// Gets the type.
@@ -28,12 +28,12 @@ namespace PDDL.Model.Pddl12
         /// <param name="name">The name.</param>
         /// <param name="type">The type.</param>
         /// <exception cref="ArgumentNullException">The value of 'name' and 'type' cannot be null. </exception>
-        public VariableDefinition(IName name, IType type)
+        public VariableDefinition(IVariable name, IType type)
         {
             if(ReferenceEquals(name, null)) throw new ArgumentNullException("name", "name must not be null");
             if (ReferenceEquals(type, null)) throw new ArgumentNullException("type", "type must not be null");
 
-            Name = name;
+            Value = name;
             Type = type;
         }
 
@@ -42,7 +42,7 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <param name="name">The name.</param>
         /// <exception cref="ArgumentNullException">The value of 'name' cannot be null.</exception>
-        public VariableDefinition(IName name)
+        public VariableDefinition(IVariable name)
             : this(name, Types.DefaultType.Default)
         {
         }
@@ -53,7 +53,7 @@ namespace PDDL.Model.Pddl12
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         public override string ToString()
         {
-            return String.Format("?{0} - {1}", Name, Type);
+            return String.Format("{0} - {1}", Value, Type);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <value>The variables.</value>
         [NotNull]
-        IReadOnlyList<IVariableDefinition> Variables { get; }
+        IReadOnlyList<IVariable> Variables { get; }
 
         /// <summary>
         /// Gets the context.
