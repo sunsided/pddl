@@ -176,5 +176,15 @@ namespace PDDL.Tests.Parser
             Assert.IsInstanceOf<IConjunctionGoalDescription>(gd);
             Assert.AreEqual(3, ((IConjunctionGoalDescription)gd).Goals.Count);
         }
+
+        [Test]
+        public void Axiom()
+        {
+            var ax = _grammar.AxiomDefinition.Parse("(:axiom :vars (?x ?y - physob) :context (on ?x ?y) :implies (above ?x ?y))");
+            Assert.AreEqual(2, ax.Variables.Count);
+            Assert.IsInstanceOf<ILiteralGoalDescription>(ax.Context);
+            Assert.AreEqual("on", ((ILiteralGoalDescription)ax.Context).Literal.Name);
+            Assert.AreEqual("above", ax.Implication.Name);
+        }
     }
 }

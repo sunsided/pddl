@@ -56,7 +56,7 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <value>The actions.</value>
         [NotNull]
-        IReadOnlyList<Action> Actions { get; }
+        IReadOnlyList<IAction> Actions { get; }
 
         /// <summary>
         /// Gets or sets the axioms.

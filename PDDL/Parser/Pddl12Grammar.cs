@@ -42,6 +42,7 @@ namespace PDDL.Parser
             GoalDescription = CreateGoalDescription();
             TimelessDefinition = CreateTimelessDefinition();
             Effect = CreateEffect();
+            Vars = CreateVars();
             ActionDefinition = CreateActionDefinition();
 
             AxiomDefinition = CreateAxiomDefinition();
@@ -244,7 +245,7 @@ namespace PDDL.Parser
         /// <summary>
         /// The action definition
         /// </summary>
-        internal readonly Parser<Action> ActionDefinition;
+        internal readonly Parser<IAction> ActionDefinition;
 
         /// <summary>
         /// The domain definition
@@ -313,10 +314,30 @@ namespace PDDL.Parser
         }
 
         /// <summary>
+        /// The vars
+        /// </summary>
+        internal readonly Parser<IEnumerable<IVariableDefinition>> Vars;
+
+        /// <summary>
+        /// Creates the vars.
+        /// </summary>
+        /// <returns>Parser&lt;IEnumerable&lt;IVariableDefinition&gt;&gt;.</returns>
+        private Parser<IEnumerable<IVariableDefinition>> CreateVars()
+        {
+            return (
+                from keyword in Parse.String(":vars").Token()
+                from open in OpeningParenthesis
+                from variables in TypedListOfVariable.Token()
+                from close in ClosingParenthesis
+                select variables
+                ).Token();
+        }
+
+        /// <summary>
         /// Creates the action definition.
         /// </summary>
         /// <returns>Parser&lt;Action&gt;.</returns>
-        private Parser<Action> CreateActionDefinition()
+        private Parser<IAction> CreateActionDefinition()
         {
             var actionFunctor = NameNonToken.Token();
 
@@ -333,15 +354,7 @@ namespace PDDL.Parser
                 from close in ClosingParenthesis
                 select variables
                 ).Token();
-
-            var actionVars = (
-                from keyword in Parse.String(":vars").Token()
-                from open in OpeningParenthesis
-                from variables in TypedListOfVariable.Token()
-                from close in ClosingParenthesis
-                select variables
-                ).Token();
-
+            
             var effectDef = (
                 from keyword in Parse.String(":effect").Token()
                 from e in Effect.Token()
@@ -354,7 +367,7 @@ namespace PDDL.Parser
                 from functor in actionFunctor
                 from parameters in actionParameters
                 // action-def body following
-                from vars in actionVars.Optional()
+                from vars in Vars.Optional()
                 from precs in actionPreconditions.Optional()
                 from e in effectDef.Optional()
                 from close in ClosingParenthesis
@@ -695,9 +708,9 @@ namespace PDDL.Parser
             return (
                 from open in OpeningParenthesis
                 from keyword in Parse.String(":axiom").Token()
-                from vars in TypedListOfVariable
-                from context in GoalDescription
-                from implications in LiteralOfTerm
+                from vars in Vars
+                from context in Parse.String(":context").Token().Then(_ => GoalDescription)
+                from implications in Parse.String(":implies").Token().Then(_ => LiteralOfTerm)
                 from close in ClosingParenthesis
                 select new Axiom(vars.ToList(), context, implications)
                 ).Token();
