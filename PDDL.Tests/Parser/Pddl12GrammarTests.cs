@@ -157,5 +157,24 @@ namespace PDDL.Tests.Parser
 
             Assert.AreEqual(3, ((IEitherType)((ICustomType)type[0]).Parent).Types.Count);
         }
+
+        [Test]
+        public void GoalDescription()
+        {
+            var gd = _grammar.GoalDescription.Parse("(in house person)");
+            Assert.IsInstanceOf<ILiteralGoalDescription>(gd);
+            Assert.AreEqual("in", ((ILiteralGoalDescription)gd).Literal.Name.Value);
+            Assert.AreEqual(2, ((ILiteralGoalDescription)gd).Literal.Parameters.Count);
+
+            gd = _grammar.GoalDescription.Parse("(not (at home person))");
+            Assert.IsInstanceOf<ILiteralGoalDescription>(gd);
+            Assert.AreEqual(false, ((ILiteralGoalDescription)gd).Literal.Positive);
+            Assert.AreEqual("at", ((ILiteralGoalDescription)gd).Literal.Name.Value);
+            Assert.AreEqual(2, ((ILiteralGoalDescription)gd).Literal.Parameters.Count);
+
+            gd = _grammar.GoalDescription.Parse("(and (in house person) (not (at home person)) (on street person))");
+            Assert.IsInstanceOf<IConjunctionGoalDescription>(gd);
+            Assert.AreEqual(3, ((IConjunctionGoalDescription)gd).Goals.Count);
+        }
     }
 }
