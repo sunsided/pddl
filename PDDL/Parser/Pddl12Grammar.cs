@@ -43,10 +43,19 @@ namespace PDDL.Parser
             TimelessDefinition = CreateTimelessDefinition();
             Effect = CreateEffect();
             ActionDefinition = CreateActionDefinition();
+
+            AxiomDefinition = CreateAxiomDefinition();
+
             DomainDefinition = CreateDomainDefinition();
             DefineDefinition = CreateDefineDefinition();
         }
 
+        /// <summary>
+        /// Gets or sets the axioms.
+        /// </summary>
+        /// <value>The axioms.</value>
+        internal Parser<IAxiom> AxiomDefinition { get; set; }
+        
         /// <summary>
         /// Comments start with a semicolon and run until the eol
         /// </summary>
@@ -286,6 +295,7 @@ namespace PDDL.Parser
                 from timeless in TimelessDefinition.Optional()
                 // structure-def following
                 from actions in ActionDefinition.Many()
+                from axioms in AxiomDefinition.Many()
 
                 // bundle and go
                 let ex = Wrap(extensions)
@@ -295,6 +305,10 @@ namespace PDDL.Parser
                 let pr = Wrap(predicates)
                 let tl = Wrap(timeless)
                 select new Domain(domainName, dr, ty, co, pr, tl)
+                       {
+                           Actions = actions.ToList(),
+                           Axioms = axioms.ToList()
+                       }
                 );
         }
 
@@ -673,6 +687,23 @@ namespace PDDL.Parser
         }
 
         /// <summary>
+        /// Creates the axiom definition.
+        /// </summary>
+        /// <returns>Parser&lt;IAxiom&gt;.</returns>
+        private Parser<IAxiom> CreateAxiomDefinition()
+        {
+            return (
+                from open in OpeningParenthesis
+                from keyword in Parse.String(":axiom").Token()
+                from vars in TypedListOfVariable
+                from context in GoalDescription
+                from implications in LiteralOfTerm
+                from close in ClosingParenthesis
+                select new Axiom(vars.ToList(), context, implications)
+                ).Token();
+        }
+
+        /// <summary>
         /// Class ParserInjector. This class cannot be inherited.
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -684,5 +715,6 @@ namespace PDDL.Parser
             /// <value>The parser.</value>
             public Parser<T> Parser { get; set; }
         }
+
     }
 }

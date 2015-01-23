@@ -47,6 +47,18 @@ namespace PDDL.Model.Pddl12
         public IReadOnlyList<ILiteral<IName>> Timeless { get; private set; }
 
         /// <summary>
+        /// Gets or sets the actions.
+        /// </summary>
+        /// <value>The actions.</value>
+        public IReadOnlyList<Action> Actions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the axioms.
+        /// </summary>
+        /// <value>The axioms.</value>
+        public IReadOnlyList<IAxiom> Axioms { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Domain"/> class.
         /// </summary>
         /// <param name="name">The name.</param>

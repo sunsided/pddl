@@ -50,5 +50,19 @@ namespace PDDL.Model.Pddl12
         /// <value>The timeless literals.</value>
         [NotNull]
         IReadOnlyList<ILiteral<IName>> Timeless { get; }
+
+        /// <summary>
+        /// Gets or sets the actions.
+        /// </summary>
+        /// <value>The actions.</value>
+        [NotNull]
+        IReadOnlyList<Action> Actions { get; }
+
+        /// <summary>
+        /// Gets or sets the axioms.
+        /// </summary>
+        /// <value>The axioms.</value>
+        [NotNull]
+        IReadOnlyList<IAxiom> Axioms { get; }
     }
 }
