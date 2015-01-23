@@ -58,8 +58,8 @@ namespace PDDL.Tests.Model
                                                            CreatePredicate("top", "?c", container, "?p", pile),
                                                            CreatePredicate("top", "?k1", container, "?k2", container),
                                                        };
-            
-            IReadOnlyList<ILiteral> timeless = new ILiteral[0];
+
+            IReadOnlyList<ILiteral<IName>> timeless = new ILiteral<IName>[0];
             
             var domain = new Domain(name, requirements, types, constants, predicates, timeless);
         }

@@ -7,7 +7,7 @@ namespace PDDL.Model.Pddl12
     /// <summary>
     /// Class AtomicFormula.
     /// </summary>
-    public class AtomicFormula : IAtomicFormula
+    public class AtomicFormula<T> : IAtomicFormula<T>
     {
         /// <summary>
         /// Gets the name.
@@ -19,7 +19,7 @@ namespace PDDL.Model.Pddl12
         /// Gets the parameters.
         /// </summary>
         /// <value>The parameters.</value>
-        public IReadOnlyList<ITerm> Parameters { get; private set; }
+        public IReadOnlyList<T> Parameters { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AtomicFormulaSkeleton"/> class.
@@ -27,7 +27,7 @@ namespace PDDL.Model.Pddl12
         /// <param name="name">The name.</param>
         /// <param name="parameters">The parameters.</param>
         /// <exception cref="ArgumentNullException">The value of 'name' and 'parameters' cannot be null. </exception>
-        public AtomicFormula([NotNull] IName name, [NotNull] IReadOnlyList<ITerm> parameters)
+        public AtomicFormula([NotNull] IName name, [NotNull] IReadOnlyList<T> parameters)
         {
             if (ReferenceEquals(name, null)) throw new ArgumentNullException("name", "name must not be null");
             if (ReferenceEquals(parameters, null)) throw new ArgumentNullException("parameters", "type must not be null");
@@ -42,7 +42,7 @@ namespace PDDL.Model.Pddl12
         /// <param name="name">The name.</param>
         /// <exception cref="ArgumentNullException">The value of 'name' and 'parameters' cannot be null.</exception>
         public AtomicFormula([NotNull] IName name)
-            : this(name, new ITerm[0])
+            : this(name, new T[0])
         {
         }
 
@@ -51,7 +51,7 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <param name="other">The object to compare with the current object.</param>
         /// <returns><see langword="true" /> if the specified <see cref="AtomicFormulaSkeleton" /> is equal to this instance; otherwise, <see langword="false" />.</returns>
-        protected bool Equals([NotNull] AtomicFormula other)
+        protected bool Equals([NotNull] AtomicFormula<T> other)
         {
             return Name.Equals(other.Name) && Parameters.Equals(other.Parameters);
         }
@@ -66,7 +66,7 @@ namespace PDDL.Model.Pddl12
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((AtomicFormula)obj);
+            return Equals((AtomicFormula<T>)obj);
         }
 
         /// <summary>

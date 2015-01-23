@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Pddl12\IAxiom.cs" />
     <Compile Include="Model\Pddl12\IVariableDefinition.cs" />
     <Compile Include="Model\Pddl12\Null\NullEffect.cs" />
     <Compile Include="Model\Pddl12\ITerm.cs" />

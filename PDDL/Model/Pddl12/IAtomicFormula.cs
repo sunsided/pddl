@@ -9,7 +9,7 @@ namespace PDDL.Model.Pddl12
     ///     Atomic formulae are used to describe (ground) predicates
     /// </para>
     /// </summary>
-    public interface IAtomicFormula
+    public interface IAtomicFormula<out T>
     {
         /// <summary>
         /// Gets the name.
@@ -23,6 +23,6 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <value>The parameters.</value>
         [NotNull]
-        IReadOnlyList<ITerm> Parameters { get; }
+        IReadOnlyList<T> Parameters { get; }
     }
 }

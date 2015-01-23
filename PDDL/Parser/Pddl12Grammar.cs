@@ -193,34 +193,34 @@ namespace PDDL.Parser
         /// <summary>
         /// The atomic formula of term
         /// </summary>
-        internal static Parser<IAtomicFormula> AtomicFormulaOfTerm = (
+        internal static Parser<IAtomicFormula<ITerm>> AtomicFormulaOfTerm = (
                 from open in OpeningParenthesis
                 from p in Predicate
                 from terms in Term.Many()
                 from close in ClosingParenthesis
-                select new AtomicFormula(p, terms.ToList())
+                select new AtomicFormula<ITerm>(p, terms.ToList())
                ).Token();
 
         /// <summary>
         /// The literal of term
         /// </summary>
-        internal readonly Parser<ILiteral> LiteralOfTerm;
+        internal readonly Parser<ILiteral<ITerm>> LiteralOfTerm;
 
         /// <summary>
         /// The atomic formula of name
         /// </summary>
-        internal static Parser<IAtomicFormula> AtomicFormulaOfName = (
+        internal static Parser<IAtomicFormula<IName>> AtomicFormulaOfName = (
                 from open in OpeningParenthesis
                 from p in Predicate
-                from terms in NameNonToken.Token().Many()
+                from names in NameNonToken.Token().Many()
                 from close in ClosingParenthesis
-                select new AtomicFormula(p, terms.ToList())
+                select new AtomicFormula<IName>(p, names.ToList())
                ).Token();
 
         /// <summary>
         /// The literal of name
         /// </summary>
-        internal readonly Parser<ILiteral> LiteralOfName;
+        internal readonly Parser<ILiteral<IName>> LiteralOfName;
 
         /// <summary>
         /// The goal description
@@ -230,7 +230,7 @@ namespace PDDL.Parser
         /// <summary>
         /// The timeless definition
         /// </summary>
-        internal readonly Parser<IEnumerable<ILiteral>> TimelessDefinition;
+        internal readonly Parser<IEnumerable<ILiteral<IName>>> TimelessDefinition;
 
         /// <summary>
         /// The action definition
@@ -394,7 +394,7 @@ namespace PDDL.Parser
         /// Creates the timeless definition.
         /// </summary>
         /// <returns>Parser&lt;IEnumerable&lt;ILiteral&gt;&gt;.</returns>
-        private Parser<IEnumerable<ILiteral>> CreateTimelessDefinition()
+        private Parser<IEnumerable<ILiteral<IName>>> CreateTimelessDefinition()
         {
             return (
                 from open in OpeningParenthesis
@@ -439,22 +439,22 @@ namespace PDDL.Parser
         /// Creates the literal(name)
         /// </summary>
         /// <returns>Parser&lt;ILiteral&gt;.</returns>
-        private static Parser<ILiteral> CreateLiteralOfName()
+        private static Parser<ILiteral<IName>> CreateLiteralOfName()
         {
-            Parser<ILiteral> positiveLiteralName = (
+            Parser<ILiteral<IName>> positiveLiteralName = (
                 from af in AtomicFormulaOfName
-                select new Literal(af.Name, af.Parameters, true))
+                select new Literal<IName>(af.Name, af.Parameters, true))
                 .Token();
 
-            Parser<ILiteral> negativeLiteralName = (
+            Parser<ILiteral<IName>> negativeLiteralName = (
                 from open in OpeningParenthesis
                 from keyword in Parse.String("not").Token()
                 from af in AtomicFormulaOfName
                 from close in ClosingParenthesis
-                select new Literal(af.Name, af.Parameters, false))
+                select new Literal<IName>(af.Name, af.Parameters, false))
                 .Token();
 
-            Parser<ILiteral> literalName = positiveLiteralName.Or(negativeLiteralName);
+            Parser<ILiteral<IName>> literalName = positiveLiteralName.Or(negativeLiteralName);
             return literalName;
         }
 
@@ -462,22 +462,22 @@ namespace PDDL.Parser
         /// Creates the literal of term.
         /// </summary>
         /// <returns>Parser&lt;ILiteral&gt;.</returns>
-        private static Parser<ILiteral> CreateLiteralOfTerm()
+        private static Parser<ILiteral<ITerm>> CreateLiteralOfTerm()
         {
-            Parser<ILiteral> positiveLiteralTerm = (
+            Parser<ILiteral<ITerm>> positiveLiteralTerm = (
                 from af in AtomicFormulaOfTerm
-                select new Literal(af.Name, af.Parameters, true))
+                select new Literal<ITerm>(af.Name, af.Parameters, true))
                 .Token();
 
-            Parser<ILiteral> negativeLiteralTerm = (
+            Parser<ILiteral<ITerm>> negativeLiteralTerm = (
                 from open in OpeningParenthesis
                 from keyword in Parse.String("not").Token()
                 from af in AtomicFormulaOfTerm
                 from close in ClosingParenthesis
-                select new Literal(af.Name, af.Parameters, false))
+                select new Literal<ITerm>(af.Name, af.Parameters, false))
                 .Token();
 
-            Parser<ILiteral> literalTerm = positiveLiteralTerm.Or(negativeLiteralTerm);
+            Parser<ILiteral<ITerm>> literalTerm = positiveLiteralTerm.Or(negativeLiteralTerm);
             return literalTerm;
         }
 

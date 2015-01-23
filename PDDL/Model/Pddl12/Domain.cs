@@ -44,7 +44,7 @@ namespace PDDL.Model.Pddl12
         /// Gets the timeless literals.
         /// </summary>
         /// <value>The timeless literals.</value>
-        public IReadOnlyList<ILiteral> Timeless { get; private set; }
+        public IReadOnlyList<ILiteral<IName>> Timeless { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Domain"/> class.
@@ -56,7 +56,7 @@ namespace PDDL.Model.Pddl12
         /// <param name="predicates">The predicates.</param>
         /// <param name="timeless">The timeless.</param>
         /// <exception cref="ArgumentNullException">None of the arguments may be null. </exception>
-        public Domain([NotNull] IName name, [NotNull] IReadOnlyList<IRequirement> requirements, [NotNull] IReadOnlyList<IType> types, [NotNull] IReadOnlyList<IConstant> constants, [NotNull] IReadOnlyList<IAtomicFormulaSkeleton> predicates, [NotNull] IReadOnlyList<ILiteral> timeless)
+        public Domain([NotNull] IName name, [NotNull] IReadOnlyList<IRequirement> requirements, [NotNull] IReadOnlyList<IType> types, [NotNull] IReadOnlyList<IConstant> constants, [NotNull] IReadOnlyList<IAtomicFormulaSkeleton> predicates, [NotNull] IReadOnlyList<ILiteral<IName>> timeless)
         {
             if (ReferenceEquals(name, null)) throw new ArgumentNullException("name", "name must not be null");
             if (ReferenceEquals(requirements, null)) throw new ArgumentNullException("requirements", "requirements must not be null");

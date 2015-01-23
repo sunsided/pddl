@@ -49,6 +49,6 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <value>The timeless literals.</value>
         [NotNull]
-        IReadOnlyList<ILiteral> Timeless { get; }
+        IReadOnlyList<ILiteral<IName>> Timeless { get; }
     }
 }
