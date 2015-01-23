@@ -277,12 +277,27 @@ namespace PDDL.Parser
                 );
         }
 
+        private Parser<Pddl12DomainStructure> CreateDomainStructure()
+        {
+            return (
+                from actions in ActionDefinition.Many()
+                from axioms in AxiomDefinition.Many()
+                select new Pddl12DomainStructure()
+                       {
+                           Actions = actions.ToList(),
+                           Axioms = axioms.ToList()
+                       }
+                );
+        }
+
         /// <summary>
         /// Creates the domain definition.
         /// </summary>
         /// <returns>Parser&lt;Domain&gt;.</returns>
         private Parser<Domain> CreateDomainDefinition()
         {
+            var ds = CreateDomainStructure();
+
             return (
                 from open in OpeningParenthesis
                 from domainKeyword in Parse.String("domain").Token()
@@ -295,8 +310,7 @@ namespace PDDL.Parser
                 from predicates in PredicatesDefinition.Optional()
                 from timeless in TimelessDefinition.Optional()
                 // structure-def following
-                from actions in ActionDefinition.Many()
-                from axioms in AxiomDefinition.Many()
+                from structure in ds
 
                 // bundle and go
                 let ex = Wrap(extensions)
@@ -307,8 +321,8 @@ namespace PDDL.Parser
                 let tl = Wrap(timeless)
                 select new Domain(domainName, dr, ty, co, pr, tl)
                        {
-                           Actions = actions.ToList(),
-                           Axioms = axioms.ToList()
+                           Actions = structure.Actions,
+                           Axioms = structure.Axioms
                        }
                 );
         }
