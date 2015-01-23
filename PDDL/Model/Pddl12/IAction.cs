@@ -6,7 +6,7 @@ namespace PDDL.Model.Pddl12
     /// <summary>
     /// Interface IAction
     /// </summary>
-    public interface IAction
+    public interface IAction : IDomainStructureElement
     {
         /// <summary>
         /// Gets the functor.

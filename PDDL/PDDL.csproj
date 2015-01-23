@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Model\Pddl12\Axiom.cs" />
     <Compile Include="Model\Pddl12\IAxiom.cs" />
+    <Compile Include="Model\Pddl12\IDomainStructureElement.cs" />
     <Compile Include="Model\Pddl12\ITyped.cs" />
     <Compile Include="Model\Pddl12\IVariableDefinition.cs" />
     <Compile Include="Model\Pddl12\Null\NullEffect.cs" />

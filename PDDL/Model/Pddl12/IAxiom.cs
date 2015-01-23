@@ -6,7 +6,7 @@ namespace PDDL.Model.Pddl12
     /// <summary>
     /// Interface IAxiom
     /// </summary>
-    public interface IAxiom
+    public interface IAxiom : IDomainStructureElement
     {
         /// <summary>
         /// Gets the variables.

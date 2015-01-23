@@ -1,7 +1,7 @@
 ;; Specification in PDDL1 of the DWR domain
 
 (define (domain dock-worker-robot)
- (:requirements :strips :typing )
+ (:requirements :strips :typing :domain-axioms)
  (:types 
   location      ; there are several connected locations in the harbor 
   pile             ; is attached to a location 
@@ -67,6 +67,11 @@
      :effect (and (holding ?k ?c) (top ?else ?p)
                 (not (in ?c ?p)) (not (top ?c ?p))
                 (not (on ?c ?else)) (not (empty ?k))))
+
+ (:axiom
+     :vars (?k ?c - container)
+     :context (on ?k ?c)
+     :implies (above ?k ?c))
 
 ;; puts a container held by a crane on a nearby pile
  (:action put                                 

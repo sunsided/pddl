@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.IO.MemoryMappedFiles;
 using System.Linq;
 using PDDL.Model.Pddl12;
 using PDDL.Model.Pddl12.Effects;
@@ -6,6 +9,7 @@ using PDDL.Model.Pddl12.Goals;
 using PDDL.Model.Pddl12.Null;
 using PDDL.Model.Pddl12.Types;
 using Sprache;
+using Action = PDDL.Model.Pddl12.Action;
 
 namespace PDDL.Parser
 {
@@ -277,16 +281,25 @@ namespace PDDL.Parser
                 );
         }
 
+        private T GetFromMap<T>(IReadOnlyDictionary<string, T> map, string key, T defaultValue)
+        {
+            T element;
+            if (map.TryGetValue(key, out element))
+            {
+                return (T) element;
+            }
+            return defaultValue;
+        }
+
+        /// <summary>
+        /// Creates a parser for the domain structure.
+        /// </summary>
+        /// <returns>Parser&lt;Pddl12DomainStructure&gt;.</returns>
         private Parser<Pddl12DomainStructure> CreateDomainStructure()
         {
             return (
-                from actions in ActionDefinition.Many()
-                from axioms in AxiomDefinition.Many()
-                select new Pddl12DomainStructure()
-                       {
-                           Actions = actions.ToList(),
-                           Axioms = axioms.ToList()
-                       }
+                from matches in ActionDefinition.Or<IDomainStructureElement>(AxiomDefinition).Many()
+                select Pddl12DomainStructure.FromSequence(matches)
                 );
         }
 
@@ -310,7 +323,7 @@ namespace PDDL.Parser
                 from predicates in PredicatesDefinition.Optional()
                 from timeless in TimelessDefinition.Optional()
                 // structure-def following
-                from structure in ds
+                from structure in ds // TODO: this should go for the whole domain structure
 
                 // bundle and go
                 let ex = Wrap(extensions)
