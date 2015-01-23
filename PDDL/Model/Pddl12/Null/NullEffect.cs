@@ -1,7 +1,7 @@
 ﻿using JetBrains.Annotations;
-using PDDL.Model.Pddl12.Null;
+using PDDL.Model.Pddl12.Effects;
 
-namespace PDDL.Model.Pddl12.Effects
+namespace PDDL.Model.Pddl12.Null
 {
     /// <summary>
     /// Class NullEffect.

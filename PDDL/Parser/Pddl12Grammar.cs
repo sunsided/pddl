@@ -3,6 +3,7 @@ using System.Linq;
 using PDDL.Model.Pddl12;
 using PDDL.Model.Pddl12.Effects;
 using PDDL.Model.Pddl12.Goals;
+using PDDL.Model.Pddl12.Null;
 using PDDL.Model.Pddl12.Types;
 using Sprache;
 

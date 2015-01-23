@@ -45,7 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Pddl12\Effects\NullEffect.cs" />
+    <Compile Include="Model\Pddl12\Null\NullEffect.cs" />
     <Compile Include="Model\Pddl12\ITerm.cs" />
     <Compile Include="Model\Pddl12\Action.cs" />
     <Compile Include="Model\Pddl12\AtomicFormula.cs" />
