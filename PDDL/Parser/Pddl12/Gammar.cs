@@ -1,10 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using PDDL.Model.Pddl12;
-using PDDL.Model.Pddl12.Effects;
-using PDDL.Model.Pddl12.Goals;
-using PDDL.Model.Pddl12.Null;
-using PDDL.Model.Pddl12.Types;
 using Sprache;
 
 namespace PDDL.Parser.Pddl12
@@ -26,18 +22,14 @@ namespace PDDL.Parser.Pddl12
             // TODO: add :domain-axioms
             // TODO: add :action-expansions
 
-            AtomicFormulaSkeleton = CreateAtomicFormulaSkeleton();
             PredicatesDefinition = CreatePredicatesDefinition();
             ExtensionDefinition = CreateExtensionDefinition();
             RequirementsDefinition = CreateRequirementsDefinition();
             TypesDefinition = CreateTypesDefinition();
             ConstantsDefinition = CreateConstantsDefinition();
 
-            GoalDescription = CreateGoalDescription();
             TimelessDefinition = CreateTimelessDefinition();
-            Effect = CreateEffect();
             Vars = CreateVars();
-            ActionDefinition = CreateActionDefinition();
 
             AxiomDefinition = CreateAxiomDefinition();
 
@@ -82,16 +74,6 @@ namespace PDDL.Parser.Pddl12
                 ).Token();
         
         /// <summary>
-        /// typed list (variable)
-        /// </summary>
-        internal readonly Parser<IEnumerable<IVariableDefinition>> TypedListOfVariable;
-        
-        /// <summary>
-        /// The atomic formula skeleton
-        /// </summary>
-        internal readonly Parser<IAtomicFormulaSkeleton> AtomicFormulaSkeleton;
-
-        /// <summary>
         /// The predicates definition
         /// </summary>
         internal readonly Parser<IEnumerable<IAtomicFormulaSkeleton>> PredicatesDefinition;
@@ -105,62 +87,27 @@ namespace PDDL.Parser.Pddl12
         /// The requirements definition
         /// </summary>
         internal readonly Parser<IEnumerable<IRequirement>> RequirementsDefinition;
-
-        /// <summary>
-        /// The typed list of type
-        /// </summary>
-        internal readonly Parser<IEnumerable<IType>> TypedListOfType;
-
+        
         /// <summary>
         /// The types definition
         /// </summary>
         internal readonly Parser<IEnumerable<IType>> TypesDefinition;
-
-        /// <summary>
-        /// The typed list of constant
-        /// </summary>
-        internal readonly Parser<IEnumerable<IConstant>> TypedListOfConstant;
-
+        
         /// <summary>
         /// The constants definition
         /// </summary>
         internal readonly Parser<IEnumerable<IConstant>> ConstantsDefinition;
         
         /// <summary>
-        /// The literal of term
-        /// </summary>
-        internal readonly Parser<ILiteral<ITerm>> LiteralOfTerm;
-        
-        /// <summary>
-        /// The literal of name
-        /// </summary>
-        internal readonly Parser<ILiteral<IName>> LiteralOfName;
-
-        /// <summary>
-        /// The goal description
-        /// </summary>
-        internal readonly Parser<IGoalDescription> GoalDescription;
-
-        /// <summary>
         /// The timeless definition
         /// </summary>
         internal readonly Parser<IEnumerable<ILiteral<IName>>> TimelessDefinition;
-
-        /// <summary>
-        /// The action definition
-        /// </summary>
-        internal readonly Parser<IAction> ActionDefinition;
-
+        
         /// <summary>
         /// The domain definition
         /// </summary>
         internal readonly Parser<IDomain> DomainDefinition;
-
-        /// <summary>
-        /// The effect
-        /// </summary>
-        internal readonly Parser<IEffect> Effect;
-
+        
         /// <summary>
         /// The define definition
         /// </summary>
@@ -249,91 +196,7 @@ namespace PDDL.Parser.Pddl12
                 select variables
                 ).Token();
         }
-
-        /// <summary>
-        /// Creates the action definition.
-        /// </summary>
-        /// <returns>Parser&lt;Action&gt;.</returns>
-        private Parser<IAction> CreateActionDefinition()
-        {
-            var actionFunctor = NameNonToken.Token();
-
-            var actionPreconditions = (
-                from keyword in Parse.String(":precondition").Token()
-                from precondition in GoalDescription
-                select precondition
-                ).Token();
-
-            var actionParameters = (
-                from keyword in Parse.String(":parameters").Token()
-                from open in OpeningParenthesis
-                from variables in TypedListOfVariable.Token()
-                from close in ClosingParenthesis
-                select variables
-                ).Token();
-            
-            var effectDef = (
-                from keyword in Parse.String(":effect").Token()
-                from e in Effect.Token()
-                select e
-                ).Token();
-
-            var actionDef = (
-                from open in OpeningParenthesis
-                from keyword in Parse.String(":action").Token()
-                from functor in actionFunctor
-                from parameters in actionParameters
-                // action-def body following
-                from vars in Vars.Optional()
-                from precs in actionPreconditions.Optional()
-                from e in effectDef.Optional()
-                from close in ClosingParenthesis
-                select new Action(functor, parameters.ToList(), (e.IsDefined ? e.Get() : NullEffect.Default))
-                       {
-                           Variables = Wrap(vars)
-                       }
-                ).Token();
-
-            return actionDef;
-        }
-
-        /// <summary>
-        /// The effect parser injector
-        /// </summary>
-        private readonly ParserInjector<IEffect> _effectParserInjector = new ParserInjector<IEffect>();
-
-        /// <summary>
-        /// Creates the effect.
-        /// </summary>
-        /// <returns>Parser&lt;IEffect&gt;.</returns>
-        private Parser<IEffect> CreateEffect()
-        {
-            Parser<IEffect> positiveEffect =
-                (from af in AtomicFormulaOfTerm
-                    select new PositiveEffect(af)).Token();
-
-            Parser<IEffect> negativeEffect =
-                (
-                    from open in OpeningParenthesis
-                    from keyword in Parse.String("not").Token()
-                    from af in AtomicFormulaOfTerm
-                    from close in ClosingParenthesis
-                    select new NegativeEffect(af)).Token();
-
-            Parser<IEffect> conjunctionEffect =
-                (
-                    from open in OpeningParenthesis
-                    from keyword in Parse.String("and").Token()
-                    from effects in _effectParserInjector.Parser.Many()
-                    from close in ClosingParenthesis
-                    select new ConjunctionEffect(effects.ToArray())
-                    ).Token();
-
-            var effect = positiveEffect.Or(negativeEffect).Or(conjunctionEffect);
-            _effectParserInjector.Parser = effect;
-            return effect;
-        }
-
+        
         /// <summary>
         /// Creates the timeless definition.
         /// </summary>
@@ -348,37 +211,7 @@ namespace PDDL.Parser.Pddl12
                 select literals
                 ).Token();
         }
-
-        private readonly ParserInjector<IGoalDescription> _goalParserInjector = new ParserInjector<IGoalDescription>();
-
-        /// <summary>
-        /// Creates the goal description.
-        /// </summary>
-        /// <returns>Parser&lt;IGoalDescription&gt;.</returns>
-        private Parser<IGoalDescription> CreateGoalDescription()
-        {
-            Parser<IGoalDescription> atomicGoalDescription =
-                (from af in AtomicFormulaOfTerm
-                    select new AtomicGoalDescription(af));
-
-            Parser<IGoalDescription> literalGoalDesccription =
-                (from l in LiteralOfTerm
-                    select new LiteralGoalDescription(l));
-            
-            Parser<IGoalDescription> conjunctionGoalDescription =
-                (
-                    from open in OpeningParenthesis
-                    from keyword in Parse.String("and").Token()
-                    from goals in _goalParserInjector.Parser.Many()
-                    from close in ClosingParenthesis
-                    select new ConjunctionGoalDescription(goals.ToArray())
-                    ).Token();
-
-            var goalDescription = literalGoalDesccription.Or(atomicGoalDescription).Or(conjunctionGoalDescription);
-            _goalParserInjector.Parser = goalDescription;
-            return goalDescription;
-        }
-
+        
         /// <summary>
         /// Creates the constants definition.
         /// </summary>
@@ -452,21 +285,6 @@ namespace PDDL.Parser.Pddl12
                 from close in ClosingParenthesis
                 select skeletons
                 ).Token();
-        }
-
-        /// <summary>
-        /// Creates the atomic formula skeleton.
-        /// </summary>
-        /// <returns>Parser&lt;AtomicFormulaSkeleton&gt;.</returns>
-        private Parser<AtomicFormulaSkeleton> CreateAtomicFormulaSkeleton()
-        {
-            return (
-                from open in OpeningParenthesis
-                from p in Predicate
-                from variables in TypedListOfVariable.Token()
-                from close in ClosingParenthesis
-                select new AtomicFormulaSkeleton(p, variables.ToList()))
-                .Token();
         }
         
         /// <summary>

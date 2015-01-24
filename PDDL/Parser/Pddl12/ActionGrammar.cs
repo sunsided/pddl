@@ -18,55 +18,51 @@ namespace PDDL.Parser.Pddl12
         /// <summary>
         /// The action definition
         /// </summary>
-        [NotNull]
-        public readonly Parser<IAction> ActionDefinition;
+        [NotNull] 
+        public static readonly Parser<IAction> ActionDefinition =
+            CreateActionDefinition();
 
-        /// <summary>
-        /// Initializes static members of the <see cref="ActionGrammar"/> class.
-        /// </summary>
-        public ActionGrammar(CommonGrammar common)
-        {
-            ActionDefinition = CreateActionDefinition(common);
-        }
+        #region Factory Functions
 
         /// <summary>
         /// Creates the action definition.
         /// </summary>
         /// <returns>Parser&lt;Action&gt;.</returns>
-        private Parser<IAction> CreateActionDefinition(CommonGrammar common)
+        [NotNull]
+        private static Parser<IAction> CreateActionDefinition()
         {
-            var actionFunctor = NameNonToken.Token();
+            var actionFunctor = CommonGrammar.NameNonToken.Token();
 
             var actionPreconditions = (
-                from keyword in Parse.String(":precondition").Token()
+                from keyword in Keywords.Precondition
                 from precondition in GoalDescription
                 select precondition
                 ).Token();
 
             var actionParameters = (
-                from keyword in Parse.String(":parameters").Token()
-                from open in OpeningParenthesis
-                from variables in TypedListOfVariable.Token()
-                from close in ClosingParenthesis
+                from keyword in Keywords.Parameters
+                from open in CommonGrammar.OpeningParenthesis
+                from variables in TypedLists.TypedListOfVariable.Token()
+                from close in CommonGrammar.ClosingParenthesis
                 select variables
                 ).Token();
 
             var effectDef = (
-                from keyword in Parse.String(":effect").Token()
+                from keyword in Keywords.Effect
                 from e in Effect.Token()
                 select e
                 ).Token();
 
             var actionDef = (
-                from open in OpeningParenthesis
-                from keyword in Parse.String(":action").Token()
+                from open in CommonGrammar.OpeningParenthesis
+                from keyword in Keywords.Action
                 from functor in actionFunctor
                 from parameters in actionParameters
                 // action-def body following
                 from vars in Vars.Optional()
                 from precs in actionPreconditions.Optional()
                 from e in effectDef.Optional()
-                from close in ClosingParenthesis
+                from close in CommonGrammar.ClosingParenthesis
                 select new Action(functor, parameters.ToList(), (e.IsDefined ? e.Get() : NullEffect.Default))
                 {
                     Variables = Wrap(vars)
@@ -75,5 +71,7 @@ namespace PDDL.Parser.Pddl12
 
             return actionDef;
         }
+
+        #endregion Factory Functions
     }
 }
