@@ -160,6 +160,7 @@ namespace PDDL.Model.Pddl12
             if (constants != null) domain.Constants = constants;
             if (predicates != null) domain.Predicates = predicates;
             if (timeless != null) domain.Timeless = timeless;
+            if (safety != null) domain.Safety = safety;
 
             // there we go
             return domain;

@@ -17,6 +17,7 @@ namespace PDDL.Model.Pddl12
         private IReadOnlyList<IAction> _actions = new IAction[0];
         private IReadOnlyList<IAxiom> _axioms = new IAxiom[0];
         private IReadOnlyList<IName> _extends = new IName[0];
+        private IReadOnlyList<IGoalDescription> _safety = new IGoalDescription[0];
 
         /// <summary>
         /// Gets the name.
@@ -36,6 +37,21 @@ namespace PDDL.Model.Pddl12
             {
                 if (ReferenceEquals(value, null)) throw new ArgumentNullException("value");
                 _extends = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets safety constraints.
+        /// </summary>
+        /// <value>The constraints.</value>
+        /// <exception cref="ArgumentNullException">The value of 'value' cannot be null. </exception>
+        public IReadOnlyList<IGoalDescription> Safety
+        {
+            get { return _safety; }
+            set
+            {
+                if (ReferenceEquals(value, null)) throw new ArgumentNullException("value");
+                _safety = value;
             }
         }
 
