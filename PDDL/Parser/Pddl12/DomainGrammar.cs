@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using PDDL.Model.Pddl12;
 using PDDL.Model.Pddl12.DomainElements;
@@ -98,11 +99,34 @@ namespace PDDL.Parser.Pddl12
         /// </summary>
         /// <returns>Parser&lt;Pddl12DomainStructure&gt;.</returns>
         [NotNull]
-        private static Parser<DomainStructure> CreateDomainStructure()
+        private static Parser<DomainFactory> CreateDomainStructure()
         {
             return (
                 from matches in ActionGrammar.ActionDefinition.Or<IDomainStructureElement>(AxiomGrammar.AxiomDefinition).Many()
-                select DomainStructure.FromSequence(matches)
+                select DomainFactory.FromSequence(matches)
+                );
+        }
+
+        /// <summary>
+        /// Creates the domain definition element parser.
+        /// </summary>
+        /// <returns>Parser&lt;IReadOnlyList&lt;IDomainDefinitionElement&gt;&gt;.</returns>
+        private static Parser<IReadOnlyList<IDomainDefinitionElement>> CreateDomainDefinitionElementParser()
+        {
+            return (
+                from matches in 
+                    ExtensionDefinition
+                    .Or<IDomainDefinitionElement>(RequirementsDefinition)
+                    .Or<IDomainDefinitionElement>(TypesDefinition)
+                    .Or<IDomainDefinitionElement>(ConstantsDefinition)
+                    // TODO .Or<IDomainDefinitionElement>(VarsDefinition)
+                    .Or<IDomainDefinitionElement>(PredicatesDefinition)
+                    .Or<IDomainDefinitionElement>(TimelessDefinition)
+                    // TODO .Or<IDomainDefinitionElement>(SafetyDefinition)
+                    .Or<IDomainDefinitionElement>(ActionGrammar.ActionDefinition)
+                    .Or<IDomainDefinitionElement>(AxiomGrammar.AxiomDefinition)
+                    .Many()
+                select matches.ToList()
                 );
         }
 
