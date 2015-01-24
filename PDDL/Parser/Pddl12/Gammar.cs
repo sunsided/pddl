@@ -12,12 +12,12 @@ namespace PDDL.Parser.Pddl12
     /// <summary>
     /// Class Pddl12Grammar. This class cannot be inherited.
     /// </summary>
-    sealed class Grammar
+    sealed class Gammar
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Grammar"/> class.
+        /// Initializes a new instance of the <see cref="Gammar"/> class.
         /// </summary>
-        public Grammar()
+        public Gammar()
         {
             // TODO: implement domain-vars-def 
             // TODO add :disjunctive-preconditions goals
@@ -26,19 +26,13 @@ namespace PDDL.Parser.Pddl12
             // TODO: add :domain-axioms
             // TODO: add :action-expansions
 
-            Type = CreateTypeDefinition();
-            TypedListOfVariable = CreateTypedListOfVariable();
             AtomicFormulaSkeleton = CreateAtomicFormulaSkeleton();
             PredicatesDefinition = CreatePredicatesDefinition();
             ExtensionDefinition = CreateExtensionDefinition();
             RequirementsDefinition = CreateRequirementsDefinition();
-            TypedListOfType = CreateTypedListOfType();
             TypesDefinition = CreateTypesDefinition();
-            TypedListOfConstant = CreateTypedListOfConstant();
             ConstantsDefinition = CreateConstantsDefinition();
 
-            LiteralOfTerm = CreateLiteralOfTerm();
-            LiteralOfName = CreateLiteralOfName();
             GoalDescription = CreateGoalDescription();
             TimelessDefinition = CreateTimelessDefinition();
             Effect = CreateEffect();
@@ -56,45 +50,6 @@ namespace PDDL.Parser.Pddl12
         /// </summary>
         /// <value>The axioms.</value>
         internal Parser<IAxiom> AxiomDefinition { get; set; }
-        
-        /// <summary>
-        /// Comments start with a semicolon and run until the eol
-        /// </summary>
-        internal static readonly Parser<string> Comment =
-            Parse.Char(';').Once()
-            .Concat(Parse.AnyChar.Until(Parse.LineTerminator))
-            .Text();
-
-        /// <summary>
-        /// The opening parenthesis
-        /// </summary>
-        internal static readonly Parser<char> OpeningParenthesis = Parse.Char('(').Token();
-
-        /// <summary>
-        /// The closing parenthesis
-        /// </summary>
-        internal static readonly Parser<char> ClosingParenthesis = Parse.Char(')').Token();
-
-        /// <summary>
-        /// The name definition
-        /// <para>
-        /// letter followed by any alphanumeric, hyphen or underscore
-        /// </para>
-        /// </summary>
-        internal static readonly Parser<string> NameDefinition = Parse.Letter.AtLeastOnce()
-            .Concat(Parse.Char('-').Or(Parse.Char('_')).Or(Parse.LetterOrDigit).Many()).Text();
-
-        /// <summary>
-        /// The name
-        /// </summary>
-        internal static readonly Parser<IName> NameNonToken = (
-            from value in NameDefinition 
-            select new Name(value));
-
-        /// <summary>
-        /// The type
-        /// </summary>
-        internal readonly Parser<IType> Type;
 
         /// <summary>
         /// The valid requirements
@@ -125,36 +80,12 @@ namespace PDDL.Parser.Pddl12
                      .Text()
                  select new Requirement(value)
                 ).Token();
-
-        /// <summary>
-        /// The variable name token
-        /// </summary>
-        internal static readonly Parser<IName> VariableName = (
-                from n in Parse.Char('?').Then(_ => NameNonToken)
-                select n
-                ).Token();
-
-        /// <summary>
-        /// The variable
-        /// </summary>
-        internal static readonly Parser<IVariable> Variable = (
-                from n in VariableName
-                select new Variable(n)
-                ).Token();
-
+        
         /// <summary>
         /// typed list (variable)
         /// </summary>
         internal readonly Parser<IEnumerable<IVariableDefinition>> TypedListOfVariable;
-
-        /// <summary>
-        /// The predicate
-        /// </summary>
-        internal readonly static Parser<IPredicate> Predicate = (
-                from value in NameDefinition
-                select new Predicate(value))
-                .Token();
-
+        
         /// <summary>
         /// The atomic formula skeleton
         /// </summary>
@@ -194,39 +125,12 @@ namespace PDDL.Parser.Pddl12
         /// The constants definition
         /// </summary>
         internal readonly Parser<IEnumerable<IConstant>> ConstantsDefinition;
-
-        /// <summary>
-        /// The term
-        /// </summary>
-        internal static readonly Parser<ITerm> Term = NameNonToken.Token().Or<ITerm>(Variable);
-
-        /// <summary>
-        /// The atomic formula of term
-        /// </summary>
-        internal static Parser<IAtomicFormula<ITerm>> AtomicFormulaOfTerm = (
-                from open in OpeningParenthesis
-                from p in Predicate
-                from terms in Term.Many()
-                from close in ClosingParenthesis
-                select new AtomicFormula<ITerm>(p, terms.ToList())
-               ).Token();
-
+        
         /// <summary>
         /// The literal of term
         /// </summary>
         internal readonly Parser<ILiteral<ITerm>> LiteralOfTerm;
-
-        /// <summary>
-        /// The atomic formula of name
-        /// </summary>
-        internal static Parser<IAtomicFormula<IName>> AtomicFormulaOfName = (
-                from open in OpeningParenthesis
-                from p in Predicate
-                from names in NameNonToken.Token().Many()
-                from close in ClosingParenthesis
-                select new AtomicFormula<IName>(p, names.ToList())
-               ).Token();
-
+        
         /// <summary>
         /// The literal of name
         /// </summary>
@@ -275,16 +179,6 @@ namespace PDDL.Parser.Pddl12
                 from closeDefine in ClosingParenthesis
                 select domain
                 );
-        }
-
-        private T GetFromMap<T>(IReadOnlyDictionary<string, T> map, string key, T defaultValue)
-        {
-            T element;
-            if (map.TryGetValue(key, out element))
-            {
-                return (T) element;
-            }
-            return defaultValue;
         }
 
         /// <summary>
@@ -486,52 +380,6 @@ namespace PDDL.Parser.Pddl12
         }
 
         /// <summary>
-        /// Creates the literal(name)
-        /// </summary>
-        /// <returns>Parser&lt;ILiteral&gt;.</returns>
-        private static Parser<ILiteral<IName>> CreateLiteralOfName()
-        {
-            Parser<ILiteral<IName>> positiveLiteralName = (
-                from af in AtomicFormulaOfName
-                select new Literal<IName>(af.Name, af.Parameters, true))
-                .Token();
-
-            Parser<ILiteral<IName>> negativeLiteralName = (
-                from open in OpeningParenthesis
-                from keyword in Parse.String("not").Token()
-                from af in AtomicFormulaOfName
-                from close in ClosingParenthesis
-                select new Literal<IName>(af.Name, af.Parameters, false))
-                .Token();
-
-            Parser<ILiteral<IName>> literalName = positiveLiteralName.Or(negativeLiteralName);
-            return literalName;
-        }
-
-        /// <summary>
-        /// Creates the literal of term.
-        /// </summary>
-        /// <returns>Parser&lt;ILiteral&gt;.</returns>
-        private static Parser<ILiteral<ITerm>> CreateLiteralOfTerm()
-        {
-            Parser<ILiteral<ITerm>> positiveLiteralTerm = (
-                from af in AtomicFormulaOfTerm
-                select new Literal<ITerm>(af.Name, af.Parameters, true))
-                .Token();
-
-            Parser<ILiteral<ITerm>> negativeLiteralTerm = (
-                from open in OpeningParenthesis
-                from keyword in Parse.String("not").Token()
-                from af in AtomicFormulaOfTerm
-                from close in ClosingParenthesis
-                select new Literal<ITerm>(af.Name, af.Parameters, false))
-                .Token();
-
-            Parser<ILiteral<ITerm>> literalTerm = positiveLiteralTerm.Or(negativeLiteralTerm);
-            return literalTerm;
-        }
-
-        /// <summary>
         /// Creates the constants definition.
         /// </summary>
         /// <returns>Parser&lt;IEnumerable&lt;IConstant&gt;&gt;.</returns>
@@ -545,23 +393,7 @@ namespace PDDL.Parser.Pddl12
                 select types
                 ).Token();
         }
-
-        /// <summary>
-        /// Creates the typed list of constant.
-        /// </summary>
-        /// <returns>Parser&lt;IEnumerable&lt;Constant&gt;&gt;.</returns>
-        private Parser<IEnumerable<Constant>> CreateTypedListOfConstant()
-        {
-            return (
-                from names in NameNonToken.Token().AtLeastOnce() // TODO This grammar always allows :typing requirement - change grammar if this is not explicitly required
-                from t in Parse.Char('-').Token().Then(_ => Type).Token().Optional()
-                select names.Select(vn => new Constant(vn, t.IsDefined ? t.Get() : DefaultType.Default))
-                )
-                .Many()
-                // ReSharper disable once PossibleMultipleEnumeration
-                .Select(groupedPerType => groupedPerType.SelectMany(t => t));
-        }
-
+        
         /// <summary>
         /// Creates the types definition.
         /// </summary>
@@ -576,23 +408,7 @@ namespace PDDL.Parser.Pddl12
                 select types
                 ).Token();
         }
-
-        /// <summary>
-        /// Creates the type list (type)
-        /// </summary>
-        /// <returns>Parser&lt;IEnumerable&lt;CustomType&gt;&gt;.</returns>
-        private Parser<IEnumerable<CustomType>> CreateTypedListOfType()
-        {
-            return (
-                from names in NameNonToken.Token().AtLeastOnce() // TODO This grammar always allows :typing requirement - change grammar if this is not explicitly required
-                from t in Parse.Char('-').Token().Then(_ => Type).Token().Optional()
-                select names.Select(vn => new CustomType(vn, t.IsDefined ? t.Get() : DefaultType.Default))
-                )
-                .Many()
-                // ReSharper disable once PossibleMultipleEnumeration
-                .Select(groupedPerType => groupedPerType.SelectMany(t => t));
-        }
-
+        
         /// <summary>
         /// Creates the requirements definition.
         /// </summary>
@@ -652,65 +468,7 @@ namespace PDDL.Parser.Pddl12
                 select new AtomicFormulaSkeleton(p, variables.ToList()))
                 .Token();
         }
-
-        /// <summary>
-        /// Creates the typed list (variable)
-        /// </summary>
-        /// <returns>Parser&lt;IEnumerable&lt;Variable&gt;&gt;.</returns>
-        private Parser<IEnumerable<IVariableDefinition>> CreateTypedListOfVariable()
-        {
-            return (
-                from vns in VariableName.AtLeastOnce() // TODO This grammar always allows :typing requirement - change grammar if this is not explicitly required
-                from t in Parse.Char('-').Token().Then(_ => Type).Token().Optional()
-                select vns.Select(vn => new VariableDefinition(new Variable(vn), t.IsDefined ? t.Get() : DefaultType.Default))
-                )
-                .Many()
-                // ReSharper disable once PossibleMultipleEnumeration
-                .Select(groupedPerType => groupedPerType.SelectMany(v => v));
-        }
-
-        /// <summary>
-        /// This injector is used to fake-decouple the left recursive grammar construction
-        /// </summary>
-        private readonly ParserInjector<IType> _typeParserInjector = new ParserInjector<IType>();
-
-        /// <summary>
-        /// Creates the type definition.
-        /// </summary>
-        /// <returns>Parser&lt;IType&gt;.</returns>
-        private Parser<IType> CreateTypeDefinition()
-        {
-            // Simple type definition
-            Parser<IType> typeDefinition = (
-                from value in NameNonToken
-                select new CustomType(value)
-                ).Token();
-
-            // (either <type>+) definition
-            Parser<IType> eitherTypeDefinition = (
-                from open in OpeningParenthesis
-                from keyword in Parse.String("either").Token()
-                from types in _typeParserInjector.Parser.AtLeastOnce().Token()
-                from close in ClosingParenthesis
-                select new EitherType(types.ToList())
-                ).Token();
-
-            // (fluent <type>) definition
-            Parser<IType> fluentTypeDefinition = (
-                from open in OpeningParenthesis
-                from keyword in Parse.String("fluent").Token()
-                from t in _typeParserInjector.Parser
-                from close in ClosingParenthesis
-                select new FluentType(t)
-                ).Token();
-
-            // final parser for types
-            Parser<IType> type = typeDefinition.Or(eitherTypeDefinition).Or(fluentTypeDefinition);
-            _typeParserInjector.Parser = type;
-
-            return type;
-        }
-
+        
         /// <summary>
         /// Wraps the specified option.
         /// </summary>
@@ -738,19 +496,5 @@ namespace PDDL.Parser.Pddl12
                 select new Axiom(vars.ToList(), context, implications)
                 ).Token();
         }
-
-        /// <summary>
-        /// Class ParserInjector. This class cannot be inherited.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        sealed class ParserInjector<T>
-        {
-            /// <summary>
-            /// Gets or sets the parser.
-            /// </summary>
-            /// <value>The parser.</value>
-            public Parser<T> Parser { get; set; }
-        }
-
     }
 }
