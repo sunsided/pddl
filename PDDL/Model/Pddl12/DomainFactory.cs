@@ -51,6 +51,7 @@ namespace PDDL.Model.Pddl12
             IReadOnlyList<ILiteral<IName>> timeless = null;
             IReadOnlyList<IName> extensions = null;
             IReadOnlyList<IGoalDescription> safety = null;
+            IReadOnlyList<IDomainVariable> variables = null;
 
             // iterate and sort
             foreach (var element in sequence)
@@ -111,7 +112,9 @@ namespace PDDL.Model.Pddl12
                 var varsElement = element as IDomainVarsDefinition;
                 if (varsElement != null)
                 {
-                    throw new NotImplementedException(":vars");
+                    if (!ReferenceEquals(variables, null)) throw new ParseException(":domain-variables definition occured more than once");
+                    variables = varsElement.Variables;
+                    continue;
                 }
 
                 // only one predicates is allowed
@@ -161,6 +164,7 @@ namespace PDDL.Model.Pddl12
             if (predicates != null) domain.Predicates = predicates;
             if (timeless != null) domain.Timeless = timeless;
             if (safety != null) domain.Safety = safety;
+            if (variables != null) domain.Variables = variables;
 
             // there we go
             return domain;

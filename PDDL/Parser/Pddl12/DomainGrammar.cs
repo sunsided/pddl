@@ -93,6 +93,13 @@ namespace PDDL.Parser.Pddl12
             = CreateSafetyDefinition();
 
         /// <summary>
+        /// The vars definition
+        /// </summary>
+        [NotNull]
+        public static readonly Parser<IDomainVarsDefinition> VarsDefinition
+            = CreateVarsDefinition();
+
+        /// <summary>
         /// The domain definition
         /// </summary>
         [NotNull] 
@@ -113,7 +120,7 @@ namespace PDDL.Parser.Pddl12
                     .Or<IDomainDefinitionElement>(RequirementsDefinition)
                     .Or<IDomainDefinitionElement>(TypesDefinition)
                     .Or<IDomainDefinitionElement>(ConstantsDefinition)
-                    // TODO .Or<IDomainDefinitionElement>(VarsDefinition)
+                    .Or<IDomainDefinitionElement>(VarsDefinition)
                     .Or<IDomainDefinitionElement>(PredicatesDefinition)
                     .Or<IDomainDefinitionElement>(TimelessDefinition)
                     .Or<IDomainDefinitionElement>(SafetyDefinition)
@@ -174,6 +181,21 @@ namespace PDDL.Parser.Pddl12
                 from backgroundGoals in GoalGrammar.GoalDescription.Many()
                 from close in CommonGrammar.ClosingParenthesis
                 select new SafetyDefinition(backgroundGoals.ToList())
+                ).Token();
+        }
+
+        /// <summary>
+        /// Creates the vars definition.
+        /// </summary>
+        [NotNull]
+        private static Parser<IDomainVarsDefinition> CreateVarsDefinition()
+        {
+            return (
+                from open in CommonGrammar.OpeningParenthesis
+                from keyword in Keywords.Vars
+                from variables in TypedLists.TypedListOfDomainVariable
+                from close in CommonGrammar.ClosingParenthesis
+                select new VarsDefinition(variables.ToList())
                 ).Token();
         }
 

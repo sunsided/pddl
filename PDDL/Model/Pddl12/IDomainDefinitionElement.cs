@@ -70,7 +70,12 @@ namespace PDDL.Model.Pddl12
     /// </summary>
     public interface IDomainVarsDefinition : IDomainDefinitionElement
     {
-        // TODO: add domain-vars
+        /// <summary>
+        /// Gets the safety constraints.
+        /// </summary>
+        /// <value>The safety constraints.</value>
+        [NotNull]
+        IReadOnlyList<IDomainVariable> Variables { get; }
     }
 
     /// <summary>

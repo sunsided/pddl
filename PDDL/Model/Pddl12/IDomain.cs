@@ -68,6 +68,13 @@ namespace PDDL.Model.Pddl12
         IReadOnlyList<IGoalDescription> Safety { get; }
 
         /// <summary>
+        /// Gets the domain variables.
+        /// </summary>
+        /// <value>The domain variables.</value>
+        [NotNull]
+        IReadOnlyList<IDomainVariable> Variables { get; }
+
+        /// <summary>
         /// Gets or sets the actions.
         /// </summary>
         /// <value>The actions.</value>

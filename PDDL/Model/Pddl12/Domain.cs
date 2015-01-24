@@ -18,6 +18,7 @@ namespace PDDL.Model.Pddl12
         private IReadOnlyList<IAxiom> _axioms = new IAxiom[0];
         private IReadOnlyList<IName> _extends = new IName[0];
         private IReadOnlyList<IGoalDescription> _safety = new IGoalDescription[0];
+        private IReadOnlyList<IDomainVariable> _variables = new IDomainVariable[0];
 
         /// <summary>
         /// Gets the name.
@@ -143,6 +144,22 @@ namespace PDDL.Model.Pddl12
             {
                 if (ReferenceEquals(value, null)) throw new ArgumentNullException("value");
                 _actions = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the domain variables.
+        /// </summary>
+        /// <value>The domain variables.</value>
+        /// <exception cref="ArgumentNullException">The value of 'value' cannot be null. </exception>
+        [NotNull]
+        public IReadOnlyList<IDomainVariable> Variables
+        {
+            get { return _variables; }
+            set
+            {
+                if (ReferenceEquals(value, null)) throw new ArgumentNullException("value");
+                _variables = value;
             }
         }
 
