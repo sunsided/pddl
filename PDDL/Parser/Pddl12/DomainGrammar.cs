@@ -96,7 +96,7 @@ namespace PDDL.Parser.Pddl12
         /// The vars definition
         /// </summary>
         [NotNull]
-        public static readonly Parser<IDomainVarsDefinition> VarsDefinition
+        public static readonly Parser<IDomainVarsDefinition> VariablesDefinition
             = CreateVarsDefinition();
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace PDDL.Parser.Pddl12
                     .Or<IDomainDefinitionElement>(RequirementsDefinition)
                     .Or<IDomainDefinitionElement>(TypesDefinition)
                     .Or<IDomainDefinitionElement>(ConstantsDefinition)
-                    .Or<IDomainDefinitionElement>(VarsDefinition)
+                    .Or<IDomainDefinitionElement>(VariablesDefinition)
                     .Or<IDomainDefinitionElement>(PredicatesDefinition)
                     .Or<IDomainDefinitionElement>(TimelessDefinition)
                     .Or<IDomainDefinitionElement>(SafetyDefinition)
@@ -192,7 +192,7 @@ namespace PDDL.Parser.Pddl12
         {
             return (
                 from open in CommonGrammar.OpeningParenthesis
-                from keyword in Keywords.Vars
+                from keyword in Keywords.DomainVariables
                 from variables in TypedLists.TypedListOfDomainVariable
                 from close in CommonGrammar.ClosingParenthesis
                 select new VarsDefinition(variables.ToList())
