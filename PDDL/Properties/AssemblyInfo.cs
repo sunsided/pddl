@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("PDDL#")]
 [assembly: AssemblyDescription("Planning Domain Definition Language Parser")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Markus Mayer")]
 [assembly: AssemblyProduct("PDDL#")]
 [assembly: AssemblyCopyright("Copyright © Markus Mayer 2015")]
 [assembly: AssemblyTrademark("")]
