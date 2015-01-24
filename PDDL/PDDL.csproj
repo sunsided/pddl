@@ -110,7 +110,7 @@
     <Compile Include="Parser\Pddl12\ActionGrammar.cs" />
     <Compile Include="Parser\Pddl12\CommonGrammar.cs" />
     <Compile Include="Parser\Pddl12\DomainGrammar.cs" />
-    <Compile Include="Parser\Pddl12\DomainFactory.cs" />
+    <Compile Include="Model\Pddl12\DomainFactory.cs" />
     <Compile Include="Parser\Pddl12\GoalGrammar.cs" />
     <Compile Include="Parser\Pddl12\Keywords.cs" />
     <Compile Include="Parser\Pddl12\ParserInjector.cs" />

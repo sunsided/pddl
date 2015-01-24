@@ -18,6 +18,13 @@ namespace PDDL.Model.Pddl12
         IName Name { get; }
 
         /// <summary>
+        /// Gets the names of the extended domains.
+        /// </summary>
+        /// <value>The types.</value>
+        [NotNull]
+        IReadOnlyList<IName> Extends { get; }
+
+        /// <summary>
         /// Gets the requirements.
         /// </summary>
         /// <value>The requirements.</value>

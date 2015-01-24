@@ -95,19 +95,6 @@ namespace PDDL.Parser.Pddl12
         #region Factory Functions
         
         /// <summary>
-        /// Creates a parser for the domain structure.
-        /// </summary>
-        /// <returns>Parser&lt;Pddl12DomainStructure&gt;.</returns>
-        [NotNull]
-        private static Parser<DomainFactory> CreateDomainStructure()
-        {
-            return (
-                from matches in ActionGrammar.ActionDefinition.Or<IDomainStructureElement>(AxiomGrammar.AxiomDefinition).Many()
-                select DomainFactory.FromSequence(matches)
-                );
-        }
-
-        /// <summary>
         /// Creates the domain definition element parser.
         /// </summary>
         /// <returns>Parser&lt;IReadOnlyList&lt;IDomainDefinitionElement&gt;&gt;.</returns>
@@ -137,35 +124,18 @@ namespace PDDL.Parser.Pddl12
         [NotNull]
         private static Parser<IDomain> CreateDomainDefinition()
         {
-            var ds = CreateDomainStructure();
+            var definition = CreateDomainDefinitionElementParser();
 
             return (
+                // header
                 from open in CommonGrammar.OpeningParenthesis
                 from domainKeyword in Keywords.Domain
                 from domainName in CommonGrammar.NameNonToken.Token()
                 from close in CommonGrammar.ClosingParenthesis
-                from extensions in ExtensionDefinition.Optional()
-                from requirements in RequirementsDefinition.Optional()
-                from types in TypesDefinition.Optional()
-                from constants in ConstantsDefinition.Optional()
-                from predicates in PredicatesDefinition.Optional()
-                from timeless in TimelessDefinition.Optional()
-                // structure-def following
-                from structure in ds
-                // TODO: this should go for the whole domain structure
-
+                // definition body
+                from body in definition
                 // bundle and go
-                let ex = extensions.GetDefinition(def => def.Names) 
-                let dr = requirements.GetDefinition(def => def.Requirements)
-                let ty = types.GetDefinition(def => def.Types)
-                let co = constants.GetDefinition(def => def.Constants)
-                let pr = predicates.GetDefinition(def => def.Predicates)
-                let tl = timeless.GetDefinition(def => def.Timeless)
-                select new Domain(domainName, dr, ty, co, pr, tl)
-                {
-                    Actions = structure.Actions,
-                    Axioms = structure.Axioms
-                }
+                select DomainFactory.FromSequence(domainName, body)
                 );
         }
 

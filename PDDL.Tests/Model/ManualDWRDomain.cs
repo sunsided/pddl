@@ -60,8 +60,15 @@ namespace PDDL.Tests.Model
                                                        };
 
             IReadOnlyList<ILiteral<IName>> timeless = new ILiteral<IName>[0];
-            
-            var domain = new Domain(name, requirements, types, constants, predicates, timeless);
+
+            var domain = new Domain(name)
+                         {
+                             Requirements = requirements,
+                             Types = types,
+                             Constants = constants,
+                             Predicates = predicates,
+                             Timeless = timeless
+                         };
         }
 
         /// <summary>
