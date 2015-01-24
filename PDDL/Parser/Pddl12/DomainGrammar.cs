@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using JetBrains.Annotations;
 using PDDL.Model.Pddl12;
+using PDDL.Model.Pddl12.DomainElements;
 using Sprache;
 
 namespace PDDL.Parser.Pddl12
@@ -45,42 +46,42 @@ namespace PDDL.Parser.Pddl12
         /// The predicates definition
         /// </summary>
         [NotNull] 
-        public static readonly Parser<IEnumerable<IAtomicFormulaSkeleton>> PredicatesDefinition
+        public static readonly Parser<IDomainPredicatesDefinition> PredicatesDefinition
             = CreatePredicatesDefinition();
 
         /// <summary>
         /// The extension definition
         /// </summary>
         [NotNull]
-        public static readonly Parser<IEnumerable<IName>> ExtensionDefinition
+        public static readonly Parser<IDomainExtensionDefinition> ExtensionDefinition
             = CreateExtensionDefinition();
 
         /// <summary>
         /// The requirements definition
         /// </summary>
         [NotNull] 
-        public static readonly Parser<IEnumerable<IRequirement>> RequirementsDefinition
+        public static readonly Parser<IDomainRequireDefinition> RequirementsDefinition
             = CreateRequirementsDefinition();
 
         /// <summary>
         /// The types definition
         /// </summary>
         [NotNull] 
-        public static readonly Parser<IEnumerable<IType>> TypesDefinition
+        public static readonly Parser<IDomainTypesDefinition> TypesDefinition
             = CreateTypesDefinition();
 
         /// <summary>
         /// The constants definition
         /// </summary>
         [NotNull] 
-        public static readonly Parser<IEnumerable<IConstant>> ConstantsDefinition
+        public static readonly Parser<IDomainConstantsDefinition> ConstantsDefinition
             = CreateConstantsDefinition();
 
         /// <summary>
         /// The timeless definition
         /// </summary>
-        [NotNull] 
-        public static readonly Parser<IEnumerable<ILiteral<IName>>> TimelessDefinition
+        [NotNull]
+        public static readonly Parser<IDomainTimelessDefinition> TimelessDefinition
             = CreateTimelessDefinition();
 
         /// <summary>
@@ -110,7 +111,7 @@ namespace PDDL.Parser.Pddl12
         /// </summary>
         /// <returns>Parser&lt;Domain&gt;.</returns>
         [NotNull]
-        private static Parser<Domain> CreateDomainDefinition()
+        private static Parser<IDomain> CreateDomainDefinition()
         {
             var ds = CreateDomainStructure();
 
@@ -126,15 +127,16 @@ namespace PDDL.Parser.Pddl12
                 from predicates in PredicatesDefinition.Optional()
                 from timeless in TimelessDefinition.Optional()
                 // structure-def following
-                from structure in ds // TODO: this should go for the whole domain structure
+                from structure in ds
+                // TODO: this should go for the whole domain structure
 
                 // bundle and go
-                let ex = CommonGrammar.Wrap(extensions)
-                let dr = CommonGrammar.Wrap(requirements)
-                let ty = CommonGrammar.Wrap(types)
-                let co = CommonGrammar.Wrap(constants)
-                let pr = CommonGrammar.Wrap(predicates)
-                let tl = CommonGrammar.Wrap(timeless)
+                let ex = extensions.GetDefinition(def => def.Names) 
+                let dr = requirements.GetDefinition(def => def.Requirements)
+                let ty = types.GetDefinition(def => def.Types)
+                let co = constants.GetDefinition(def => def.Constants)
+                let pr = predicates.GetDefinition(def => def.Predicates)
+                let tl = timeless.GetDefinition(def => def.Timeless)
                 select new Domain(domainName, dr, ty, co, pr, tl)
                 {
                     Actions = structure.Actions,
@@ -148,14 +150,14 @@ namespace PDDL.Parser.Pddl12
         /// </summary>
         /// <returns>Parser&lt;IEnumerable&lt;ILiteral&gt;&gt;.</returns>
         [NotNull]
-        private static Parser<IEnumerable<ILiteral<IName>>> CreateTimelessDefinition()
+        private static Parser<IDomainTimelessDefinition> CreateTimelessDefinition()
         {
             return (
                 from open in CommonGrammar.OpeningParenthesis
                 from keyword in Keywords.Timeless
                 from literals in CommonGrammar.LiteralOfName.Many()
                 from close in CommonGrammar.ClosingParenthesis
-                select literals
+                select new TimelessDefinition(literals.ToList())
                 ).Token();
         }
 
@@ -164,14 +166,14 @@ namespace PDDL.Parser.Pddl12
         /// </summary>
         /// <returns>Parser&lt;IEnumerable&lt;IConstant&gt;&gt;.</returns>
         [NotNull]
-        private static Parser<IEnumerable<IConstant>> CreateConstantsDefinition()
+        private static Parser<IDomainConstantsDefinition> CreateConstantsDefinition()
         {
             return (
                 from open in CommonGrammar.OpeningParenthesis
                 from keyword in Keywords.Constants
-                from types in TypedLists.TypedListOfConstant
+                from constants in TypedLists.TypedListOfConstant
                 from close in CommonGrammar.ClosingParenthesis
-                select types
+                select new ConstantsDefinition(constants.ToList())
                 ).Token();
         }
 
@@ -180,14 +182,14 @@ namespace PDDL.Parser.Pddl12
         /// </summary>
         /// <returns>Parser&lt;IEnumerable&lt;IType&gt;&gt;.</returns>
         [NotNull]
-        private static Parser<IEnumerable<IType>> CreateTypesDefinition()
+        private static Parser<IDomainTypesDefinition> CreateTypesDefinition()
         {
             return (
                 from open in CommonGrammar.OpeningParenthesis
                 from keyword in Keywords.Types
                 from types in TypedLists.TypedListOfType
                 from close in CommonGrammar.ClosingParenthesis
-                select types
+                select new TypesDefinition(types.ToList())
                 ).Token();
         }
 
@@ -196,14 +198,14 @@ namespace PDDL.Parser.Pddl12
         /// </summary>
         /// <returns>Parser&lt;IEnumerable&lt;IRequirement&gt;&gt;.</returns>
         [NotNull]
-        private static Parser<IEnumerable<IRequirement>> CreateRequirementsDefinition()
+        private static Parser<IDomainRequireDefinition> CreateRequirementsDefinition()
         {
             return (
                 from open in CommonGrammar.OpeningParenthesis
                 from keyword in Keywords.Requirements
                 from keys in ValidRequirements.Many()
                 from close in CommonGrammar.ClosingParenthesis
-                select keys
+                select new RequirementsDefinition(keys.ToList())
                 ).Token();
         }
 
@@ -212,14 +214,14 @@ namespace PDDL.Parser.Pddl12
         /// </summary>
         /// <returns>Parser&lt;IEnumerable&lt;IName&gt;&gt;.</returns>
         [NotNull]
-        private static Parser<IEnumerable<IName>> CreateExtensionDefinition()
+        private static Parser<IDomainExtensionDefinition> CreateExtensionDefinition()
         {
             return (
                 from open in CommonGrammar.OpeningParenthesis
                 from keyword in Keywords.Extends
                 from names in CommonGrammar.NameNonToken.Token().AtLeastOnce()
                 from close in CommonGrammar.ClosingParenthesis
-                select names
+                select new ExtensionDefinition(names.ToList())
                 ).Token();
         }
 
@@ -228,14 +230,14 @@ namespace PDDL.Parser.Pddl12
         /// </summary>
         /// <returns>Parser&lt;IEnumerable&lt;IAtomicFormulaSkeleton&gt;&gt;.</returns>
         [NotNull]
-        private static Parser<IEnumerable<IAtomicFormulaSkeleton>> CreatePredicatesDefinition()
+        private static Parser<IDomainPredicatesDefinition> CreatePredicatesDefinition()
         {
             return (
                 from open in CommonGrammar.OpeningParenthesis
                 from keyword in Keywords.Predicates
                 from skeletons in CommonGrammar.AtomicFormulaSkeleton.AtLeastOnce()
                 from close in CommonGrammar.ClosingParenthesis
-                select skeletons
+                select new PredicatesDefinition(skeletons.ToList())
                 ).Token();
         }
 

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using JetBrains.Annotations;
 using PDDL.Model.Pddl12;
+using PDDL.Model.Pddl12.DomainElements;
 using Sprache;
 
 namespace PDDL.Parser.Pddl12
@@ -15,7 +16,7 @@ namespace PDDL.Parser.Pddl12
         /// </summary>
         /// <value>The axioms.</value>
         [NotNull]
-        public static readonly Parser<IAxiom> AxiomDefinition =
+        public static readonly Parser<IDomainAxiomElement> AxiomDefinition =
             CreateAxiomDefinition();
 
         #region Factory Functions
@@ -25,7 +26,7 @@ namespace PDDL.Parser.Pddl12
         /// </summary>
         /// <returns>Parser&lt;IAxiom&gt;.</returns>
         [NotNull]
-        private static Parser<IAxiom> CreateAxiomDefinition()
+        private static Parser<IDomainAxiomElement> CreateAxiomDefinition()
         {
             return (
                 from open in CommonGrammar.OpeningParenthesis
@@ -34,7 +35,9 @@ namespace PDDL.Parser.Pddl12
                 from context in Keywords.Context.Then(_ => GoalGrammar.GoalDescription)
                 from implications in Keywords.Implies.Then(_ => CommonGrammar.LiteralOfTerm)
                 from close in CommonGrammar.ClosingParenthesis
-                select new Axiom(vars.ToList(), context, implications)
+                // bundle and go
+                let axiom = new Axiom(vars.ToList(), context, implications)
+                select new AxiomDefinition(axiom)
                 ).Token();
         }
 

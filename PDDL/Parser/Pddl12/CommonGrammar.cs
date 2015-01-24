@@ -271,6 +271,19 @@ namespace PDDL.Parser.Pddl12
             return option.IsDefined ? option.Get().ToList().AsReadOnly() : (IReadOnlyList<T>)new T[0];
         }
 
+        /// <summary>
+        /// Wraps the specified option.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="option">The option.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns>IReadOnlyList&lt;T&gt;.</returns>
+        [NotNull]
+        internal static T Wrap<T>([NotNull] IOption<T> option, T defaultValue)
+        {
+            return option.IsDefined ? option.Get() : defaultValue;
+        }
+
         #endregion
     }
 }

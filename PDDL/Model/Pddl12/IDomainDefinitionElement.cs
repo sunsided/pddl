@@ -8,12 +8,19 @@ namespace PDDL.Model.Pddl12
     /// </summary>
     public interface IDomainDefinitionElement
     { }
-    
+
     /// <summary>
     /// Interface IDomainExtensionDefinition
     /// </summary>
     public interface IDomainExtensionDefinition : IDomainDefinitionElement
-    { }
+    {
+        /// <summary>
+        /// Gets the names.
+        /// </summary>
+        /// <value>The names.</value>
+        [NotNull]
+        IReadOnlyList<IName> Names { get; }
+    }
 
     /// <summary>
     /// Interface IDomainRequireDefinition

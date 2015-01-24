@@ -173,7 +173,9 @@ namespace PDDL.Tests.Parser
         [Test]
         public void Axiom()
         {
-            var ax = AxiomGrammar.AxiomDefinition.Parse("(:axiom :vars (?x ?y - physob) :context (on ?x ?y) :implies (above ?x ?y))");
+            var axd = AxiomGrammar.AxiomDefinition.Parse("(:axiom :vars (?x ?y - physob) :context (on ?x ?y) :implies (above ?x ?y))");
+            var ax = axd.Axiom;
+
             Assert.AreEqual(2, ax.Variables.Count);
             Assert.IsInstanceOf<ILiteralGoalDescription>(ax.Context);
             Assert.AreEqual("on", ((ILiteralGoalDescription)ax.Context).Literal.Name);

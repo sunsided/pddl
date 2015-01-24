@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using JetBrains.Annotations;
 using PDDL.Model.Pddl12;
+using PDDL.Model.Pddl12.DomainElements;
 using PDDL.Model.Pddl12.Null;
 using Sprache;
 
@@ -14,8 +15,8 @@ namespace PDDL.Parser.Pddl12
         /// <summary>
         /// The action definition
         /// </summary>
-        [NotNull] 
-        public static readonly Parser<IAction> ActionDefinition =
+        [NotNull]
+        public static readonly Parser<IDomainActionElement> ActionDefinition =
             CreateActionDefinition();
 
         #region Factory Functions
@@ -25,7 +26,7 @@ namespace PDDL.Parser.Pddl12
         /// </summary>
         /// <returns>Parser&lt;Action&gt;.</returns>
         [NotNull]
-        private static Parser<IAction> CreateActionDefinition()
+        private static Parser<IDomainActionElement> CreateActionDefinition()
         {
             var actionFunctor = CommonGrammar.NameNonToken.Token();
 
@@ -59,10 +60,12 @@ namespace PDDL.Parser.Pddl12
                 from precs in actionPreconditions.Optional()
                 from e in effectDef.Optional()
                 from close in CommonGrammar.ClosingParenthesis
-                select new Action(functor, parameters.ToList(), (e.IsDefined ? e.Get() : NullEffect.Default))
+                // bundle and go
+                let action = new Action(functor, parameters.ToList(), (e.IsDefined ? e.Get() : NullEffect.Default))
                 {
                     Variables = CommonGrammar.Wrap(vars)
                 }
+                select new ActionDefinition(action)
                 ).Token();
 
             return actionDef;
