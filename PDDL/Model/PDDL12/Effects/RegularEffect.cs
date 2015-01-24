@@ -20,7 +20,7 @@ namespace PDDL.Model.PDDL12.Effects
         /// <param name="effects">The effects.</param>
         /// <exception cref="ArgumentNullException">The value of 'effects' cannot be null. </exception>
         public RegularEffect([NotNull] IAtomicFormula<ITerm> effects)
-            : base(ListType.Add)
+            : base(EffectKind.Regular)
         {
             if (ReferenceEquals(effects, null)) throw new ArgumentNullException("effects", "effects must not be null");
             Effects = effects;

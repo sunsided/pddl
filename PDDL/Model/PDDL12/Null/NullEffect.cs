@@ -24,7 +24,7 @@ namespace PDDL.Model.PDDL12.Null
         /// <summary>
         /// Initializes a new instance of the <see cref="NullEffect"/> class.
         /// </summary>
-        public NullEffect() : base(ListType.Indifferent)
+        public NullEffect() : base(EffectKind.None)
         {
         }
     }

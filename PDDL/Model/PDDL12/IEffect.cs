@@ -12,7 +12,7 @@ namespace PDDL.Model.PDDL12
         /// Gets the list type.
         /// </summary>
         /// <value>The list type.</value>
-        ListType Type { get; }
+        EffectKind Type { get; }
     }
 
     /// <summary>

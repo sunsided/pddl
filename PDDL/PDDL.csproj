@@ -88,7 +88,7 @@
     <Compile Include="Model\PDDL12\IPredicate.cs" />
     <Compile Include="Model\PDDL12\Predicate.cs" />
     <Compile Include="Model\PDDL12\Requirement.cs" />
-    <Compile Include="Model\PDDL12\ListType.cs" />
+    <Compile Include="Model\PDDL12\EffectKind.cs" />
     <Compile Include="Model\PDDL12\Effects\ConjunctionEffect.cs" />
     <Compile Include="Model\PDDL12\Effects\RegularEffect.cs" />
     <Compile Include="Model\PDDL12\Effects\EffectBase.cs" />
