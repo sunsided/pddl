@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\PDDL12\Axiom.cs" />
+    <Compile Include="Model\PDDL12\GoalKind.cs" />
     <Compile Include="Model\PDDL12\IDefinition.cs" />
     <Compile Include="Model\PDDL12\Object.cs" />
     <Compile Include="Model\PDDL12\ConstantDomainVariable.cs" />

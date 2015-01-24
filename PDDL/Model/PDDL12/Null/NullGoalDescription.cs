@@ -23,5 +23,14 @@ namespace PDDL.Model.PDDL12.Null
         /// <value>The default.</value>
         [NotNull]
         public static NullGoalDescription Default { get {  return _default; } }
+
+        /// <summary>
+        /// Gets the kind of goal.
+        /// </summary>
+        /// <value>The kind.</value>
+        public override GoalKind Kind
+        {
+            get { return GoalKind.None; }
+        }
     }
 }
