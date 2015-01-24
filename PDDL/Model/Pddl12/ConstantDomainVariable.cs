@@ -15,12 +15,15 @@ namespace PDDL.Model.Pddl12
         public IValue Value { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConstantDomainVariable"/> class.
+        /// Initializes a new instance of the <see cref="ConstantDomainVariable" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
+        /// <param name="type">The type.</param>
         /// <param name="value">The value.</param>
-        /// <exception cref="ArgumentNullException">The value of 'value' cannot be null. </exception>
-        public ConstantDomainVariable([NotNull] IName name, IValue value) : base(name)
+        /// <exception cref="System.ArgumentNullException">value</exception>
+        /// <exception cref="ArgumentNullException">The value of 'value' cannot be null.</exception>
+        public ConstantDomainVariable([NotNull] IName name, IValue value)
+            : base(name)
         {
             if (ReferenceEquals(value, null)) throw new ArgumentNullException("value");
             Value = value;

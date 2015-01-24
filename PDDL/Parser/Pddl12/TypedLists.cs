@@ -35,6 +35,13 @@ namespace PDDL.Parser.Pddl12
         public static readonly Parser<IEnumerable<IConstant>> TypedListOfConstant
             = CreateTypedListOfConstant();
 
+        /// <summary>
+        /// The typed list of domain variable
+        /// </summary>
+        [NotNull]
+        public static readonly Parser<IEnumerable<IDomainVariable>> TypedListOfDomainVariable
+            = CreateTypedListOfDomainVariable();
+
         #region Factory Functions
 
         /// <summary>
@@ -82,6 +89,28 @@ namespace PDDL.Parser.Pddl12
                 from names in CommonGrammar.NameNonToken.Token().AtLeastOnce() // TODO This grammar always allows :typing requirement - change grammar if this is not explicitly required
                 from t in Parse.Char('-').Token().Then(_ => CommonGrammar.Type).Token().Optional()
                 select names.Select(vn => new Constant(vn, t.IsDefined ? t.Get() : DefaultType.Default))
+                )
+                .Many()
+                // ReSharper disable once PossibleMultipleEnumeration
+                .Select(groupedPerType => groupedPerType.SelectMany(t => t));
+        }
+
+        /// <summary>
+        /// Creates the typed list of domain variable.
+        /// </summary>
+        /// <returns>Parser&lt;IEnumerable&lt;Constant&gt;&gt;.</returns>
+        [NotNull]
+        private static Parser<IEnumerable<IDomainVariable>> CreateTypedListOfDomainVariable()
+        {
+            return (
+                from variables in DomainVariableGrammar.DomainVariable.Token().AtLeastOnce() // TODO This grammar always allows :typing requirement - change grammar if this is not explicitly required
+                from t in Parse.Char('-').Token().Then(_ => CommonGrammar.Type).Token().Optional()
+                select variables.Select(var =>
+                                        {
+                                            // bind the optional type
+                                            if (t.IsDefined) var.Type = t.Get();
+                                            return var;
+                                        })
                 )
                 .Many()
                 // ReSharper disable once PossibleMultipleEnumeration

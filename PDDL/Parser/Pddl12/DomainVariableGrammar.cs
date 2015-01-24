@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using JetBrains.Annotations;
 using PDDL.Model.Pddl12;
 using PDDL.Model.Pddl12.Value;
@@ -23,7 +19,7 @@ namespace PDDL.Parser.Pddl12
             from value in Parse.Digit.AtLeastOnce().Text()
             let number = Decimal.Parse(value)
             select new DecimalValue(number)
-            );
+            ).Token();
 
         /// <summary>
         /// The value
@@ -36,28 +32,28 @@ namespace PDDL.Parser.Pddl12
         /// A variable without a value
         /// </summary>
         [NotNull]
-        public static readonly Parser<IDomainVariable> Variable = (
+        public static readonly Parser<DomainVariable> Variable = (
             from name in CommonGrammar.NameNonToken.Token()
             select new DomainVariable(name)
-            );
+            ).Token();
 
         /// <summary>
         /// A variable without a value
         /// </summary>
         [NotNull]
-        public static readonly Parser<IDomainVariable> VariableWithValue = (
+        public static readonly Parser<DomainVariable> VariableWithValue = (
             from open in CommonGrammar.OpeningParenthesis
             from name in CommonGrammar.NameNonToken.Token()
             from value in Value
             from close in CommonGrammar.ClosingParenthesis
             select new ConstantDomainVariable(name, value)
-            );
+            ).Token();
 
         /// <summary>
         /// The domain variable
         /// </summary>
         [NotNull]
-        public static readonly Parser<IDomainVariable> DomainVariable =
-            Variable.Or(VariableWithValue);
+        public static readonly Parser<DomainVariable> DomainVariable =
+            Variable.Or(VariableWithValue).Token();
     }
 }

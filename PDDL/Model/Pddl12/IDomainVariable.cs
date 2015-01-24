@@ -13,5 +13,12 @@ namespace PDDL.Model.Pddl12
         /// <value>The name.</value>
         [NotNull]
         IName Name { get; }
+
+        /// <summary>
+        /// Gets the type.
+        /// </summary>
+        /// <value>The type.</value>
+        [NotNull]
+        IType Type { get; }
     }
 }
