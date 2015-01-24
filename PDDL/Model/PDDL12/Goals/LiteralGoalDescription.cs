@@ -24,5 +24,14 @@ namespace PDDL.Model.PDDL12.Goals
             if (ReferenceEquals(literal, null)) throw new ArgumentNullException("literal", "literal must not be null");
             Literal = literal;
         }
+
+        /// <summary>
+        /// Gets the kind of goal.
+        /// </summary>
+        /// <value>The kind.</value>
+        public override GoalKind Kind
+        {
+            get { return GoalKind.Literal; }
+        }
     }
 }

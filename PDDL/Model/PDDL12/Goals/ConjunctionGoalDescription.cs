@@ -25,5 +25,14 @@ namespace PDDL.Model.PDDL12.Goals
             if (ReferenceEquals(goals, null)) throw new ArgumentNullException("goals", "goals must not be null");
             Goals = goals;
         }
+
+        /// <summary>
+        /// Gets the kind of goal.
+        /// </summary>
+        /// <value>The kind.</value>
+        public override GoalKind Kind
+        {
+            get { return GoalKind.Conjunction; }
+        }
     }
 }

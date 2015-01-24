@@ -12,6 +12,11 @@ namespace PDDL.Model.PDDL12
     /// </summary>
     public interface IGoalDescription
     {
+        /// <summary>
+        /// Gets the kind of goal.
+        /// </summary>
+        /// <value>The kind.</value>
+        GoalKind Kind { get; }
     }
 
     /// <summary>
