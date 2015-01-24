@@ -1,7 +1,7 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12
+namespace PDDL.Model.PDDL12
 {
     /// <summary>
     /// class Requirement
@@ -9,7 +9,7 @@ namespace PDDL.Model.Pddl12
     ///     Names a requirement for a <see cref="IDomain"/>.
     /// </para>
     /// </summary>
-    public class Requirement : IRequirement
+    internal sealed class Requirement : IRequirement
     {
         /// <summary>
         /// Gets the value.

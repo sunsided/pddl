@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Globalization;
-using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
-using PDDL.Model.Pddl12;
-using PDDL.Model.Pddl12.Value;
+using PDDL.Model.PDDL12;
+using PDDL.Model.PDDL12.Value;
 using Sprache;
 
-namespace PDDL.Parser.Pddl12
+namespace PDDL.Parser.PDDL12
 {
     /// <summary>
     /// Class DomainVariableGrammar.

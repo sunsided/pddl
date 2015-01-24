@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12
+namespace PDDL.Model.PDDL12
 {
     /// <summary>
     /// Class Literal.
     /// </summary>
-    public class Literal<T> : AtomicFormula<T>, ILiteral<T>
+    internal sealed class Literal<T> : AtomicFormula<T>, ILiteral<T>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Literal{T}" /> class.

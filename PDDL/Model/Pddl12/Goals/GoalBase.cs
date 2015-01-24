@@ -1,9 +1,9 @@
-﻿namespace PDDL.Model.Pddl12.Goals
+﻿namespace PDDL.Model.PDDL12.Goals
 {
     /// <summary>
     /// Class GoalBase.
     /// </summary>
-    public abstract class GoalBase : IGoalDescription
+    internal abstract class GoalBase : IGoalDescription
     {
     }
 }

@@ -1,13 +1,13 @@
 ﻿using System;
 using JetBrains.Annotations;
-using PDDL.Model.Pddl12.Types;
+using PDDL.Model.PDDL12.Types;
 
-namespace PDDL.Model.Pddl12
+namespace PDDL.Model.PDDL12
 {
     /// <summary>
     /// Class DomainVariable.
     /// </summary>
-    public class DomainVariable : IDomainVariable
+    internal class DomainVariable : IDomainVariable
     {
         /// <summary>
         /// The type

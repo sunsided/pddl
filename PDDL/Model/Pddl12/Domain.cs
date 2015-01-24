@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12
+namespace PDDL.Model.PDDL12
 {
     /// <summary>
     /// Class Domain.
     /// </summary>
-    internal class Domain : IDomain
+    internal sealed class Domain : IDomain
     {
         private IReadOnlyList<IRequirement> _requirements = new IRequirement[0];
         private IReadOnlyList<IType> _types = new IType[0];

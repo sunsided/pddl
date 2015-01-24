@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PDDL.Model.Pddl12.Types
+namespace PDDL.Model.PDDL12.Types
 {
     /// <summary>
     /// Class EitherType. This class cannot be inherited.
     /// </summary>
-    public sealed class EitherType : IEitherType
+    internal sealed class EitherType : IEitherType
     {
         /// <summary>
         /// Gets the options.

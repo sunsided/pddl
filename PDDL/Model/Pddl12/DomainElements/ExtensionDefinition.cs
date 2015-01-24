@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12.DomainElements
+namespace PDDL.Model.PDDL12.DomainElements
 {
     /// <summary>
     /// Class ExtensionDefinition. This class cannot be inherited.
     /// </summary>
-    public sealed class ExtensionDefinition : IDomainExtensionDefinition
+    internal sealed class ExtensionDefinition : IDomainExtensionDefinition
     {
         /// <summary>
         /// Gets the name definitions.

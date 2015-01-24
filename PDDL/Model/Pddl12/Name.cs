@@ -2,12 +2,12 @@
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12
+namespace PDDL.Model.PDDL12
 {
     /// <summary>
     /// Class Name. This class cannot be inherited.
     /// </summary>
-    public class Name : IName
+    internal class Name : IName
     {
         /// <summary>
         /// Gets the value.

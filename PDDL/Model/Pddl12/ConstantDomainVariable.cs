@@ -1,12 +1,12 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12
+namespace PDDL.Model.PDDL12
 {
     /// <summary>
     /// Class ConstantDomainVariable.
     /// </summary>
-    public class ConstantDomainVariable : DomainVariable, IConstantDomainVariable
+    internal sealed class ConstantDomainVariable : DomainVariable, IConstantDomainVariable
     {
         /// <summary>
         /// Gets the value.

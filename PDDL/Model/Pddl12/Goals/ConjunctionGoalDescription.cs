@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12.Goals
+namespace PDDL.Model.PDDL12.Goals
 {
     /// <summary>
     /// Class ConjunctionGoalDescription.
     /// </summary>
-    public class ConjunctionGoalDescription : GoalBase, IConjunctionGoalDescription
+    internal sealed class ConjunctionGoalDescription : GoalBase, IConjunctionGoalDescription
     {
         /// <summary>
         /// Gets the goals.

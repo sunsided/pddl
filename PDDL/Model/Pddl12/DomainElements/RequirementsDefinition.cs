@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12.DomainElements
+namespace PDDL.Model.PDDL12.DomainElements
 {
     /// <summary>
     /// Class RequirementsDefinition. This class cannot be inherited.
     /// </summary>
-    public sealed class RequirementsDefinition : IDomainRequireDefinition, IProblemRequireDefinition
+    internal sealed class RequirementsDefinition : IDomainRequireDefinition, IProblemRequireDefinition
     {
         /// <summary>
         /// Gets the requirements.

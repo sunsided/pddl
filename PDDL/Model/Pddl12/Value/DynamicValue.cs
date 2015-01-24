@@ -1,11 +1,11 @@
 ﻿using System.Globalization;
 
-namespace PDDL.Model.Pddl12.Value
+namespace PDDL.Model.PDDL12.Value
 {
     /// <summary>
     /// Class DecimalValue. This class cannot be inherited.
     /// </summary>
-    public sealed class DynamicValue : IDynamicValue
+    internal sealed class DynamicValue : IDynamicValue
     {
         /// <summary>
         /// Gets the value.

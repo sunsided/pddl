@@ -4,9 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using PDDL.Model.Pddl12;
+using PDDL.Model.PDDL12;
 using PDDL.Parser;
-using PDDL.Parser.Pddl12;
 using Sprache;
 
 namespace PDDL.Tests

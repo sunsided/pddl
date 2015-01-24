@@ -1,12 +1,12 @@
 ﻿using JetBrains.Annotations;
-using PDDL.Model.Pddl12.Effects;
+using PDDL.Model.PDDL12.Effects;
 
-namespace PDDL.Model.Pddl12.Null
+namespace PDDL.Model.PDDL12.Null
 {
     /// <summary>
     /// Class NullEffect.
     /// </summary>
-    public sealed class NullEffect : EffectBase
+    internal sealed class NullEffect : EffectBase
     {
         /// <summary>
         /// The default instance

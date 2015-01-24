@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12.DomainElements
+namespace PDDL.Model.PDDL12.DomainElements
 {
     /// <summary>
     /// Class ConstantsDefinition. This class cannot be inherited.
     /// </summary>
-    public sealed class ConstantsDefinition : IDomainConstantsDefinition
+    internal sealed class ConstantsDefinition : IDomainConstantsDefinition
     {
         /// <summary>
         /// Gets the constants definitions.

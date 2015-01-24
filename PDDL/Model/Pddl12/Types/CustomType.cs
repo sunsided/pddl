@@ -1,12 +1,12 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12.Types
+namespace PDDL.Model.PDDL12.Types
 {
     /// <summary>
     /// Class CustomType. This class cannot be inherited.
     /// </summary>
-    public sealed class CustomType : TypeBase, ICustomType
+    internal sealed class CustomType : TypeBase, ICustomType
     {
         /// <summary>
         /// Gets or sets the parent type.

@@ -1,9 +1,12 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12
+namespace PDDL.Model.PDDL12
 {
-    public class Variable : IVariable
+    /// <summary>
+    /// Class Variable. This class cannot be inherited.
+    /// </summary>
+    internal sealed class Variable : IVariable
     {
         /// <summary>
         /// Gets the name.

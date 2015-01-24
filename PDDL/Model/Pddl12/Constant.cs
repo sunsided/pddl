@@ -1,12 +1,12 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12
+namespace PDDL.Model.PDDL12
 {
     /// <summary>
     /// Class Constant.
     /// </summary>
-    public class Constant : IConstant
+    internal sealed class Constant : IConstant
     {
         /// <summary>
         /// Gets the name.

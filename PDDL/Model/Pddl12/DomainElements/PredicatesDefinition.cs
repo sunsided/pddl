@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12.DomainElements
+namespace PDDL.Model.PDDL12.DomainElements
 {
     /// <summary>
     /// Class PredicatesDefinition. This class cannot be inherited.
     /// </summary>
-    public sealed class PredicatesDefinition : IDomainPredicatesDefinition
+    internal sealed class PredicatesDefinition : IDomainPredicatesDefinition
     {
         /// <summary>
         /// Gets the predicate definitions.

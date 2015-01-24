@@ -1,12 +1,12 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12.DomainElements
+namespace PDDL.Model.PDDL12.DomainElements
 {
     /// <summary>
     /// Class AxiomDefinition. This class cannot be inherited.
     /// </summary>
-    public sealed class AxiomDefinition : IDomainAxiomElement
+    internal sealed class AxiomDefinition : IDomainAxiomElement
     {
         /// <summary>
         /// Gets the axiom definition.

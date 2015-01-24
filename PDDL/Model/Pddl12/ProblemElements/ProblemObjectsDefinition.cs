@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12.ProblemElements
+namespace PDDL.Model.PDDL12.ProblemElements
 {
     /// <summary>
     /// Class ProblemObjectsDefinition. This class cannot be inherited.
     /// </summary>
-    public sealed class ProblemObjectsDefinition : IProblemObjectsDefinition
+    internal sealed class ProblemObjectsDefinition : IProblemObjectsDefinition
     {
         /// <summary>
         /// Gets the requirements.

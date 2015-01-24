@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12.Types
+namespace PDDL.Model.PDDL12.Types
 {
     /// <summary>
     /// Class DefaultType. This class cannot be inherited.
@@ -9,7 +9,7 @@ namespace PDDL.Model.Pddl12.Types
     ///     other type is explicitly defined.
     /// </para>
     /// </summary>
-    public sealed class DefaultType : TypeBase
+    internal sealed class DefaultType : TypeBase
     {
         /// <summary>
         /// The default instance

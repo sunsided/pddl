@@ -1,12 +1,12 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12
+namespace PDDL.Model.PDDL12
 {
     /// <summary>
     /// Class Predicate. This class cannot be inherited.
     /// </summary>
-    public sealed class Predicate : Name, IPredicate
+    internal sealed class Predicate : Name, IPredicate
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Predicate"/> class.

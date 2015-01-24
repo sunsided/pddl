@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12.DomainElements
+namespace PDDL.Model.PDDL12.DomainElements
 {
     /// <summary>
     /// Class SafetyDefinition. This class cannot be inherited.
     /// </summary>
-    public sealed class SafetyDefinition : IDomainSafetyDefinition
+    internal sealed class SafetyDefinition : IDomainSafetyDefinition
     {
         /// <summary>
         /// Gets the safety constraints.

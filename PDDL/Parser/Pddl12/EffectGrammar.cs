@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using JetBrains.Annotations;
-using PDDL.Model.Pddl12;
-using PDDL.Model.Pddl12.Effects;
+using PDDL.Model.PDDL12;
+using PDDL.Model.PDDL12.Effects;
 using Sprache;
 
-namespace PDDL.Parser.Pddl12
+namespace PDDL.Parser.PDDL12
 {
     /// <summary>
     /// Class EffectGrammar. This class cannot be inherited.

@@ -1,9 +1,9 @@
-﻿namespace PDDL.Model.Pddl12.Effects
+﻿namespace PDDL.Model.PDDL12.Effects
 {
     /// <summary>
     /// Class EffectBase.
     /// </summary>
-    public abstract class EffectBase : IEffect
+    internal abstract class EffectBase : IEffect
     {
         /// <summary>
         /// Gets the list type.

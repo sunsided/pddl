@@ -1,12 +1,12 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12
+namespace PDDL.Model.PDDL12
 {
     /// <summary>
     /// Class Object.
     /// </summary>
-    public class Object : IObject
+    internal sealed class Object : IObject
     {
         /// <summary>
         /// Gets the name.
