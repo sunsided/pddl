@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 
 namespace PDDL.Model.PDDL12
@@ -19,6 +20,7 @@ namespace PDDL.Model.PDDL12
         private IReadOnlyList<IName> _extends = new IName[0];
         private IReadOnlyList<IGoalDescription> _safety = new IGoalDescription[0];
         private IReadOnlyList<IDomainVariable> _variables = new IDomainVariable[0];
+        private bool _closedWorld = true;
 
         /// <summary>
         /// Gets the name.
@@ -68,9 +70,10 @@ namespace PDDL.Model.PDDL12
             {
                 if (ReferenceEquals(value, null)) throw new ArgumentNullException("value");
                 _requirements = value;
+                Update(_requirements);
             }
         }
-
+        
         /// <summary>
         /// Gets the type definitions.
         /// </summary>
@@ -188,6 +191,22 @@ namespace PDDL.Model.PDDL12
             if (ReferenceEquals(name, null)) throw new ArgumentNullException("name", "name must not be null");
 
             Name = name;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this domain follows a closed-world assumption.
+        /// </summary>
+        /// <value><see langword="true" /> if the domain is a closed world; otherwise, <see langword="false" />.</value>
+        public bool ClosedWorld { get { return _closedWorld; } }
+
+        /// <summary>
+        /// Updates the domain based on the requirements.
+        /// </summary>
+        /// <param name="requirements">The requirements.</param>
+        private void Update([NotNull] IEnumerable<IRequirement> requirements)
+        {
+            var openWorld = requirements.Any(req => req.Value.Equals(":open-world", StringComparison.OrdinalIgnoreCase));
+            _closedWorld = !openWorld;
         }
     }
 }

@@ -1,7 +1,7 @@
 ;; Specification in PDDL1 of the DWR domain
 
 (define (domain dock-worker-robot)
- (:requirements :strips :typing :domain-axioms)
+ (:requirements :strips :typing :open-world)
  (:types 
   location      ; there are several connected locations in the harbor 
   pile             ; is attached to a location 

@@ -85,5 +85,11 @@ namespace PDDL.Model.PDDL12
         /// <value>The axioms.</value>
         [NotNull]
         IReadOnlyList<IAxiom> Axioms { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether this domain follows a closed-world assumption.
+        /// </summary>
+        /// <value><see langword="true" /> if the domain is a closed world; otherwise, <see langword="false" />.</value>
+        bool ClosedWorld { get; }
     }
 }
