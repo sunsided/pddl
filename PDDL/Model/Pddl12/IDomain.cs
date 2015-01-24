@@ -61,6 +61,13 @@ namespace PDDL.Model.Pddl12
         IReadOnlyList<ILiteral<IName>> Timeless { get; }
 
         /// <summary>
+        /// Gets the safety constraints.
+        /// </summary>
+        /// <value>The safety constraints.</value>
+        [NotNull]
+        IReadOnlyList<IGoalDescription> Safety { get; }
+
+        /// <summary>
         /// Gets or sets the actions.
         /// </summary>
         /// <value>The actions.</value>

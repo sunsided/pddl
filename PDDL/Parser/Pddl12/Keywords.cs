@@ -130,8 +130,14 @@ namespace PDDL.Parser.Pddl12
         /// <summary>
         /// The keyword <c>:timeless</c>
         /// </summary>
-        [NotNull]
-        public static readonly Parser<string> Timeless =
+        [NotNull] public static readonly Parser<string> Timeless =
             Parse.String(":timeless").Text().Token();
+
+        /// <summary>
+        /// The keyword <c>:safety</c>
+        /// </summary>
+        [NotNull]
+        public static readonly Parser<string> Safety =
+            Parse.String(":safety").Text().Token();
     }
 }

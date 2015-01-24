@@ -50,6 +50,7 @@ namespace PDDL.Model.Pddl12
             IReadOnlyList<IAtomicFormulaSkeleton> predicates = null;
             IReadOnlyList<ILiteral<IName>> timeless = null;
             IReadOnlyList<IName> extensions = null;
+            IReadOnlyList<IGoalDescription> safety = null;
 
             // iterate and sort
             foreach (var element in sequence)
@@ -135,7 +136,9 @@ namespace PDDL.Model.Pddl12
                 var safetyElement = element as IDomainSafetyDefinition;
                 if (safetyElement != null)
                 {
-                    throw new NotImplementedException(":safety");
+                    if (!ReferenceEquals(safety, null)) throw new ParseException(":safety definition occured more than once");
+                    safety = safetyElement.Safety;
+                    continue;
                 }
 
                 // or fail

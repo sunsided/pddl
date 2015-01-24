@@ -86,6 +86,13 @@ namespace PDDL.Parser.Pddl12
             = CreateTimelessDefinition();
 
         /// <summary>
+        /// The safety definition
+        /// </summary>
+        [NotNull]
+        public static readonly Parser<IDomainSafetyDefinition> SafetyDefinition
+            = CreateSafetyDefinition();
+
+        /// <summary>
         /// The domain definition
         /// </summary>
         [NotNull] 
@@ -109,7 +116,7 @@ namespace PDDL.Parser.Pddl12
                     // TODO .Or<IDomainDefinitionElement>(VarsDefinition)
                     .Or<IDomainDefinitionElement>(PredicatesDefinition)
                     .Or<IDomainDefinitionElement>(TimelessDefinition)
-                    // TODO .Or<IDomainDefinitionElement>(SafetyDefinition)
+                    .Or<IDomainDefinitionElement>(SafetyDefinition)
                     .Or<IDomainDefinitionElement>(ActionGrammar.ActionDefinition)
                     .Or<IDomainDefinitionElement>(AxiomGrammar.AxiomDefinition)
                     .Many()
@@ -152,6 +159,21 @@ namespace PDDL.Parser.Pddl12
                 from literals in CommonGrammar.LiteralOfName.Many()
                 from close in CommonGrammar.ClosingParenthesis
                 select new TimelessDefinition(literals.ToList())
+                ).Token();
+        }
+
+        /// <summary>
+        /// Creates the safety definition.
+        /// </summary>
+        [NotNull]
+        private static Parser<IDomainSafetyDefinition> CreateSafetyDefinition()
+        {
+            return (
+                from open in CommonGrammar.OpeningParenthesis
+                from keyword in Keywords.Safety
+                from backgroundGoals in GoalGrammar.GoalDescription.Many()
+                from close in CommonGrammar.ClosingParenthesis
+                select new SafetyDefinition(backgroundGoals.ToList())
                 ).Token();
         }
 
