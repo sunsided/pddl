@@ -122,6 +122,7 @@
     <Compile Include="Model\Pddl12\Types\CustomType.cs" />
     <Compile Include="Model\Pddl12\Types\DefaultType.cs" />
     <Compile Include="Model\Pddl12\Constant.cs" />
+    <Compile Include="Parser\PDDL12Parser.cs" />
     <Compile Include="Parser\Pddl12\AxiomGrammar.cs" />
     <Compile Include="Parser\Pddl12\DefineGrammar.cs" />
     <Compile Include="Parser\Pddl12\DomainVariableGrammar.cs" />
@@ -138,6 +139,8 @@
     <Compile Include="Parser\Pddl12\TypedLists.cs" />
     <Compile Include="Parser\Pddl12\VarsGrammar.cs" />
     <Compile Include="Parser\Pddl12\SpracheExtensions.cs" />
+    <Compile Include="Parser\PDDLSyntaxException.cs" />
+    <Compile Include="Parser\PDDLParserException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

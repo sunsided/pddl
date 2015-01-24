@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 using PDDL.Model.Pddl12;
 using Sprache;
 
@@ -15,6 +16,13 @@ namespace PDDL.Parser.Pddl12
         [NotNull]
         public static readonly Parser<IDefinition> DefineDefinition
             = CreateDefineDefinition();
+
+        /// <summary>
+        /// Multiple defines
+        /// </summary>
+        [NotNull] public static readonly Parser<IEnumerable<IDefinition>> MultiDefineDefinition
+            = DefineDefinition.AtLeastOnce();
+
 
         #region Factory Functions
 
