@@ -60,15 +60,7 @@ namespace PDDL.Parser.Pddl12
         [NotNull]
         public static readonly Parser<IType> Type =
             CreateTypeDefinition();
-
-
-        /// <summary>
-        /// The typed list of type
-        /// </summary>
-        [NotNull]
-        public static readonly Parser<IEnumerable<CustomType>> TypedListOfType
-            = CreateTypedListOfType();
-
+        
         /// <summary>
         /// The variable name token
         /// </summary>
@@ -87,11 +79,6 @@ namespace PDDL.Parser.Pddl12
                 select new Variable(n)
                 ).Token();
 
-        /// <summary>
-        /// The typed list of variable
-        /// </summary>
-        [NotNull] public static readonly Parser<IEnumerable<IVariableDefinition>> TypedListOfVariable
-            = CreateTypedListOfVariable();
 
         /// <summary>
         /// The predicate
@@ -112,6 +99,7 @@ namespace PDDL.Parser.Pddl12
         /// <summary>
         /// The atomic formula of term
         /// </summary>
+        [NotNull]
         internal static Parser<IAtomicFormula<ITerm>> AtomicFormulaOfTerm = (
                 from open in OpeningParenthesis
                 from p in Predicate
@@ -123,6 +111,7 @@ namespace PDDL.Parser.Pddl12
         /// <summary>
         /// The atomic formula of name
         /// </summary>
+        [NotNull]
         internal static Parser<IAtomicFormula<IName>> AtomicFormulaOfName = (
                 from open in OpeningParenthesis
                 from p in Predicate
@@ -130,6 +119,13 @@ namespace PDDL.Parser.Pddl12
                 from close in ClosingParenthesis
                 select new AtomicFormula<IName>(p, names.ToList())
                ).Token();
+
+        /// <summary>
+        /// The atomic formula skeleton
+        /// </summary>
+        [NotNull]
+        public static readonly Parser<IAtomicFormulaSkeleton> AtomicFormulaSkeleton
+            = CreateAtomicFormulaSkeleton();
 
         /// <summary>
         /// The literal of name
@@ -144,13 +140,6 @@ namespace PDDL.Parser.Pddl12
         [NotNull]
         public static readonly Parser<ILiteral<ITerm>> LiteralOfTerm =
             CreateLiteralOfTerm();
-
-        /// <summary>
-        /// The typed list of constant
-        /// </summary>
-        [NotNull]
-        public static readonly Parser<IEnumerable<IConstant>> TypedListOfConstant
-            = CreateTypedListOfConstant();
 
         #region Factory Functions
 
@@ -246,6 +235,38 @@ namespace PDDL.Parser.Pddl12
             return literalTerm;
         }
 
+        /// <summary>
+        /// Creates the atomic formula skeleton.
+        /// </summary>
+        /// <returns>Parser&lt;AtomicFormulaSkeleton&gt;.</returns>
+        [NotNull]
+        private static Parser<IAtomicFormulaSkeleton> CreateAtomicFormulaSkeleton()
+        {
+            return (
+                from open in OpeningParenthesis
+                from p in Predicate
+                from variables in TypedLists.TypedListOfVariable.Token()
+                from close in ClosingParenthesis
+                select new AtomicFormulaSkeleton(p, variables.ToList()))
+                .Token();
+        }
+
         #endregion Factory Functions
+
+        #region Helper Functions
+
+        /// <summary>
+        /// Wraps the specified option.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="option">The option.</param>
+        /// <returns>IReadOnlyList&lt;T&gt;.</returns>
+        [NotNull]
+        internal static IReadOnlyList<T> Wrap<T>([NotNull] IOption<IEnumerable<T>> option)
+        {
+            return option.IsDefined ? option.Get().ToList().AsReadOnly() : (IReadOnlyList<T>)new T[0];
+        }
+
+        #endregion
     }
 }

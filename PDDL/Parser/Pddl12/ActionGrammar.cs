@@ -1,12 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using JetBrains.Annotations;
 using PDDL.Model.Pddl12;
 using PDDL.Model.Pddl12.Null;
 using Sprache;
-using Action = System.Action;
 
 namespace PDDL.Parser.Pddl12
 {
@@ -35,7 +31,7 @@ namespace PDDL.Parser.Pddl12
 
             var actionPreconditions = (
                 from keyword in Keywords.Precondition
-                from precondition in GoalDescription
+                from precondition in GoalGrammar.GoalDescription
                 select precondition
                 ).Token();
 
@@ -49,7 +45,7 @@ namespace PDDL.Parser.Pddl12
 
             var effectDef = (
                 from keyword in Keywords.Effect
-                from e in Effect.Token()
+                from e in EffectGrammar.Effect.Token()
                 select e
                 ).Token();
 
@@ -59,13 +55,13 @@ namespace PDDL.Parser.Pddl12
                 from functor in actionFunctor
                 from parameters in actionParameters
                 // action-def body following
-                from vars in Vars.Optional()
+                from vars in VarsGrammar.VarsDefinition.Optional()
                 from precs in actionPreconditions.Optional()
                 from e in effectDef.Optional()
                 from close in CommonGrammar.ClosingParenthesis
                 select new Action(functor, parameters.ToList(), (e.IsDefined ? e.Get() : NullEffect.Default))
                 {
-                    Variables = Wrap(vars)
+                    Variables = CommonGrammar.Wrap(vars)
                 }
                 ).Token();
 
