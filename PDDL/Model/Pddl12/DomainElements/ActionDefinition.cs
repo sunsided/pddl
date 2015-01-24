@@ -1,7 +1,7 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12.DomainElements
+namespace PDDL.Model.PDDL12.DomainElements
 {
     /// <summary>
     /// Class ActionDefinition. This class cannot be inherited.

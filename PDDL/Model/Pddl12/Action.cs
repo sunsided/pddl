@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using PDDL.Model.Pddl12.Null;
+using PDDL.Model.PDDL12.Null;
 
-namespace PDDL.Model.Pddl12
+namespace PDDL.Model.PDDL12
 {
     /// <summary>
     /// Class Action.

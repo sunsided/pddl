@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12.ProblemElements
+namespace PDDL.Model.PDDL12.ProblemElements
 {
     /// <summary>
     /// Class ProblemRequireDefinition. This class cannot be inherited.

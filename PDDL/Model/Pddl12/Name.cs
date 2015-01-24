@@ -2,7 +2,7 @@
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12
+namespace PDDL.Model.PDDL12
 {
     /// <summary>
     /// Class Name. This class cannot be inherited.

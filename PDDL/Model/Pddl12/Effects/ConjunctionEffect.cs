@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12.Effects
+namespace PDDL.Model.PDDL12.Effects
 {
     /// <summary>
     /// Class ConjunctionEffect.

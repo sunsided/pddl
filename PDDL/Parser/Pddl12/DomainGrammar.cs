@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
-using PDDL.Model.Pddl12;
-using PDDL.Model.Pddl12.DomainElements;
+using PDDL.Model.PDDL12;
+using PDDL.Model.PDDL12.DomainElements;
 using Sprache;
 
-namespace PDDL.Parser.Pddl12
+namespace PDDL.Parser.PDDL12
 {
     /// <summary>
     /// Class DomainGrammar.

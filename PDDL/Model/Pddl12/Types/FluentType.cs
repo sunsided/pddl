@@ -1,7 +1,7 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12.Types
+namespace PDDL.Model.PDDL12.Types
 {
     /// <summary>
     /// Class FluentType. This class cannot be inherited.

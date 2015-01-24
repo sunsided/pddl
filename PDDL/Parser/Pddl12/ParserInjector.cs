@@ -1,6 +1,6 @@
 ﻿using Sprache;
 
-namespace PDDL.Parser.Pddl12
+namespace PDDL.Parser.PDDL12
 {
     /// <summary>
     /// Class ParserInjector. This class cannot be inherited.

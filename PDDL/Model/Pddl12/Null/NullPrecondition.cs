@@ -1,6 +1,6 @@
 ﻿using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12.Null
+namespace PDDL.Model.PDDL12.Null
 {
     /// <summary>
     /// Class Preconditions.

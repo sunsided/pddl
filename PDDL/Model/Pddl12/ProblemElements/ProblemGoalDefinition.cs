@@ -1,7 +1,7 @@
 ﻿using System;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12.ProblemElements
+namespace PDDL.Model.PDDL12.ProblemElements
 {
     /// <summary>
     /// Class ProblemGoalDefinition. This class cannot be inherited.

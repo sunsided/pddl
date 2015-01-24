@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
-using PDDL.Model.Pddl12;
-using PDDL.Model.Pddl12.Types;
-using PDDL.Parser.Pddl12;
+using PDDL.Model.PDDL12;
+using PDDL.Model.PDDL12.Types;
+using PDDL.Parser.PDDL12;
 using Sprache;
 
 namespace PDDL.Tests.Parser.Pddl12

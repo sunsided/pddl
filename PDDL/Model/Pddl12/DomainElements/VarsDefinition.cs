@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 
-namespace PDDL.Model.Pddl12.DomainElements
+namespace PDDL.Model.PDDL12.DomainElements
 {
     /// <summary>
     /// Class VarsDefinition. This class cannot be inherited.

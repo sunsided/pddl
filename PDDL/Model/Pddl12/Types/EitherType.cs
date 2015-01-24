@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PDDL.Model.Pddl12.Types
+namespace PDDL.Model.PDDL12.Types
 {
     /// <summary>
     /// Class EitherType. This class cannot be inherited.

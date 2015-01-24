@@ -1,7 +1,7 @@
 ﻿using JetBrains.Annotations;
-using PDDL.Model.Pddl12.Goals;
+using PDDL.Model.PDDL12.Goals;
 
-namespace PDDL.Model.Pddl12.Null
+namespace PDDL.Model.PDDL12.Null
 {
     /// <summary>
     /// Class NullGoalDescription.

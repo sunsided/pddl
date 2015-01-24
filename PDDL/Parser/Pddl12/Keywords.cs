@@ -1,7 +1,7 @@
 ﻿using JetBrains.Annotations;
 using Sprache;
 
-namespace PDDL.Parser.Pddl12
+namespace PDDL.Parser.PDDL12
 {
     /// <summary>
     /// Class Keywords.
