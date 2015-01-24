@@ -1,8 +1,10 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using PDDL.Model.Pddl12;
 using PDDL.Parser.Pddl12;
 using Sprache;
 
@@ -35,10 +37,13 @@ namespace PDDL.Tests
             string problemDefinition = LoadNamedResourceString(assembly, problemFileName);
 
             domainDefinition = RemoveAllComments(domainDefinition);
-            var domain = DefineGrammar.DefineDefinition.Parse(domainDefinition);
-
             problemDefinition = RemoveAllComments(problemDefinition);
-            var problem = DefineGrammar.DefineDefinition.Parse(problemDefinition);
+
+            var combined = domainDefinition + Environment.NewLine + problemDefinition;
+            var definitions = DefineGrammar.MultiDefineDefinition.Parse(combined).ToList();
+
+            var domain = definitions.Single(item => item is IDomain);
+            var problem = definitions.Single(item => item is IProblem);
         }
 
         /// <summary>
