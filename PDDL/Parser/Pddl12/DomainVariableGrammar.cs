@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using PDDL.Model.Pddl12;
 using PDDL.Model.Pddl12.Value;
@@ -15,7 +17,7 @@ namespace PDDL.Parser.Pddl12
         /// The value
         /// </summary>
         [NotNull] 
-        public static Parser<IDecimalValue> DecimalValue = (
+        public static Parser<IDecimalValue> IntegerValue = (
             from value in Parse.Digit.AtLeastOnce().Text()
             let number = Decimal.Parse(value)
             select new DecimalValue(number)
@@ -25,8 +27,21 @@ namespace PDDL.Parser.Pddl12
         /// The value
         /// </summary>
         [NotNull]
+        public static Parser<IDecimalValue> FloatingPointValue = (
+            from integer in Parse.Digit.Many().Text()
+            from point in Parse.Char('.')
+            from fraction in Parse.Digit.AtLeastOnce().Text()
+            let value = String.Format("{0}.{1}", integer, fraction)
+            let number = Decimal.Parse(value, CultureInfo.InvariantCulture)
+            select new DecimalValue(number)
+            ).Token();
+
+        /// <summary>
+        /// The value
+        /// </summary>
+        [NotNull]
         public static Parser<IValue> Value =
-            DecimalValue;
+            FloatingPointValue.Or(IntegerValue);
 
             /// <summary>
         /// A variable without a value
