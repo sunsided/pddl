@@ -68,11 +68,6 @@
                 (not (in ?c ?p)) (not (top ?c ?p))
                 (not (on ?c ?else)) (not (empty ?k))))
 
- (:axiom
-     :vars (?k ?c - container)
-     :context (on ?k ?c)
-     :implies (above ?k ?c))
-
 ;; puts a container held by a crane on a nearby pile
  (:action put                                 
      :parameters (?k - crane ?c - container ?p - pile)
