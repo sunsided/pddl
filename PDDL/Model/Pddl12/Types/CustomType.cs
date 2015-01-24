@@ -20,7 +20,6 @@ namespace PDDL.Model.PDDL12.Types
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="parent">The parent.</param>
-        /// <exception cref="System.ArgumentNullException">parent;parent type must not be null</exception>
         /// <exception cref="ArgumentNullException">The value of 'name' cannot be null.</exception>
         public CustomType([NotNull] IName name, [NotNull] IType parent)
             : base(name)
@@ -34,10 +33,18 @@ namespace PDDL.Model.PDDL12.Types
         /// </summary>
         /// <param name="name">The name.</param>
         /// <exception cref="ArgumentNullException">The value of 'name' cannot be null. </exception>
-        /// <exception cref="ArgumentException">The type name must not be empty</exception>
         public CustomType([NotNull] IName name)
             : this(name, DefaultType.Default)
         {
+        }
+
+        /// <summary>
+        /// Gets the type flavor.
+        /// </summary>
+        /// <value>The flavor.</value>
+        public override TypeKind Kind
+        {
+            get { return Name.Value.Equals("object", StringComparison.OrdinalIgnoreCase) ? TypeKind.Default : TypeKind.UserDefined; }
         }
     }
 }

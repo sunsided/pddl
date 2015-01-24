@@ -26,5 +26,14 @@ namespace PDDL.Model.PDDL12.Types
             if (types.Count < 1) throw new ArgumentException("the type lust must contain of at least one type", "types");
             Types = types;
         }
+
+        /// <summary>
+        /// Gets the type flavor.
+        /// </summary>
+        /// <value>The flavor.</value>
+        public TypeKind Kind 
+        {
+            get { return TypeKind.Either; }
+        }
     }
 }
