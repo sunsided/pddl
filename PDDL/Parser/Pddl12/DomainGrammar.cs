@@ -162,7 +162,7 @@ namespace PDDL.Parser.Pddl12
         {
             return (
                 from open in CommonGrammar.OpeningParenthesis
-                from keyword in Keywords.Timeless
+                from keyword in Keywords.CTimeless
                 from literals in CommonGrammar.LiteralOfName.Many()
                 from close in CommonGrammar.ClosingParenthesis
                 select new TimelessDefinition(literals.ToList())
@@ -177,7 +177,7 @@ namespace PDDL.Parser.Pddl12
         {
             return (
                 from open in CommonGrammar.OpeningParenthesis
-                from keyword in Keywords.Safety
+                from keyword in Keywords.CSafety
                 from backgroundGoals in GoalGrammar.GoalDescription.Many()
                 from close in CommonGrammar.ClosingParenthesis
                 select new SafetyDefinition(backgroundGoals.ToList())
@@ -192,7 +192,7 @@ namespace PDDL.Parser.Pddl12
         {
             return (
                 from open in CommonGrammar.OpeningParenthesis
-                from keyword in Keywords.DomainVariables
+                from keyword in Keywords.CDomainVariables
                 from variables in TypedLists.TypedListOfDomainVariable
                 from close in CommonGrammar.ClosingParenthesis
                 select new VarsDefinition(variables.ToList())
@@ -208,7 +208,7 @@ namespace PDDL.Parser.Pddl12
         {
             return (
                 from open in CommonGrammar.OpeningParenthesis
-                from keyword in Keywords.Constants
+                from keyword in Keywords.CConstants
                 from constants in TypedLists.TypedListOfConstant
                 from close in CommonGrammar.ClosingParenthesis
                 select new ConstantsDefinition(constants.ToList())
@@ -224,7 +224,7 @@ namespace PDDL.Parser.Pddl12
         {
             return (
                 from open in CommonGrammar.OpeningParenthesis
-                from keyword in Keywords.Types
+                from keyword in Keywords.CTypes
                 from types in TypedLists.TypedListOfType
                 from close in CommonGrammar.ClosingParenthesis
                 select new TypesDefinition(types.ToList())
@@ -240,7 +240,7 @@ namespace PDDL.Parser.Pddl12
         {
             return (
                 from open in CommonGrammar.OpeningParenthesis
-                from keyword in Keywords.Requirements
+                from keyword in Keywords.CRequirements
                 from keys in ValidRequirements.Many()
                 from close in CommonGrammar.ClosingParenthesis
                 select new RequirementsDefinition(keys.ToList())
@@ -256,7 +256,7 @@ namespace PDDL.Parser.Pddl12
         {
             return (
                 from open in CommonGrammar.OpeningParenthesis
-                from keyword in Keywords.Extends
+                from keyword in Keywords.CExtends
                 from names in CommonGrammar.NameNonToken.Token().AtLeastOnce()
                 from close in CommonGrammar.ClosingParenthesis
                 select new ExtensionDefinition(names.ToList())
@@ -272,7 +272,7 @@ namespace PDDL.Parser.Pddl12
         {
             return (
                 from open in CommonGrammar.OpeningParenthesis
-                from keyword in Keywords.Predicates
+                from keyword in Keywords.CPredicates
                 from skeletons in CommonGrammar.AtomicFormulaSkeleton.AtLeastOnce()
                 from close in CommonGrammar.ClosingParenthesis
                 select new PredicatesDefinition(skeletons.ToList())

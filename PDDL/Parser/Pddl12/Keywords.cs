@@ -26,56 +26,56 @@ namespace PDDL.Parser.Pddl12
         /// The keyword <c>:precondition</c>
         /// </summary>
         [NotNull]
-        public static readonly Parser<string> Precondition =
+        public static readonly Parser<string> CPrecondition =
             Parse.String(":precondition").Text().Token();
 
         /// <summary>
         /// The keyword <c>:parameters</c>
         /// </summary>
         [NotNull]
-        public static readonly Parser<string> Parameters =
+        public static readonly Parser<string> CParameters =
             Parse.String(":parameters").Text().Token();
 
         /// <summary>
         /// The keyword <c>:effect</c>
         /// </summary>
         [NotNull]
-        public static readonly Parser<string> Effect =
+        public static readonly Parser<string> CEffect =
             Parse.String(":effect").Text().Token();
 
         /// <summary>
         /// The keyword <c>:action</c>
         /// </summary>
         [NotNull]
-        public static readonly Parser<string> Action =
+        public static readonly Parser<string> CAction =
             Parse.String(":action").Text().Token();
 
         /// <summary>
         /// The keyword <c>:vars</c>
         /// </summary>
         [NotNull]
-        public static readonly Parser<string> Vars =
+        public static readonly Parser<string> CVars =
             Parse.String(":vars").Text().Token();
 
         /// <summary>
         /// The keyword <c>:axiom</c>
         /// </summary>
         [NotNull]
-        public static readonly Parser<string> Axiom =
+        public static readonly Parser<string> CAxiom =
             Parse.String(":axiom").Text().Token();
 
         /// <summary>
         /// The keyword <c>:context</c>
         /// </summary>
         [NotNull]
-        public static readonly Parser<string> Context =
+        public static readonly Parser<string> CContext =
             Parse.String(":context").Text().Token();
 
         /// <summary>
         /// The keyword <c>:implies</c>
         /// </summary>
         [NotNull]
-        public static readonly Parser<string> Implies =
+        public static readonly Parser<string> CImplies =
             Parse.String(":implies").Text().Token();
 
         /// <summary>
@@ -93,58 +93,72 @@ namespace PDDL.Parser.Pddl12
             Parse.String("domain").Text().Token();
 
         /// <summary>
+        /// The keyword <c>problem</c>
+        /// </summary>
+        [NotNull]
+        public static readonly Parser<string> Problem =
+            Parse.String("problem").Text().Token();
+
+        /// <summary>
+        /// The keyword <c>:domain</c>
+        /// </summary>
+        [NotNull]
+        public static readonly Parser<string> CDomain =
+            Parse.String(":domain").Text().Token();
+
+        /// <summary>
         /// The keyword <c>:predicates</c>
         /// </summary>
         [NotNull]
-        public static readonly Parser<string> Predicates =
+        public static readonly Parser<string> CPredicates =
             Parse.String(":predicates").Text().Token();
 
         /// <summary>
         /// The keyword <c>:extends</c>
         /// </summary>
         [NotNull]
-        public static readonly Parser<string> Extends =
+        public static readonly Parser<string> CExtends =
             Parse.String(":extends").Text().Token();
 
         /// <summary>
         /// The keyword <c>:requirements</c>
         /// </summary>
         [NotNull]
-        public static readonly Parser<string> Requirements =
+        public static readonly Parser<string> CRequirements =
             Parse.String(":requirements").Text().Token();
 
         /// <summary>
         /// The keyword <c>:types</c>
         /// </summary>
         [NotNull]
-        public static readonly Parser<string> Types =
+        public static readonly Parser<string> CTypes =
             Parse.String(":types").Text().Token();
 
         /// <summary>
         /// The keyword <c>:constants</c>
         /// </summary>
         [NotNull]
-        public static readonly Parser<string> Constants =
+        public static readonly Parser<string> CConstants =
             Parse.String(":constants").Text().Token();
 
         /// <summary>
         /// The keyword <c>:timeless</c>
         /// </summary>
-        [NotNull] public static readonly Parser<string> Timeless =
+        [NotNull] public static readonly Parser<string> CTimeless =
             Parse.String(":timeless").Text().Token();
 
         /// <summary>
         /// The keyword <c>:safety</c>
         /// </summary>
         [NotNull]
-        public static readonly Parser<string> Safety =
+        public static readonly Parser<string> CSafety =
             Parse.String(":safety").Text().Token();
 
         /// <summary>
         /// The keyword <c>:domain-variables</c>
         /// </summary>
         [NotNull]
-        public static readonly Parser<string> DomainVariables =
+        public static readonly Parser<string> CDomainVariables =
             Parse.String(":domain-variables").Text().Token();
     }
 }
