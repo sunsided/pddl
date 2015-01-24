@@ -8,8 +8,6 @@ namespace PDDL.Model.Pddl12
     /// </summary>
     public interface IDomain
     {
-        // TODO: Extension definition is missing
-
         /// <summary>
         /// Gets the name.
         /// </summary>
