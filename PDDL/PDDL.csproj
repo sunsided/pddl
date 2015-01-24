@@ -46,6 +46,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Pddl12\Axiom.cs" />
+    <Compile Include="Model\Pddl12\DomainElements\AxiomDefinition.cs" />
+    <Compile Include="Model\Pddl12\DomainElements\ActionDefinition.cs" />
+    <Compile Include="Model\Pddl12\DomainElements\SafetyDefinition.cs" />
+    <Compile Include="Model\Pddl12\DomainElements\VarsDefinition.cs" />
+    <Compile Include="Model\Pddl12\DomainElements\TimelessDefinition.cs" />
+    <Compile Include="Model\Pddl12\DomainElements\PredicatesDefinition.cs" />
+    <Compile Include="Model\Pddl12\DomainElements\ConstantsDefinition.cs" />
+    <Compile Include="Model\Pddl12\DomainElements\TypesDefinition.cs" />
+    <Compile Include="Model\Pddl12\DomainElements\RequirementsDefinition.cs" />
+    <Compile Include="Model\Pddl12\DomainElements\ExtensionDefinition.cs" />
     <Compile Include="Model\Pddl12\IAxiom.cs" />
     <Compile Include="Model\Pddl12\IDomainDefinitionElement.cs" />
     <Compile Include="Model\Pddl12\ITyped.cs" />
