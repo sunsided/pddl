@@ -139,5 +139,12 @@ namespace PDDL.Parser.Pddl12
         [NotNull]
         public static readonly Parser<string> Safety =
             Parse.String(":safety").Text().Token();
+
+        /// <summary>
+        /// The keyword <c>:domain-variables</c>
+        /// </summary>
+        [NotNull]
+        public static readonly Parser<string> DomainVariables =
+            Parse.String(":domain-variables").Text().Token();
     }
 }
