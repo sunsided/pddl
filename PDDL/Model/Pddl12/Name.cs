@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using JetBrains.Annotations;
 
 namespace PDDL.Model.Pddl12
@@ -25,10 +26,24 @@ namespace PDDL.Model.Pddl12
         {
             if (ReferenceEquals(value, null)) throw new ArgumentNullException("value", "value was null");
             if (String.IsNullOrWhiteSpace(value)) throw new ArgumentException("value must not be empty or whitespace only", "value");
-            
-            // TODO: join types?
-            if (!Symbols.Name.IsValid(value)) throw new ArgumentException("value contained invalid characters", "value");
+            if (!IsValid(value)) throw new ArgumentException("value contained invalid characters", "value");
             Value = value;
+        }
+
+        /// <summary>
+        /// Determines whether the specified value is valid.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns><see langword="true" /> if the specified value is valid; otherwise, <see langword="false" />.</returns>
+        [Pure]
+        private static bool IsValid([CanBeNull] string value)
+        {
+            if (String.IsNullOrWhiteSpace(value)) return false;
+
+            // first character must be a letter
+            // following characters may be either letter, digit, hyphen or underscore
+            return Char.IsLetter(value.First())
+                   && value.Skip(1).All(c => Char.IsLetterOrDigit(c) || (c == '-') || (c == '_'));
         }
 
         /// <summary>

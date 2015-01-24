@@ -126,13 +126,6 @@
     <Compile Include="Parser\Pddl12\VarsGrammar.cs" />
     <Compile Include="Parser\Pddl12\SpracheExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Symbols\Keywords\DefineKeyword.cs" />
-    <Compile Include="Symbols\Keywords\DomainDefinitionKeyword.cs" />
-    <Compile Include="Symbols\Keywords\DefinitionTypeKeyword.cs" />
-    <Compile Include="Symbols\RequirementKey.cs" />
-    <Compile Include="Symbols\Name.cs" />
-    <Compile Include="Symbols\Keyword.cs" />
-    <Compile Include="Symbols\Symbol.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
