@@ -12,7 +12,7 @@ namespace PDDL.Model.PDDL12
         /// Gets the list type.
         /// </summary>
         /// <value>The list type.</value>
-        ListType Type { get; }
+        EffectKind Type { get; }
     }
 
     /// <summary>
@@ -32,12 +32,12 @@ namespace PDDL.Model.PDDL12
     }
 
     /// <summary>
-    /// Interface IPositiveEffect
+    /// Interface IRegularEffect
     /// <para>
     ///     Note that positive effects must be applied after negative effects.
     /// </para>
     /// </summary>
-    public interface IPositiveEffect : IEffect
+    public interface IRegularEffect : IEffect
     {
         /// <summary>
         /// Gets the effect.
@@ -48,12 +48,12 @@ namespace PDDL.Model.PDDL12
     }
 
     /// <summary>
-    /// Interface INegativeEffect
+    /// Interface INegatedEffect
     /// <para>
     ///     Note that negative effects must be applied before positive effects.
     /// </para>
     /// </summary>
-    public interface INegativeEffect : IEffect
+    public interface INegatedEffect : IEffect
     {
         /// <summary>
         /// Gets the negated effect.

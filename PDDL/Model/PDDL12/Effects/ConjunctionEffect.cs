@@ -21,7 +21,7 @@ namespace PDDL.Model.PDDL12.Effects
         /// <param name="effects">The effects.</param>
         /// <exception cref="ArgumentNullException">The value of 'effects' cannot be null. </exception>
         public ConjunctionEffect([NotNull] IReadOnlyList<IEffect> effects)
-            : base(ListType.Indifferent)
+            : base(EffectKind.Conjunction)
         {
             if (ReferenceEquals(effects, null)) throw new ArgumentNullException("effects", "effects must not be null");
             Effects = effects;

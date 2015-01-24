@@ -9,13 +9,13 @@
         /// Gets the list type.
         /// </summary>
         /// <value>The list type.</value>
-        public ListType Type { get; private set; }
+        public EffectKind Type { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EffectBase"/> class.
         /// </summary>
         /// <param name="type">The type.</param>
-        protected EffectBase(ListType type)
+        protected EffectBase(EffectKind type)
         {
             Type = type;
         }

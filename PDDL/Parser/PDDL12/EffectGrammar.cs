@@ -39,7 +39,7 @@ namespace PDDL.Parser.PDDL12
         {
             Parser<IEffect> positiveEffect =
                 (from af in CommonGrammar.AtomicFormulaOfTerm
-                 select new PositiveEffect(af)).Token();
+                 select new RegularEffect(af)).Token();
 
             Parser<IEffect> negativeEffect =
                 (
@@ -47,7 +47,7 @@ namespace PDDL.Parser.PDDL12
                     from keyword in Keywords.Not
                     from af in CommonGrammar.AtomicFormulaOfTerm
                     from close in CommonGrammar.ClosingParenthesis
-                    select new NegativeEffect(af)).Token();
+                    select new NegatedEffect(af)).Token();
 
             Parser<IEffect> conjunctionEffect =
                 (
