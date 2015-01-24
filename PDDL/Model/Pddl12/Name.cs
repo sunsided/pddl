@@ -6,7 +6,7 @@ namespace PDDL.Model.Pddl12
     /// <summary>
     /// Class Name. This class cannot be inherited.
     /// </summary>
-    public sealed class Name : IName
+    public class Name : IName
     {
         /// <summary>
         /// Gets the value.
@@ -31,6 +31,15 @@ namespace PDDL.Model.Pddl12
             Value = value;
         }
 
+        /// <summary>
+        /// Determines whether the specified <see cref="string" /> is equal to this instance.
+        /// </summary>
+        /// <param name="other">The object to compare with the current object.</param>
+        /// <returns><see langword="true" /> if the specified <see cref="string" /> is equal to this instance; otherwise, <see langword="false" />.</returns>
+        public bool Equals([CanBeNull] string other)
+        {
+            return string.Equals(Value, other, StringComparison.OrdinalIgnoreCase);
+        }
 
         /// <summary>
         /// Determines whether the specified <see cref="Name" /> is equal to this instance.

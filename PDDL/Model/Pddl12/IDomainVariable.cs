@@ -3,9 +3,9 @@
 namespace PDDL.Model.Pddl12
 {
     /// <summary>
-    /// Interface IParameter
+    /// Interface IDomainVariable
     /// </summary>
-    public interface IParameter
+    public interface IDomainVariable
     {
         /// <summary>
         /// Gets the name.

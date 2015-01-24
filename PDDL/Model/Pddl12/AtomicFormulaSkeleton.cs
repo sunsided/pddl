@@ -1,59 +1,59 @@
 ﻿using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
-using Object = PDDL.Model.Pddl12.Types.Object;
 
 namespace PDDL.Model.Pddl12
 {
     /// <summary>
-    /// Class Parameter.
+    /// Class AtomicFormula.
     /// </summary>
-    public class Parameter : IParameter
+    public class AtomicFormulaSkeleton : IAtomicFormulaSkeleton
     {
         /// <summary>
         /// Gets the name.
         /// </summary>
         /// <value>The name.</value>
-        public IName Name { get; private set; }
+        public IPredicate Name { get; private set; }
 
         /// <summary>
-        /// Gets the type.
+        /// Gets the parameters.
         /// </summary>
-        /// <value>The type.</value>
-        public IType Type { get; private set; }
+        /// <value>The parameters.</value>
+        public IReadOnlyList<IVariableDefinition> Parameters { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Parameter"/> class.
+        /// Initializes a new instance of the <see cref="AtomicFormulaSkeleton"/> class.
         /// </summary>
         /// <param name="name">The name.</param>
-        /// <param name="type">The type.</param>
-        /// <exception cref="ArgumentNullException">The value of 'name' and 'type' cannot be null. </exception>
-        public Parameter([NotNull] IName name, [NotNull] IType type)
+        /// <param name="parameters">The parameters.</param>
+        /// <exception cref="ArgumentNullException">The value of 'name' and 'parameters' cannot be null. </exception>
+        public AtomicFormulaSkeleton([NotNull] IPredicate name, [NotNull] IReadOnlyList<IVariableDefinition> parameters)
         {
             if (ReferenceEquals(name, null)) throw new ArgumentNullException("name", "name must not be null");
-            if (ReferenceEquals(type, null)) throw new ArgumentNullException("type", "type must not be null");
+            if (ReferenceEquals(parameters, null)) throw new ArgumentNullException("parameters", "type must not be null");
 
             Name = name;
-            Type = type;
+            Parameters = parameters;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Parameter" /> class.
+        /// Initializes a new instance of the <see cref="AtomicFormulaSkeleton" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
-        /// <exception cref="ArgumentNullException">The value of 'name' and 'type' cannot be null.</exception>
-        public Parameter([NotNull] IName name)
-            : this(name, new Object())
+        /// <exception cref="ArgumentNullException">The value of 'name' and 'parameters' cannot be null.</exception>
+        public AtomicFormulaSkeleton([NotNull] IPredicate name)
+            : this(name, new IVariableDefinition[0])
         {
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="Parameter" /> is equal to this instance.
+        /// Determines whether the specified <see cref="AtomicFormulaSkeleton" /> is equal to this instance.
         /// </summary>
         /// <param name="other">The object to compare with the current object.</param>
-        /// <returns><see langword="true" /> if the specified <see cref="Parameter" /> is equal to this instance; otherwise, <see langword="false" />.</returns>
-        protected bool Equals([NotNull] Parameter other)
+        /// <returns><see langword="true" /> if the specified <see cref="AtomicFormulaSkeleton" /> is equal to this instance; otherwise, <see langword="false" />.</returns>
+        protected bool Equals([NotNull] AtomicFormulaSkeleton other)
         {
-            return Name.Equals(other.Name) && Type.Equals(other.Type);
+            return Name.Equals(other.Name) && Parameters.Equals(other.Parameters);
         }
 
         /// <summary>
@@ -61,12 +61,12 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <param name="obj">The object to compare with the current object.</param>
         /// <returns><see langword="true" /> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <see langword="false" />.</returns>
-        public override bool Equals([CanBeNull] object obj)
+        public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((Parameter) obj);
+            return Equals((AtomicFormulaSkeleton) obj);
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace PDDL.Model.Pddl12
         {
             unchecked
             {
-                return (Name.GetHashCode()*397) ^ Type.GetHashCode();
+                return (Name.GetHashCode()*397) ^ Parameters.GetHashCode();
             }
         }
 
@@ -87,7 +87,7 @@ namespace PDDL.Model.Pddl12
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         public override string ToString()
         {
-            return String.Format("{0} - {1}", Name, Type);
+            return Name.ToString();
         }
     }
 }

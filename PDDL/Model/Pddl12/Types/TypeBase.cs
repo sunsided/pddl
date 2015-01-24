@@ -12,29 +12,27 @@ namespace PDDL.Model.Pddl12.Types
         /// Gets the value.
         /// </summary>
         /// <value>The value.</value>
-        public string Name { get; private set; }
+        public IName Name { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Typed"/> class.
+        /// Initializes a new instance of the <see cref="CustomType"/> class.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <exception cref="ArgumentNullException">The value of 'name' cannot be null. </exception>
-        /// <exception cref="ArgumentException">The type name must not be empty</exception>
-        protected TypeBase([NotNull] string name)
+        protected TypeBase([NotNull] IName name)
         {
             if (ReferenceEquals(name, null)) throw new ArgumentNullException("name", "type name must not be null");
-            if (String.IsNullOrWhiteSpace(name)) throw new ArgumentException("The type name must not be empty", "name");
             Name = name;
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="Typed" /> is equal to this instance.
+        /// Determines whether the specified <see cref="CustomType" /> is equal to this instance.
         /// </summary>
         /// <param name="other">The object to compare with the current object.</param>
-        /// <returns><see langword="true" /> if the specified <see cref="Typed" /> is equal to this instance; otherwise, <see langword="false" />.</returns>
+        /// <returns><see langword="true" /> if the specified <see cref="CustomType" /> is equal to this instance; otherwise, <see langword="false" />.</returns>
         private bool Equals([NotNull] TypeBase other)
         {
-            return String.Equals(Name, other.Name, StringComparison.OrdinalIgnoreCase);
+            return Name.Equals(other.Name);
         }
 
         /// <summary>
@@ -55,7 +53,7 @@ namespace PDDL.Model.Pddl12.Types
         /// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
         public override int GetHashCode()
         {
-            return Name.ToLowerInvariant().GetHashCode();
+            return Name.GetHashCode();
         }
 
         /// <summary>
@@ -64,7 +62,7 @@ namespace PDDL.Model.Pddl12.Types
         /// <returns>A <see cref="System.String" /> that represents this instance.</returns>
         public override string ToString()
         {
-            return Name;
+            return Name.ToString();
         }
     }
 }

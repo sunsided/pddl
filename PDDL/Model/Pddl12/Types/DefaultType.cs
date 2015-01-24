@@ -3,31 +3,31 @@
 namespace PDDL.Model.Pddl12.Types
 {
     /// <summary>
-    /// Class Object. This class cannot be inherited.
+    /// Class DefaultType. This class cannot be inherited.
     /// <para>
     ///     This is the implicit type of all instances if no
     ///     other type is explicitly defined.
     /// </para>
     /// </summary>
-    public sealed class Object : TypeBase
+    public sealed class DefaultType : TypeBase
     {
         /// <summary>
         /// The default instance
         /// </summary>
         [NotNull]
-        private static readonly Object _default = new Object();
+        private static readonly DefaultType _default = new DefaultType();
 
         /// <summary>
-        /// Returns the default instance of the <see cref="Object"/>
+        /// Returns the default instance of the <see cref="DefaultType"/>
         /// </summary>
         /// <value>The default.</value>
         [NotNull]
-        public static Object Default { get { return _default; } }
+        public static DefaultType Default { get { return _default; } }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Object"/> class.
+        /// Initializes a new instance of the <see cref="DefaultType"/> class.
         /// </summary>
-        public Object() : base("Object")
+        public DefaultType() : base(new Name("object"))
         { }
     }
 }

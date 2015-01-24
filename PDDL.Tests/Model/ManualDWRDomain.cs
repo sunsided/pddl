@@ -23,23 +23,23 @@ namespace PDDL.Tests.Model
                                                            new Requirement(":typing")
                                                        };
 
-            var location = new Typed("location");
-            var pile = new Typed("pile");
-            var robot = new Typed("robot");
-            var crane = new Typed("crane");
-            var container = new Typed("container");
+            var location = new CustomType(new Name("location"));
+            var pile = new CustomType(new Name("pile"));
+            var robot = new CustomType(new Name("robot"));
+            var crane = new CustomType(new Name("crane"));
+            var container = new CustomType(new Name("container"));
             IReadOnlyList<IType> types = new[]
                                          {
-                                             new Typed("location"),
-                                             new Typed("pile"),
-                                             new Typed("robot"),
-                                             new Typed("crane"),
-                                             new Typed("container")
+                                             location,
+                                             pile,
+                                             robot,
+                                             crane,
+                                             container
                                          };
 
-            IReadOnlyList<IVariable> constants = new IVariable[0];
+            IReadOnlyList<IConstant> constants = new IConstant[0];
 
-            IReadOnlyList<IAtomicFormula> predicates = new[]
+            IReadOnlyList<IAtomicFormulaSkeleton> predicates = new[]
                                                        {
                                                            CreatePredicate("adjacent", "?l1", location, "?l2", location),
                                                            CreatePredicate("attached", "?r", robot, "?l", location),
@@ -58,10 +58,17 @@ namespace PDDL.Tests.Model
                                                            CreatePredicate("top", "?c", container, "?p", pile),
                                                            CreatePredicate("top", "?k1", container, "?k2", container),
                                                        };
-            
-            IReadOnlyList<ILiteral> timeless = new ILiteral[0];
-            
-            var domain = new Domain(name, requirements, types, constants, predicates, timeless);
+
+            IReadOnlyList<ILiteral<IName>> timeless = new ILiteral<IName>[0];
+
+            var domain = new Domain(name)
+                         {
+                             Requirements = requirements,
+                             Types = types,
+                             Constants = constants,
+                             Predicates = predicates,
+                             Timeless = timeless
+                         };
         }
 
         /// <summary>
@@ -73,12 +80,12 @@ namespace PDDL.Tests.Model
         /// <param name="param2">The param2.</param>
         /// <param name="type2">The type2.</param>
         /// <returns>AtomicFormula.</returns>
-        private static AtomicFormula CreatePredicate([NotNull] string name, [NotNull]  string param1, [NotNull] IType type1, [NotNull] string param2, [NotNull] IType type2)
+        private static AtomicFormulaSkeleton CreatePredicate([NotNull] string name, [NotNull]  string param1, [NotNull] IType type1, [NotNull] string param2, [NotNull] IType type2)
         {
-            return new AtomicFormula(new Name(name), new[]
+            return new AtomicFormulaSkeleton(new Predicate(name), new[]
                                                      {
-                                                         new Parameter(new Name(param1), type1),
-                                                         new Parameter(new Name(param2), type2),
+                                                         new VariableDefinition(new Variable(new Name(param1)), type1), 
+                                                         new VariableDefinition(new Variable(new Name(param2)), type2),
                                                      });
         }
 
@@ -89,11 +96,11 @@ namespace PDDL.Tests.Model
         /// <param name="param1">The param1.</param>
         /// <param name="type1">The type1.</param>
         /// <returns>AtomicFormula.</returns>
-        private static AtomicFormula CreatePredicate([NotNull] string name, [NotNull]  string param1, [NotNull] IType type1)
+        private static AtomicFormulaSkeleton CreatePredicate([NotNull] string name, [NotNull]  string param1, [NotNull] IType type1)
         {
-            return new AtomicFormula(new Name(name), new[]
+            return new AtomicFormulaSkeleton(new Predicate(name), new[]
                                                      {
-                                                         new Parameter(new Name(param1), type1)
+                                                         new VariableDefinition(new Variable(new Name(param1)), type1)
                                                      });
         }
     }

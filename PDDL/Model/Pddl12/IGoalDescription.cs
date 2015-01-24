@@ -24,7 +24,7 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <value>The condition.</value>
         [NotNull]
-        IAtomicFormula Condition { get; }
+        IAtomicFormula<ITerm> Condition { get; }
     }
 
     /// <summary>
@@ -37,7 +37,7 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <value>The literal.</value>
         [NotNull]
-        ILiteral Literal { get; }
+        ILiteral<ITerm> Literal { get; }
     }
 
     /// <summary>

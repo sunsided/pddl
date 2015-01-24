@@ -5,7 +5,7 @@ namespace PDDL.Model.Pddl12
     /// <summary>
     /// Interface IVariable
     /// </summary>
-    public interface IVariable
+    public interface IVariable : ITerm
     {
         /// <summary>
         /// Gets the name.
@@ -13,12 +13,5 @@ namespace PDDL.Model.Pddl12
         /// <value>The name.</value>
         [NotNull]
         IName Name { get; }
-
-        /// <summary>
-        /// Gets the type.
-        /// </summary>
-        /// <value>The type.</value>
-        [NotNull]
-        IType Type { get; }
     }
 }

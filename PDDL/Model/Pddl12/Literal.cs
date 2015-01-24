@@ -6,15 +6,16 @@ namespace PDDL.Model.Pddl12
     /// <summary>
     /// Class Literal.
     /// </summary>
-    public class Literal : AtomicFormula, ILiteral
+    public class Literal<T> : AtomicFormula<T>, ILiteral<T>
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="AtomicFormula" /> class.
+        /// Initializes a new instance of the <see cref="Literal{T}" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="parameters">The parameters.</param>
         /// <param name="positive">if set to <see langword="true" />, the atomic formula is positive.</param>
-        public Literal([NotNull] IName name, [NotNull] IReadOnlyList<IParameter> parameters, bool positive) : base(name, parameters)
+        public Literal([NotNull] IName name, [NotNull] IReadOnlyList<T> parameters, bool positive)
+            : base(name, parameters)
         {
             Positive = positive;
         }

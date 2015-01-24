@@ -6,10 +6,10 @@ namespace PDDL.Model.Pddl12
     /// <summary>
     /// Interface IAtomicFormula
     /// <para>
-    ///     Atomic formulae are used to describe predicates and goals, as well as effects.
+    ///     Atomic formulae are used to describe (ground) predicates
     /// </para>
     /// </summary>
-    public interface IAtomicFormula
+    public interface IAtomicFormula<out T>
     {
         /// <summary>
         /// Gets the name.
@@ -23,6 +23,6 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <value>The parameters.</value>
         [NotNull]
-        IReadOnlyList<IParameter> Parameters { get; }
+        IReadOnlyList<T> Parameters { get; }
     }
 }
