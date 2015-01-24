@@ -11,6 +11,16 @@ namespace PDDL.Parser.Pddl12
     /// </summary>
     internal sealed class EffectGrammar
     {
+        #region Internal Helpers
+
+        /// <summary>
+        /// The effect parser injector
+        /// </summary>
+        [NotNull]
+        private static readonly ParserInjector<IEffect> _effectParserInjector = new ParserInjector<IEffect>();
+
+        #endregion
+
         /// <summary>
         /// The action definition
         /// </summary>
@@ -19,12 +29,7 @@ namespace PDDL.Parser.Pddl12
             CreateEffect();
 
         #region Factory Functions
-
-        /// <summary>
-        /// The effect parser injector
-        /// </summary>
-        private static readonly ParserInjector<IEffect> _effectParserInjector = new ParserInjector<IEffect>();
-
+        
         /// <summary>
         /// Creates the effect.
         /// </summary>

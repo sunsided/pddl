@@ -11,6 +11,16 @@ namespace PDDL.Parser.Pddl12
     /// </summary>
     internal static class GoalGrammar
     {
+        #region Internal Helpers
+
+        /// <summary>
+        /// The goal parser injector
+        /// </summary>
+        [NotNull]
+        private static readonly ParserInjector<IGoalDescription> _goalParserInjector = new ParserInjector<IGoalDescription>();
+
+        #endregion
+
         /// <summary>
         /// The goal description
         /// </summary>
@@ -19,13 +29,7 @@ namespace PDDL.Parser.Pddl12
             CreateGoalDescription();
 
         #region Factory Functions
-
-        /// <summary>
-        /// The goal parser injector
-        /// </summary>
-        [NotNull]
-        private static readonly ParserInjector<IGoalDescription> _goalParserInjector = new ParserInjector<IGoalDescription>();
-
+        
         /// <summary>
         /// Creates the goal description.
         /// </summary>

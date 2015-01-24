@@ -12,6 +12,16 @@ namespace PDDL.Parser.Pddl12
     /// </summary>
     internal static class CommonGrammar
     {
+        #region Internal Helpers
+
+        /// <summary>
+        /// This injector is used to fake-decouple the left recursive grammar construction
+        /// </summary>
+        [NotNull]
+        private readonly static ParserInjector<IType> _typeParserInjector = new ParserInjector<IType>();
+
+        #endregion
+
         /// <summary>
         /// Comments start with a semicolon and run until the end-of-line
         /// </summary>
@@ -142,13 +152,7 @@ namespace PDDL.Parser.Pddl12
             CreateLiteralOfTerm();
 
         #region Factory Functions
-
-        /// <summary>
-        /// This injector is used to fake-decouple the left recursive grammar construction
-        /// </summary>
-        [NotNull]
-        private readonly static ParserInjector<IType> _typeParserInjector = new ParserInjector<IType>();
-
+        
         /// <summary>
         /// Creates the type definition.
         /// </summary>
