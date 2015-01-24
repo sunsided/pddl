@@ -7,7 +7,7 @@ PDDL# is a parser for the [PDDL](http://en.wikipedia.org/wiki/Planning_Domain_De
 
 ### Language level and completeness
 
-Currently this library is targetet towards PDDL 1.2. The following concepts are not implemented:
+The library is currently targeted at PDDL 1.2. The following concepts are *not* yet implemented:
 
 * Requirements
 	* `:action-expansions`
