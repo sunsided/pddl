@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using FluentAssertions;
 using NUnit.Framework;
 using PDDL.Model.PDDL12;
 using PDDL.Model.PDDL12.Types;
@@ -72,6 +73,8 @@ namespace PDDL.Tests.Parser
             Assert.IsInstanceOf<ICustomType>(type);
             Assert.AreEqual("integer", ((ICustomType)type).Name);
 
+            type.Kind.Should().Be(TypeKind.UserDefined);
+
             Assert.IsInstanceOf<DefaultType>(((ICustomType)type).Parent);
         }
 
@@ -99,7 +102,8 @@ namespace PDDL.Tests.Parser
             Assert.AreEqual("number", ((ICustomType)type[1].Parent).Name);
             Assert.AreEqual("rock", ((ICustomType)type[2].Parent).Name);
 
-            Assert.IsInstanceOf<DefaultType>(type[3].Parent);
+            type[3].Parent.Should().BeOfType<DefaultType>();
+            type[3].Parent.Kind.Should().Be(TypeKind.Default);
         }
 
         [Test]
