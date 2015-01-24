@@ -34,7 +34,7 @@ namespace PDDL.Model.PDDL12
         /// </summary>
         /// <param name="other">The object to compare with the current object.</param>
         /// <returns><see langword="true" /> if the specified <see cref="Requirement" /> is equal to this instance; otherwise, <see langword="false" />.</returns>
-        protected bool Equals(Requirement other)
+        private bool Equals(Requirement other)
         {
             return string.Equals(Value, other.Value, StringComparison.OrdinalIgnoreCase);
         }
