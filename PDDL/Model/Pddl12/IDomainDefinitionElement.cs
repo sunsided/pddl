@@ -7,7 +7,9 @@ namespace PDDL.Model.Pddl12
     /// Interface IDomainDefinitionElement
     /// </summary>
     public interface IDomainDefinitionElement
-    { }
+    {
+        // intentionally left blank
+    }
 
     /// <summary>
     /// Interface IDomainExtensionDefinition
@@ -67,7 +69,9 @@ namespace PDDL.Model.Pddl12
     /// Interface IDomainVarsDefinition
     /// </summary>
     public interface IDomainVarsDefinition : IDomainDefinitionElement
-    { }
+    {
+        // TODO: add domain-vars
+    }
 
     /// <summary>
     /// Interface IDomainPredicatesDefinition
@@ -99,7 +103,14 @@ namespace PDDL.Model.Pddl12
     /// Interface IDomainSafetyDefinition
     /// </summary>
     public interface IDomainSafetyDefinition : IDomainDefinitionElement
-    { }
+    {
+        /// <summary>
+        /// Gets the safety constraints.
+        /// </summary>
+        /// <value>The safety constraints.</value>
+        [NotNull]
+        IReadOnlyList<IGoalDescription> Safety { get; }
+    }
 
     /// <summary>
     /// Interface IDomainStructureElement
@@ -109,6 +120,7 @@ namespace PDDL.Model.Pddl12
     /// </summary>
     public interface IDomainStructureElement : IDomainDefinitionElement
     {
+        // intentionally left blank
     }
 
     /// <summary>
