@@ -48,6 +48,12 @@
     <Compile Include="Model\Pddl12\Axiom.cs" />
     <Compile Include="Model\Pddl12\ConstantDomainVariable.cs" />
     <Compile Include="Model\Pddl12\DomainVariable.cs" />
+    <Compile Include="Model\Pddl12\IProblemDefinitionElement.cs" />
+    <Compile Include="Model\Pddl12\IProblem.cs" />
+    <Compile Include="Model\Pddl12\ProblemElements\ProblemInitialStateDefinition.cs" />
+    <Compile Include="Model\Pddl12\ProblemElements\ProblemGoalDefinition.cs" />
+    <Compile Include="Model\Pddl12\ProblemElements\ProblemObjectsDefinition.cs" />
+    <Compile Include="Model\Pddl12\ProblemElements\ProblemRequireDefinition.cs" />
     <Compile Include="Model\Pddl12\Value\DynamicValue.cs" />
     <Compile Include="Model\Pddl12\Value\DecimalValue.cs" />
     <Compile Include="Model\Pddl12\DomainElements\AxiomDefinition.cs" />
