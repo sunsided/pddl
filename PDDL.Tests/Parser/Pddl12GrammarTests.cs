@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Linq;
-using JetBrains.Annotations;
 using NUnit.Framework;
 using PDDL.Model.Pddl12;
 using PDDL.Model.Pddl12.Types;
-using PDDL.Parser;
 using PDDL.Parser.Pddl12;
 using Sprache;
 
@@ -16,12 +14,6 @@ namespace PDDL.Tests.Parser
     [TestFixture]
     public class Pddl12GrammarTests
     {
-        /// <summary>
-        /// The grammar
-        /// </summary>
-        [NotNull]
-        private readonly Gammar _grammar = new Gammar();
-
         /// <summary>
         /// Comments are correctly parsed when at the appropriate position
         /// </summary>
@@ -37,46 +29,46 @@ namespace PDDL.Tests.Parser
         [Test]
         public void OpeningParenthesisIsParsed()
         {
-            Assert.AreEqual("(", Gammar.OpeningParenthesis.Parse("(").ToString());
-            Assert.AreEqual("(", Gammar.OpeningParenthesis.Parse("   ( ").ToString());
+            Assert.AreEqual("(", CommonGrammar.OpeningParenthesis.Parse("(").ToString());
+            Assert.AreEqual("(", CommonGrammar.OpeningParenthesis.Parse("   ( ").ToString());
         }
 
         [Test]
         public void ClosingParenthesisIsParsed()
         {
-            Assert.AreEqual(")", Gammar.ClosingParenthesis.Parse(")").ToString());
-            Assert.AreEqual(")", Gammar.ClosingParenthesis.Parse("   ) ").ToString());
+            Assert.AreEqual(")", CommonGrammar.ClosingParenthesis.Parse(")").ToString());
+            Assert.AreEqual(")", CommonGrammar.ClosingParenthesis.Parse("   ) ").ToString());
         }
 
         [Test]
         public void NamesAreCorrectlyParsed()
         {
-            Assert.AreEqual("robot-worker-domain", Gammar.NameDefinition.Parse("robot-worker-domain"));
-            Assert.AreEqual("robot-3", Gammar.NameDefinition.Parse("robot-3"));
-            Assert.AreEqual("robot_", Gammar.NameDefinition.Parse("robot_"));
+            Assert.AreEqual("robot-worker-domain", CommonGrammar.NameDefinition.Parse("robot-worker-domain"));
+            Assert.AreEqual("robot-3", CommonGrammar.NameDefinition.Parse("robot-3"));
+            Assert.AreEqual("robot_", CommonGrammar.NameDefinition.Parse("robot_"));
 
-            Assert.Throws<ParseException>(() => Gammar.NameDefinition.Parse("-robot"));
-            Assert.Throws<ParseException>(() => Gammar.NameDefinition.Parse("3robot"));
-            Assert.Throws<ParseException>(() => Gammar.NameDefinition.Parse("_robot"));
+            Assert.Throws<ParseException>(() => CommonGrammar.NameDefinition.Parse("-robot"));
+            Assert.Throws<ParseException>(() => CommonGrammar.NameDefinition.Parse("3robot"));
+            Assert.Throws<ParseException>(() => CommonGrammar.NameDefinition.Parse("_robot"));
         }
 
         [Test]
         public void NameNonTokensAreCorrectlyParsed()
         {
-            Assert.AreEqual("robot-worker-domain", Gammar.NameNonToken.Parse("robot-worker-domain").Value);
-            Assert.AreEqual("robot-3", Gammar.NameNonToken.Parse("robot-3").Value);
-            Assert.AreEqual("robot_", Gammar.NameNonToken.Parse("robot_").Value);
-            Assert.AreEqual("a", Gammar.NameNonToken.Parse("a").Value);
+            Assert.AreEqual("robot-worker-domain", CommonGrammar.NameNonToken.Parse("robot-worker-domain").Value);
+            Assert.AreEqual("robot-3", CommonGrammar.NameNonToken.Parse("robot-3").Value);
+            Assert.AreEqual("robot_", CommonGrammar.NameNonToken.Parse("robot_").Value);
+            Assert.AreEqual("a", CommonGrammar.NameNonToken.Parse("a").Value);
 
-            Assert.Throws<ParseException>(() => Gammar.NameNonToken.Parse("-robot"));
-            Assert.Throws<ParseException>(() => Gammar.NameNonToken.Parse("3robot"));
-            Assert.Throws<ParseException>(() => Gammar.NameNonToken.Parse("_robot"));
+            Assert.Throws<ParseException>(() => CommonGrammar.NameNonToken.Parse("-robot"));
+            Assert.Throws<ParseException>(() => CommonGrammar.NameNonToken.Parse("3robot"));
+            Assert.Throws<ParseException>(() => CommonGrammar.NameNonToken.Parse("_robot"));
         }
 
         [Test]
         public void TypeNamesAreCorrectlyParsed()
         {
-            var type = _grammar.Type.Parse("integer - number");
+            var type = CommonGrammar.Type.Parse("integer - number");
             Assert.IsInstanceOf<ICustomType>(type);
             Assert.AreEqual("integer", ((ICustomType)type).Name);
 
@@ -86,7 +78,7 @@ namespace PDDL.Tests.Parser
         [Test]
         public void TypeListsAreCorrectlyParsed()
         {
-            var type = _grammar.TypedListOfType.Parse("float integer - number moon - rock something").ToArray();
+            var type = TypedLists.TypedListOfType.Parse("float integer - number moon - rock something").ToArray();
             Assert.AreEqual(4, type.Length);
 
             Assert.IsInstanceOf<ICustomType>(type[0]);
@@ -99,21 +91,21 @@ namespace PDDL.Tests.Parser
             Assert.AreEqual("moon", ((ICustomType)type[2]).Name);
             Assert.AreEqual("something", ((ICustomType)type[3]).Name);
 
-            Assert.IsInstanceOf<ICustomType>(((ICustomType)type[0]).Parent);
-            Assert.IsInstanceOf<ICustomType>(((ICustomType)type[1]).Parent);
-            Assert.IsInstanceOf<ICustomType>(((ICustomType)type[2]).Parent);
+            Assert.IsInstanceOf<ICustomType>(type[0].Parent);
+            Assert.IsInstanceOf<ICustomType>(type[1].Parent);
+            Assert.IsInstanceOf<ICustomType>(type[2].Parent);
 
-            Assert.AreEqual("number", ((ICustomType)((ICustomType)type[0]).Parent).Name);
-            Assert.AreEqual("number", ((ICustomType)((ICustomType)type[1]).Parent).Name);
-            Assert.AreEqual("rock", ((ICustomType)((ICustomType)type[2]).Parent).Name);
+            Assert.AreEqual("number", ((ICustomType)type[0].Parent).Name);
+            Assert.AreEqual("number", ((ICustomType)type[1].Parent).Name);
+            Assert.AreEqual("rock", ((ICustomType)type[2].Parent).Name);
 
-            Assert.IsInstanceOf<DefaultType>(((ICustomType)type[3]).Parent);
+            Assert.IsInstanceOf<DefaultType>(type[3].Parent);
         }
 
         [Test]
         public void EitherTypeIsCorrectlyParsed()
         {
-            var type = _grammar.Type.Parse("(either rocket something)");
+            var type = CommonGrammar.Type.Parse("(either rocket something)");
 
             Assert.IsInstanceOf<IEitherType>(type);
 
@@ -134,7 +126,7 @@ namespace PDDL.Tests.Parser
         [Test]
         public void FluentTypeIsCorrectlyParsed()
         {
-            var type = _grammar.Type.Parse("(fluent speaker)");
+            var type = CommonGrammar.Type.Parse("(fluent speaker)");
 
             Assert.IsInstanceOf<IFluentType>(type);
 
@@ -147,7 +139,7 @@ namespace PDDL.Tests.Parser
         [Test]
         public void TypedListsWithEitherBaseType()
         {
-            var type = _grammar.TypedListOfType.Parse("something - (either rock paper scissor)").ToArray();
+            var type = TypedLists.TypedListOfType.Parse("something - (either rock paper scissor)").ToArray();
             Assert.AreEqual(1, type.Length);
 
             Assert.IsInstanceOf<ICustomType>(type[0]);
@@ -162,18 +154,18 @@ namespace PDDL.Tests.Parser
         [Test]
         public void GoalDescription()
         {
-            var gd = _grammar.GoalDescription.Parse("(in house person)");
+            var gd = GoalGrammar.GoalDescription.Parse("(in house person)");
             Assert.IsInstanceOf<ILiteralGoalDescription>(gd);
             Assert.AreEqual("in", ((ILiteralGoalDescription)gd).Literal.Name.Value);
             Assert.AreEqual(2, ((ILiteralGoalDescription)gd).Literal.Parameters.Count);
 
-            gd = _grammar.GoalDescription.Parse("(not (at home person))");
+            gd = GoalGrammar.GoalDescription.Parse("(not (at home person))");
             Assert.IsInstanceOf<ILiteralGoalDescription>(gd);
             Assert.AreEqual(false, ((ILiteralGoalDescription)gd).Literal.Positive);
             Assert.AreEqual("at", ((ILiteralGoalDescription)gd).Literal.Name.Value);
             Assert.AreEqual(2, ((ILiteralGoalDescription)gd).Literal.Parameters.Count);
 
-            gd = _grammar.GoalDescription.Parse("(and (in house person) (not (at home person)) (on street person))");
+            gd = GoalGrammar.GoalDescription.Parse("(and (in house person) (not (at home person)) (on street person))");
             Assert.IsInstanceOf<IConjunctionGoalDescription>(gd);
             Assert.AreEqual(3, ((IConjunctionGoalDescription)gd).Goals.Count);
         }
@@ -181,7 +173,7 @@ namespace PDDL.Tests.Parser
         [Test]
         public void Axiom()
         {
-            var ax = _grammar.AxiomDefinition.Parse("(:axiom :vars (?x ?y - physob) :context (on ?x ?y) :implies (above ?x ?y))");
+            var ax = AxiomGrammar.AxiomDefinition.Parse("(:axiom :vars (?x ?y - physob) :context (on ?x ?y) :implies (above ?x ?y))");
             Assert.AreEqual(2, ax.Variables.Count);
             Assert.IsInstanceOf<ILiteralGoalDescription>(ax.Context);
             Assert.AreEqual("on", ((ILiteralGoalDescription)ax.Context).Literal.Name);
