@@ -113,6 +113,7 @@
     <Compile Include="Model\Pddl12\Constant.cs" />
     <Compile Include="Parser\Pddl12\AxiomGrammar.cs" />
     <Compile Include="Parser\Pddl12\DefineGrammar.cs" />
+    <Compile Include="Parser\Pddl12\DomainVariableGrammar.cs" />
     <Compile Include="Parser\Pddl12\EffectGrammar.cs" />
     <Compile Include="Parser\Pddl12\ActionGrammar.cs" />
     <Compile Include="Parser\Pddl12\CommonGrammar.cs" />
