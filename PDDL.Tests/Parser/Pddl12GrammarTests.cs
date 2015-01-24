@@ -20,7 +20,7 @@ namespace PDDL.Tests.Parser
         /// The grammar
         /// </summary>
         [NotNull]
-        private readonly Pddl12Grammar _grammar = new Pddl12Grammar();
+        private readonly Grammar _grammar = new Grammar();
 
         /// <summary>
         /// Comments are correctly parsed when at the appropriate position
@@ -28,49 +28,49 @@ namespace PDDL.Tests.Parser
         [Test]
         public void CommentsAreRecognized()
         {
-            var result = Pddl12Grammar.Comment.Parse("; one two three" + Environment.NewLine + "this is not a comment");
+            var result = Grammar.Comment.Parse("; one two three" + Environment.NewLine + "this is not a comment");
             Assert.AreEqual("; one two three", result);
 
-            Assert.Throws<ParseException>(() => Pddl12Grammar.Comment.Parse("not a comment"));
+            Assert.Throws<ParseException>(() => Grammar.Comment.Parse("not a comment"));
         }
 
         [Test]
         public void OpeningParenthesisIsParsed()
         {
-            Assert.AreEqual("(", Pddl12Grammar.OpeningParenthesis.Parse("(").ToString());
-            Assert.AreEqual("(", Pddl12Grammar.OpeningParenthesis.Parse("   ( ").ToString());
+            Assert.AreEqual("(", Grammar.OpeningParenthesis.Parse("(").ToString());
+            Assert.AreEqual("(", Grammar.OpeningParenthesis.Parse("   ( ").ToString());
         }
 
         [Test]
         public void ClosingParenthesisIsParsed()
         {
-            Assert.AreEqual(")", Pddl12Grammar.ClosingParenthesis.Parse(")").ToString());
-            Assert.AreEqual(")", Pddl12Grammar.ClosingParenthesis.Parse("   ) ").ToString());
+            Assert.AreEqual(")", Grammar.ClosingParenthesis.Parse(")").ToString());
+            Assert.AreEqual(")", Grammar.ClosingParenthesis.Parse("   ) ").ToString());
         }
 
         [Test]
         public void NamesAreCorrectlyParsed()
         {
-            Assert.AreEqual("robot-worker-domain", Pddl12Grammar.NameDefinition.Parse("robot-worker-domain"));
-            Assert.AreEqual("robot-3", Pddl12Grammar.NameDefinition.Parse("robot-3"));
-            Assert.AreEqual("robot_", Pddl12Grammar.NameDefinition.Parse("robot_"));
+            Assert.AreEqual("robot-worker-domain", Grammar.NameDefinition.Parse("robot-worker-domain"));
+            Assert.AreEqual("robot-3", Grammar.NameDefinition.Parse("robot-3"));
+            Assert.AreEqual("robot_", Grammar.NameDefinition.Parse("robot_"));
 
-            Assert.Throws<ParseException>(() => Pddl12Grammar.NameDefinition.Parse("-robot"));
-            Assert.Throws<ParseException>(() => Pddl12Grammar.NameDefinition.Parse("3robot"));
-            Assert.Throws<ParseException>(() => Pddl12Grammar.NameDefinition.Parse("_robot"));
+            Assert.Throws<ParseException>(() => Grammar.NameDefinition.Parse("-robot"));
+            Assert.Throws<ParseException>(() => Grammar.NameDefinition.Parse("3robot"));
+            Assert.Throws<ParseException>(() => Grammar.NameDefinition.Parse("_robot"));
         }
 
         [Test]
         public void NameNonTokensAreCorrectlyParsed()
         {
-            Assert.AreEqual("robot-worker-domain", Pddl12Grammar.NameNonToken.Parse("robot-worker-domain").Value);
-            Assert.AreEqual("robot-3", Pddl12Grammar.NameNonToken.Parse("robot-3").Value);
-            Assert.AreEqual("robot_", Pddl12Grammar.NameNonToken.Parse("robot_").Value);
-            Assert.AreEqual("a", Pddl12Grammar.NameNonToken.Parse("a").Value);
+            Assert.AreEqual("robot-worker-domain", Grammar.NameNonToken.Parse("robot-worker-domain").Value);
+            Assert.AreEqual("robot-3", Grammar.NameNonToken.Parse("robot-3").Value);
+            Assert.AreEqual("robot_", Grammar.NameNonToken.Parse("robot_").Value);
+            Assert.AreEqual("a", Grammar.NameNonToken.Parse("a").Value);
 
-            Assert.Throws<ParseException>(() => Pddl12Grammar.NameNonToken.Parse("-robot"));
-            Assert.Throws<ParseException>(() => Pddl12Grammar.NameNonToken.Parse("3robot"));
-            Assert.Throws<ParseException>(() => Pddl12Grammar.NameNonToken.Parse("_robot"));
+            Assert.Throws<ParseException>(() => Grammar.NameNonToken.Parse("-robot"));
+            Assert.Throws<ParseException>(() => Grammar.NameNonToken.Parse("3robot"));
+            Assert.Throws<ParseException>(() => Grammar.NameNonToken.Parse("_robot"));
         }
 
         [Test]

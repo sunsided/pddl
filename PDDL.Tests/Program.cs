@@ -32,7 +32,7 @@ namespace PDDL.Tests
             string domainFileName = resources.FirstOrDefault(fileName => fileName.Contains("DWR-operators.pddl"));
             string domainDefinition = LoadNamedResourceString(assembly, domainFileName);
 
-            var grammar = new Pddl12Grammar();
+            var grammar = new Grammar();
 
             domainDefinition = RemoveAllComments(domainDefinition);
             var result = grammar.DefineDefinition.Parse(domainDefinition);

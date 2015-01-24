@@ -8,7 +8,7 @@ namespace PDDL.Parser.Pddl12
     /// <summary>
     /// Class Pddl12DomainStructure. This class cannot be inherited.
     /// </summary>
-    internal sealed class Pddl12DomainStructure
+    internal sealed class DomainStructure
     {
         /// <summary>
         /// Gets or sets the axiom.
@@ -25,24 +25,24 @@ namespace PDDL.Parser.Pddl12
         public IReadOnlyList<IAxiom> Axioms { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Pddl12DomainStructure"/> class.
+        /// Initializes a new instance of the <see cref="DomainStructure"/> class.
         /// </summary>
         /// <param name="actions">The actions.</param>
         /// <param name="axioms">The axioms.</param>
-        private Pddl12DomainStructure([NotNull] IReadOnlyList<IAction> actions, [NotNull] IReadOnlyList<IAxiom> axioms)
+        private DomainStructure([NotNull] IReadOnlyList<IAction> actions, [NotNull] IReadOnlyList<IAxiom> axioms)
         {
             Actions = actions;
             Axioms = axioms;
         }
 
         /// <summary>
-        /// Creates a <see cref="Pddl12DomainStructure"/> instance from a mixed sequence of parsed domain structure elements.
+        /// Creates a <see cref="DomainStructure"/> instance from a mixed sequence of parsed domain structure elements.
         /// </summary>
         /// <param name="sequence">The sequence.</param>
         /// <returns>Pddl12DomainStructure.</returns>
         /// <exception cref="ArgumentException">Sequence contained unrecognized element</exception>
         [NotNull]
-        public static Pddl12DomainStructure FromSequence(IEnumerable<IDomainStructureElement> sequence)
+        public static DomainStructure FromSequence(IEnumerable<IDomainStructureElement> sequence)
         {
             var actions = new List<IAction>();
             var axioms = new List<IAxiom>();
@@ -67,7 +67,7 @@ namespace PDDL.Parser.Pddl12
             }
 
             // there we go
-            return new Pddl12DomainStructure(
+            return new DomainStructure(
                 actions.AsReadOnly(),
                 axioms.AsReadOnly());
         }

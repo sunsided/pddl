@@ -12,12 +12,12 @@ namespace PDDL.Parser.Pddl12
     /// <summary>
     /// Class Pddl12Grammar. This class cannot be inherited.
     /// </summary>
-    sealed class Pddl12Grammar
+    sealed class Grammar
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="Pddl12Grammar"/> class.
+        /// Initializes a new instance of the <see cref="Grammar"/> class.
         /// </summary>
-        public Pddl12Grammar()
+        public Grammar()
         {
             // TODO: implement domain-vars-def 
             // TODO add :disjunctive-preconditions goals
@@ -291,11 +291,11 @@ namespace PDDL.Parser.Pddl12
         /// Creates a parser for the domain structure.
         /// </summary>
         /// <returns>Parser&lt;Pddl12DomainStructure&gt;.</returns>
-        private Parser<Pddl12DomainStructure> CreateDomainStructure()
+        private Parser<DomainStructure> CreateDomainStructure()
         {
             return (
                 from matches in ActionDefinition.Or<IDomainStructureElement>(AxiomDefinition).Many()
-                select Pddl12DomainStructure.FromSequence(matches)
+                select DomainStructure.FromSequence(matches)
                 );
         }
 
