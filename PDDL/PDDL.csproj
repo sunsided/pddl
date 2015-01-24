@@ -133,32 +133,6 @@
     <Compile Include="Symbols\Name.cs" />
     <Compile Include="Symbols\Keyword.cs" />
     <Compile Include="Symbols\Symbol.cs" />
-    <Compile Include="Tokenizer\IPddlTokenizer.cs" />
-    <Compile Include="Tokenizer\Tokenizers\CommentTokenizer.cs" />
-    <Compile Include="Tokenizer\Tokenizers\SpecificSymbolTokenizer.cs" />
-    <Compile Include="Tokenizer\Tokenizers\WhitespaceTokenizer.cs" />
-    <Compile Include="Tokenizer\Tokenizers\ParenthesisTokenizer.cs" />
-    <Compile Include="Tokenizer\Tokenizers\QuestionMarkTokenizer.cs" />
-    <Compile Include="Tokenizer\Tokenizers\UnderscoreTokenizer.cs" />
-    <Compile Include="Tokenizer\Tokenizers\HyphenTokenizer.cs" />
-    <Compile Include="Tokenizer\Tokenizers\ColonTokenizer.cs" />
-    <Compile Include="Tokenizer\Tokenizers\DigitsTokenizer.cs" />
-    <Compile Include="Tokenizer\Tokenizers\LettersTokenizer.cs" />
-    <Compile Include="Tokenizer\Tokenizers\LiteralTokenizer.cs" />
-    <Compile Include="Tokenizer\Pddl12Tokenizer.cs" />
-    <Compile Include="Tokenizer\ReaderExtensions.cs" />
-    <Compile Include="Tokenizer\Tokenizers\TokenizerBase.cs" />
-    <Compile Include="Tokenizer\Tokens\Digits.cs" />
-    <Compile Include="Tokenizer\Tokens\Literal.cs" />
-    <Compile Include="Tokenizer\Tokens\QuestionMark.cs" />
-    <Compile Include="Tokenizer\Tokens\Underscore.cs" />
-    <Compile Include="Tokenizer\Tokens\Hyphen.cs" />
-    <Compile Include="Tokenizer\Tokens\Comment.cs" />
-    <Compile Include="Tokenizer\Tokens\Letters.cs" />
-    <Compile Include="Tokenizer\Tokens\Colon.cs" />
-    <Compile Include="Tokenizer\Tokens\Parenthesis.cs" />
-    <Compile Include="Tokenizer\Tokens\Token.cs" />
-    <Compile Include="Tokenizer\Tokens\Whitespace.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
