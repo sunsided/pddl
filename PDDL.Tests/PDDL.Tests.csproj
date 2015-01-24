@@ -63,7 +63,6 @@
     <Compile Include="Parser\Pddl12\DomainVariablesTests.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tokenizer\Pddl12TokenizerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="..\Data\DWR\DWR-operators.pddl">
