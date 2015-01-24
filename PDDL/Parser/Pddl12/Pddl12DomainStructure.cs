@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using PDDL.Model.Pddl12;
 
-namespace PDDL.Parser
+namespace PDDL.Parser.Pddl12
 {
     /// <summary>
     /// Class Pddl12DomainStructure. This class cannot be inherited.

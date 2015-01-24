@@ -5,6 +5,7 @@ using NUnit.Framework;
 using PDDL.Model.Pddl12;
 using PDDL.Model.Pddl12.Types;
 using PDDL.Parser;
+using PDDL.Parser.Pddl12;
 using Sprache;
 
 namespace PDDL.Tests.Parser

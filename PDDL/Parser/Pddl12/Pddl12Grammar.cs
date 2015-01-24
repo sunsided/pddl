@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.IO.MemoryMappedFiles;
+﻿using System.Collections.Generic;
 using System.Linq;
 using PDDL.Model.Pddl12;
 using PDDL.Model.Pddl12.Effects;
@@ -9,9 +6,8 @@ using PDDL.Model.Pddl12.Goals;
 using PDDL.Model.Pddl12.Null;
 using PDDL.Model.Pddl12.Types;
 using Sprache;
-using Action = PDDL.Model.Pddl12.Action;
 
-namespace PDDL.Parser
+namespace PDDL.Parser.Pddl12
 {
     /// <summary>
     /// Class Pddl12Grammar. This class cannot be inherited.

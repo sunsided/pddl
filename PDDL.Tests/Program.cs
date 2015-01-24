@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using PDDL.Parser;
+using PDDL.Parser.Pddl12;
 using Sprache;
 
 namespace PDDL.Tests
