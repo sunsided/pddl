@@ -6,7 +6,7 @@ namespace PDDL.Model.PDDL12.Effects
     /// <summary>
     /// Class NegativeEffect.
     /// </summary>
-    public class NegativeEffect : EffectBase, IPositiveEffect
+    internal sealed class NegativeEffect : EffectBase, IPositiveEffect
     {
         /// <summary>
         /// Gets the effect.

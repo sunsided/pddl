@@ -7,7 +7,7 @@ namespace PDDL.Model.PDDL12.ProblemElements
     /// <summary>
     /// Class ProblemObjectsDefinition. This class cannot be inherited.
     /// </summary>
-    public sealed class ProblemObjectsDefinition : IProblemObjectsDefinition
+    internal sealed class ProblemObjectsDefinition : IProblemObjectsDefinition
     {
         /// <summary>
         /// Gets the requirements.

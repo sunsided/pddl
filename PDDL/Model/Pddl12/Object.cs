@@ -6,7 +6,7 @@ namespace PDDL.Model.PDDL12
     /// <summary>
     /// Class Object.
     /// </summary>
-    public class Object : IObject
+    internal sealed class Object : IObject
     {
         /// <summary>
         /// Gets the name.

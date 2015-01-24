@@ -7,7 +7,7 @@ namespace PDDL.Model.PDDL12.DomainElements
     /// <summary>
     /// Class ConstantsDefinition. This class cannot be inherited.
     /// </summary>
-    public sealed class ConstantsDefinition : IDomainConstantsDefinition
+    internal sealed class ConstantsDefinition : IDomainConstantsDefinition
     {
         /// <summary>
         /// Gets the constants definitions.

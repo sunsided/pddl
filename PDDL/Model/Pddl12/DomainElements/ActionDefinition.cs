@@ -6,7 +6,7 @@ namespace PDDL.Model.PDDL12.DomainElements
     /// <summary>
     /// Class ActionDefinition. This class cannot be inherited.
     /// </summary>
-    public sealed class ActionDefinition : IDomainActionElement
+    internal sealed class ActionDefinition : IDomainActionElement
     {
         /// <summary>
         /// Gets the action definition.

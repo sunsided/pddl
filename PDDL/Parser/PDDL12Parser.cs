@@ -3,8 +3,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
-using PDDL.Model.Pddl12;
-using PDDL.Parser.Pddl12;
+using PDDL.Model.PDDL12;
+using PDDL.Parser.PDDL12;
 using Sprache;
 
 namespace PDDL.Parser

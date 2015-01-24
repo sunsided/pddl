@@ -6,7 +6,7 @@ namespace PDDL.Model.PDDL12
     /// <summary>
     /// Class VariableDefinition.
     /// </summary>
-    public class VariableDefinition : IVariableDefinition
+    internal sealed class VariableDefinition : IVariableDefinition
     {
         /// <summary>
         /// Gets the name.

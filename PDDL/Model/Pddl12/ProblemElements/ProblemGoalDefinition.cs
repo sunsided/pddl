@@ -6,7 +6,7 @@ namespace PDDL.Model.PDDL12.ProblemElements
     /// <summary>
     /// Class ProblemGoalDefinition. This class cannot be inherited.
     /// </summary>
-    public sealed class ProblemGoalDefinition : IProblemGoalDefinition
+    internal sealed class ProblemGoalDefinition : IProblemGoalDefinition
     {
         /// <summary>
         /// Gets the goal.

@@ -9,7 +9,7 @@ namespace PDDL.Model.PDDL12.Null
     ///     Describes a nonexistant goal.
     /// </para>
     /// </summary>
-    public class NullGoalDescription : GoalBase
+    internal sealed class NullGoalDescription : GoalBase
     {
         /// <summary>
         /// The default instance

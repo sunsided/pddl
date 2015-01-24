@@ -7,7 +7,7 @@ namespace PDDL.Model.PDDL12.DomainElements
     /// <summary>
     /// Class TypesDefinition. This class cannot be inherited.
     /// </summary>
-    public sealed class TypesDefinition : IDomainTypesDefinition
+    internal sealed class TypesDefinition : IDomainTypesDefinition
     {
         /// <summary>
         /// Gets the type definitions.

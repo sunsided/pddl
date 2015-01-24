@@ -7,7 +7,7 @@ namespace PDDL.Model.PDDL12.ProblemElements
     /// <summary>
     /// Class ProblemInitialStateDefinition. This class cannot be inherited.
     /// </summary>
-    public sealed class ProblemInitialStateDefinition : IProblemInitialStateDefinition
+    internal sealed class ProblemInitialStateDefinition : IProblemInitialStateDefinition
     {
         /// <summary>
         /// Gets the initial state.

@@ -7,7 +7,7 @@ namespace PDDL.Model.PDDL12
     /// <summary>
     /// Class AtomicFormula.
     /// </summary>
-    public class AtomicFormula<T> : IAtomicFormula<T>
+    internal class AtomicFormula<T> : IAtomicFormula<T>
     {
         /// <summary>
         /// Gets the name.

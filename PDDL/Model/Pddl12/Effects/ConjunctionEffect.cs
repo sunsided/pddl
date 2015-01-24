@@ -7,7 +7,7 @@ namespace PDDL.Model.PDDL12.Effects
     /// <summary>
     /// Class ConjunctionEffect.
     /// </summary>
-    public class ConjunctionEffect : EffectBase, IConjunctionEffect
+    internal sealed class ConjunctionEffect : EffectBase, IConjunctionEffect
     {
         /// <summary>
         /// Gets the effects.

@@ -6,7 +6,7 @@ namespace PDDL.Model.PDDL12.Null
     /// <summary>
     /// Class NullEffect.
     /// </summary>
-    public sealed class NullEffect : EffectBase
+    internal sealed class NullEffect : EffectBase
     {
         /// <summary>
         /// The default instance

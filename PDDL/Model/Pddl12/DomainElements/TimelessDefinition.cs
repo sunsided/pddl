@@ -7,7 +7,7 @@ namespace PDDL.Model.PDDL12.DomainElements
     /// <summary>
     /// Class TimelessDefinition. This class cannot be inherited.
     /// </summary>
-    public sealed class TimelessDefinition : IDomainTimelessDefinition
+    internal sealed class TimelessDefinition : IDomainTimelessDefinition
     {
         /// <summary>
         /// Gets the timeless definitions.

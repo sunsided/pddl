@@ -7,7 +7,7 @@ namespace PDDL.Model.PDDL12
     /// <summary>
     /// Class Name. This class cannot be inherited.
     /// </summary>
-    public class Name : IName
+    internal class Name : IName
     {
         /// <summary>
         /// Gets the value.

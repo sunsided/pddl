@@ -7,7 +7,7 @@ namespace PDDL.Model.PDDL12.DomainElements
     /// <summary>
     /// Class ExtensionDefinition. This class cannot be inherited.
     /// </summary>
-    public sealed class ExtensionDefinition : IDomainExtensionDefinition
+    internal sealed class ExtensionDefinition : IDomainExtensionDefinition
     {
         /// <summary>
         /// Gets the name definitions.
