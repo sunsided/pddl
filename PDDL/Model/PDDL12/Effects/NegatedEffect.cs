@@ -4,9 +4,9 @@ using JetBrains.Annotations;
 namespace PDDL.Model.PDDL12.Effects
 {
     /// <summary>
-    /// Class PositiveEffect.
+    /// Class NegativeEffect.
     /// </summary>
-    public class PositiveEffect : EffectBase, IPositiveEffect
+    public class NegatedEffect : EffectBase, INegatedEffect
     {
         /// <summary>
         /// Gets the effect.
@@ -15,12 +15,12 @@ namespace PDDL.Model.PDDL12.Effects
         public IAtomicFormula<ITerm> Effects { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PositiveEffect"/> class.
+        /// Initializes a new instance of the <see cref="NegatedEffect"/> class.
         /// </summary>
         /// <param name="effects">The effects.</param>
         /// <exception cref="ArgumentNullException">The value of 'effects' cannot be null. </exception>
-        public PositiveEffect([NotNull] IAtomicFormula<ITerm> effects)
-            : base(ListType.Add)
+        public NegatedEffect([NotNull] IAtomicFormula<ITerm> effects)
+            : base(ListType.Remove)
         {
             if (ReferenceEquals(effects, null)) throw new ArgumentNullException("effects", "effects must not be null");
             Effects = effects;

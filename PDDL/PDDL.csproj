@@ -82,7 +82,7 @@
     <Compile Include="Model\PDDL12\AtomicFormula.cs" />
     <Compile Include="Model\PDDL12\AtomicFormulaSkeleton.cs" />
     <Compile Include="Model\PDDL12\Domain.cs" />
-    <Compile Include="Model\PDDL12\Effects\NegativeEffect.cs" />
+    <Compile Include="Model\PDDL12\Effects\NegatedEffect.cs" />
     <Compile Include="Model\PDDL12\IAtomicFormula.cs" />
     <Compile Include="Model\PDDL12\IConstant.cs" />
     <Compile Include="Model\PDDL12\IPredicate.cs" />
@@ -90,7 +90,7 @@
     <Compile Include="Model\PDDL12\Requirement.cs" />
     <Compile Include="Model\PDDL12\ListType.cs" />
     <Compile Include="Model\PDDL12\Effects\ConjunctionEffect.cs" />
-    <Compile Include="Model\PDDL12\Effects\PositiveEffect.cs" />
+    <Compile Include="Model\PDDL12\Effects\RegularEffect.cs" />
     <Compile Include="Model\PDDL12\Effects\EffectBase.cs" />
     <Compile Include="Model\PDDL12\Goals\ConjunctionGoalDescription.cs" />
     <Compile Include="Model\PDDL12\Goals\LiteralGoalDescription.cs" />
