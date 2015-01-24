@@ -64,5 +64,11 @@ namespace PDDL.Model.PDDL12.Types
         {
             return Name.ToString();
         }
+
+        /// <summary>
+        /// Gets the kind of type.
+        /// </summary>
+        /// <value>The kind.</value>
+        public abstract TypeKind Kind { get; }
     }
 }

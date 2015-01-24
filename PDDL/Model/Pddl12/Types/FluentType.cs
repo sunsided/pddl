@@ -24,5 +24,14 @@ namespace PDDL.Model.PDDL12.Types
         /// </summary>
         /// <value>The fluent type.</value>
         public IType Type { get; private set; }
+
+        /// <summary>
+        /// Gets the type flavor.
+        /// </summary>
+        /// <value>The flavor.</value>
+        public TypeKind Kind
+        {
+            get { return TypeKind.Fluent; }
+        }
     }
 }

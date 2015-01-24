@@ -12,6 +12,10 @@ namespace PDDL.Model.PDDL12
     /// </summary>
     public interface IType
     {
+        /// <summary>
+        /// Gets the kind of this type.
+        /// </summary>
+        TypeKind Kind { get; }
     }
 
     /// <summary>

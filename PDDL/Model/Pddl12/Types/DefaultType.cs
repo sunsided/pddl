@@ -29,5 +29,14 @@ namespace PDDL.Model.PDDL12.Types
         /// </summary>
         public DefaultType() : base(new Name("object"))
         { }
+
+        /// <summary>
+        /// Gets the type flavor.
+        /// </summary>
+        /// <value>The flavor.</value>
+        public override TypeKind Kind
+        {
+            get { return TypeKind.Default; }
+        }
     }
 }
