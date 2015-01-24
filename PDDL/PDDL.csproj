@@ -46,6 +46,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Pddl12\Axiom.cs" />
+    <Compile Include="Model\Pddl12\ConstantDomainVariable.cs" />
+    <Compile Include="Model\Pddl12\DomainVariable.cs" />
+    <Compile Include="Model\Pddl12\Value\DynamicValue.cs" />
+    <Compile Include="Model\Pddl12\Value\DecimalValue.cs" />
     <Compile Include="Model\Pddl12\DomainElements\AxiomDefinition.cs" />
     <Compile Include="Model\Pddl12\DomainElements\ActionDefinition.cs" />
     <Compile Include="Model\Pddl12\DomainElements\SafetyDefinition.cs" />
@@ -57,8 +61,11 @@
     <Compile Include="Model\Pddl12\DomainElements\RequirementsDefinition.cs" />
     <Compile Include="Model\Pddl12\DomainElements\ExtensionDefinition.cs" />
     <Compile Include="Model\Pddl12\IAxiom.cs" />
+    <Compile Include="Model\Pddl12\IConstantDomainVariable.cs" />
     <Compile Include="Model\Pddl12\IDomainDefinitionElement.cs" />
+    <Compile Include="Model\Pddl12\IDomainVariable.cs" />
     <Compile Include="Model\Pddl12\ITyped.cs" />
+    <Compile Include="Model\Pddl12\IValue.cs" />
     <Compile Include="Model\Pddl12\IVariableDefinition.cs" />
     <Compile Include="Model\Pddl12\Null\NullEffect.cs" />
     <Compile Include="Model\Pddl12\ITerm.cs" />
