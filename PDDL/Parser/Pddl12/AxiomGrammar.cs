@@ -30,10 +30,10 @@ namespace PDDL.Parser.Pddl12
         {
             return (
                 from open in CommonGrammar.OpeningParenthesis
-                from keyword in Keywords.Axiom
+                from keyword in Keywords.CAxiom
                 from vars in VarsGrammar.VarsDefinition
-                from context in Keywords.Context.Then(_ => GoalGrammar.GoalDescription)
-                from implications in Keywords.Implies.Then(_ => CommonGrammar.LiteralOfTerm)
+                from context in Keywords.CContext.Then(_ => GoalGrammar.GoalDescription)
+                from implications in Keywords.CImplies.Then(_ => CommonGrammar.LiteralOfTerm)
                 from close in CommonGrammar.ClosingParenthesis
                 // bundle and go
                 let axiom = new Axiom(vars.ToList(), context, implications)

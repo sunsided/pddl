@@ -27,7 +27,7 @@ namespace PDDL.Parser.Pddl12
         private static Parser<IEnumerable<IVariableDefinition>> CreateVarsDefinition()
         {
             return (
-                from keyword in Keywords.Vars
+                from keyword in Keywords.CVars
                 from open in CommonGrammar.OpeningParenthesis
                 from variables in TypedLists.TypedListOfVariable.Token()
                 from close in CommonGrammar.ClosingParenthesis

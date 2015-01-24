@@ -6,7 +6,7 @@ namespace PDDL.Model.Pddl12
     /// <summary>
     /// Interface IDomain
     /// </summary>
-    public interface IDomain
+    public interface IDomain : IDefinition
     {
         /// <summary>
         /// Gets the name.

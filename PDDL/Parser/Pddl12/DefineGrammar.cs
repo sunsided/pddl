@@ -12,7 +12,8 @@ namespace PDDL.Parser.Pddl12
         /// <summary>
         /// The define definition
         /// </summary>
-        [NotNull] public static readonly Parser<IDomain> DefineDefinition
+        [NotNull]
+        public static readonly Parser<IDefinition> DefineDefinition
             = CreateDefineDefinition();
 
         #region Factory Functions
@@ -22,14 +23,14 @@ namespace PDDL.Parser.Pddl12
         /// </summary>
         /// <returns>Parser&lt;IDomain&gt;.</returns>
         [NotNull]
-        private static Parser<IDomain> CreateDefineDefinition()
+        private static Parser<IDefinition> CreateDefineDefinition()
         {
             return (
                 from openDefine in CommonGrammar.OpeningParenthesis
                 from defineKeyword in Keywords.Define
-                from domain in DomainGrammar.DomainDefinition
+                from definition in DomainGrammar.DomainDefinition.Or<IDefinition>(ProblemGrammar.ProblemDefinition)
                 from closeDefine in CommonGrammar.ClosingParenthesis
-                select domain
+                select definition
                 );
         }
 

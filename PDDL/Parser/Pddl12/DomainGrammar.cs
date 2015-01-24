@@ -13,37 +13,6 @@ namespace PDDL.Parser.Pddl12
     internal static class DomainGrammar
     {
         /// <summary>
-        /// The valid requirements
-        /// </summary>
-        [NotNull]
-        public static Parser<IRequirement> ValidRequirements =
-                (from value in
-                     Parse.String(":strips")
-                     .Or(Parse.String(":typing"))
-                     .Or(Parse.String(":disjunctive-preconditions"))
-                     .Or(Parse.String(":equality"))
-                     .Or(Parse.String(":existential-preconditions"))
-                     .Or(Parse.String(":universal-preconditions"))
-                     .Or(Parse.String(":quantified-preconditions"))
-                     .Or(Parse.String(":conditional-effects"))
-                     .Or(Parse.String(":action-expansions"))
-                     .Or(Parse.String(":foreach-expansions"))
-                     .Or(Parse.String(":dag-expaeinsions"))
-                     .Or(Parse.String(":domain-axioms"))
-
-                     .Or(Parse.String(":subgoal-through-axioms"))
-                     .Or(Parse.String(":safety-constraints"))
-                     .Or(Parse.String(":expression-evaluation"))
-                     .Or(Parse.String(":fluents"))
-                     .Or(Parse.String(":open-world"))
-                     .Or(Parse.String(":true-negation"))
-                     .Or(Parse.String(":adl"))
-                     .Or(Parse.String(":ucpop"))
-                     .Text()
-                 select new Requirement(value)
-                ).Token();
-
-        /// <summary>
         /// The predicates definition
         /// </summary>
         [NotNull] 
@@ -162,7 +131,7 @@ namespace PDDL.Parser.Pddl12
         {
             return (
                 from open in CommonGrammar.OpeningParenthesis
-                from keyword in Keywords.Timeless
+                from keyword in Keywords.CTimeless
                 from literals in CommonGrammar.LiteralOfName.Many()
                 from close in CommonGrammar.ClosingParenthesis
                 select new TimelessDefinition(literals.ToList())
@@ -177,7 +146,7 @@ namespace PDDL.Parser.Pddl12
         {
             return (
                 from open in CommonGrammar.OpeningParenthesis
-                from keyword in Keywords.Safety
+                from keyword in Keywords.CSafety
                 from backgroundGoals in GoalGrammar.GoalDescription.Many()
                 from close in CommonGrammar.ClosingParenthesis
                 select new SafetyDefinition(backgroundGoals.ToList())
@@ -192,7 +161,7 @@ namespace PDDL.Parser.Pddl12
         {
             return (
                 from open in CommonGrammar.OpeningParenthesis
-                from keyword in Keywords.DomainVariables
+                from keyword in Keywords.CDomainVariables
                 from variables in TypedLists.TypedListOfDomainVariable
                 from close in CommonGrammar.ClosingParenthesis
                 select new VarsDefinition(variables.ToList())
@@ -208,7 +177,7 @@ namespace PDDL.Parser.Pddl12
         {
             return (
                 from open in CommonGrammar.OpeningParenthesis
-                from keyword in Keywords.Constants
+                from keyword in Keywords.CConstants
                 from constants in TypedLists.TypedListOfConstant
                 from close in CommonGrammar.ClosingParenthesis
                 select new ConstantsDefinition(constants.ToList())
@@ -224,7 +193,7 @@ namespace PDDL.Parser.Pddl12
         {
             return (
                 from open in CommonGrammar.OpeningParenthesis
-                from keyword in Keywords.Types
+                from keyword in Keywords.CTypes
                 from types in TypedLists.TypedListOfType
                 from close in CommonGrammar.ClosingParenthesis
                 select new TypesDefinition(types.ToList())
@@ -240,8 +209,8 @@ namespace PDDL.Parser.Pddl12
         {
             return (
                 from open in CommonGrammar.OpeningParenthesis
-                from keyword in Keywords.Requirements
-                from keys in ValidRequirements.Many()
+                from keyword in Keywords.CRequirements
+                from keys in RequirementsGrammar.ValidRequirements.Many()
                 from close in CommonGrammar.ClosingParenthesis
                 select new RequirementsDefinition(keys.ToList())
                 ).Token();
@@ -256,7 +225,7 @@ namespace PDDL.Parser.Pddl12
         {
             return (
                 from open in CommonGrammar.OpeningParenthesis
-                from keyword in Keywords.Extends
+                from keyword in Keywords.CExtends
                 from names in CommonGrammar.NameNonToken.Token().AtLeastOnce()
                 from close in CommonGrammar.ClosingParenthesis
                 select new ExtensionDefinition(names.ToList())
@@ -272,7 +241,7 @@ namespace PDDL.Parser.Pddl12
         {
             return (
                 from open in CommonGrammar.OpeningParenthesis
-                from keyword in Keywords.Predicates
+                from keyword in Keywords.CPredicates
                 from skeletons in CommonGrammar.AtomicFormulaSkeleton.AtLeastOnce()
                 from close in CommonGrammar.ClosingParenthesis
                 select new PredicatesDefinition(skeletons.ToList())

@@ -31,13 +31,13 @@ namespace PDDL.Parser.Pddl12
             var actionFunctor = CommonGrammar.NameNonToken.Token();
 
             var actionPreconditions = (
-                from keyword in Keywords.Precondition
+                from keyword in Keywords.CPrecondition
                 from precondition in GoalGrammar.GoalDescription
                 select precondition
                 ).Token();
 
             var actionParameters = (
-                from keyword in Keywords.Parameters
+                from keyword in Keywords.CParameters
                 from open in CommonGrammar.OpeningParenthesis
                 from variables in TypedLists.TypedListOfVariable.Token()
                 from close in CommonGrammar.ClosingParenthesis
@@ -45,14 +45,14 @@ namespace PDDL.Parser.Pddl12
                 ).Token();
 
             var effectDef = (
-                from keyword in Keywords.Effect
+                from keyword in Keywords.CEffect
                 from e in EffectGrammar.Effect.Token()
                 select e
                 ).Token();
 
             var actionDef = (
                 from open in CommonGrammar.OpeningParenthesis
-                from keyword in Keywords.Action
+                from keyword in Keywords.CAction
                 from functor in actionFunctor
                 from parameters in actionParameters
                 // action-def body following

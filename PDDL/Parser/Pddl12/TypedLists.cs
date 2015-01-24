@@ -19,6 +19,12 @@ namespace PDDL.Parser.Pddl12
         public static readonly Parser<IEnumerable<CustomType>> TypedListOfType
             = CreateTypedListOfType();
 
+        /// <summary>
+        /// The typed list of name
+        /// </summary>
+        [NotNull]
+        public static readonly Parser<IEnumerable<IObject>> TypedListOfObject
+            = CreateTypedListOfObject();
 
         /// <summary>
         /// The typed list of variable
@@ -51,7 +57,7 @@ namespace PDDL.Parser.Pddl12
         private static Parser<IEnumerable<IVariableDefinition>> CreateTypedListOfVariable()
         {
             return (
-                from vns in CommonGrammar.VariableName.AtLeastOnce() // TODO This grammar always allows :typing requirement - change grammar if this is not explicitly required
+                from vns in CommonGrammar.VariableName.AtLeastOnce()
                 from t in Parse.Char('-').Token().Then(_ => CommonGrammar.Type).Token().Optional()
                 let type = t.IsDefined ? t.Get() : DefaultType.Default
                 select vns.Select(vn => new VariableDefinition(new Variable(vn), type))
@@ -69,7 +75,7 @@ namespace PDDL.Parser.Pddl12
         private static Parser<IEnumerable<CustomType>> CreateTypedListOfType()
         {
             return (
-                from names in CommonGrammar.NameNonToken.Token().AtLeastOnce() // TODO This grammar always allows :typing requirement - change grammar if this is not explicitly required
+                from names in CommonGrammar.NameNonToken.Token().AtLeastOnce()
                 from t in Parse.Char('-').Token().Then(_ => CommonGrammar.Type).Token().Optional()
                 select names.Select(vn => new CustomType(vn, t.IsDefined ? t.Get() : DefaultType.Default))
                 )
@@ -86,7 +92,7 @@ namespace PDDL.Parser.Pddl12
         private static Parser<IEnumerable<IConstant>> CreateTypedListOfConstant()
         {
             return (
-                from names in CommonGrammar.NameNonToken.Token().AtLeastOnce() // TODO This grammar always allows :typing requirement - change grammar if this is not explicitly required
+                from names in CommonGrammar.NameNonToken.Token().AtLeastOnce()
                 from t in Parse.Char('-').Token().Then(_ => CommonGrammar.Type).Token().Optional()
                 select names.Select(vn => new Constant(vn, t.IsDefined ? t.Get() : DefaultType.Default))
                 )
@@ -103,7 +109,7 @@ namespace PDDL.Parser.Pddl12
         private static Parser<IEnumerable<IDomainVariable>> CreateTypedListOfDomainVariable()
         {
             return (
-                from variables in DomainVariableGrammar.DomainVariable.Token().AtLeastOnce() // TODO This grammar always allows :typing requirement - change grammar if this is not explicitly required
+                from variables in DomainVariableGrammar.DomainVariable.Token().AtLeastOnce()
                 from t in Parse.Char('-').Token().Then(_ => CommonGrammar.Type).Token().Optional()
                 select variables.Select(var =>
                                         {
@@ -111,6 +117,23 @@ namespace PDDL.Parser.Pddl12
                                             if (t.IsDefined) var.Type = t.Get();
                                             return var;
                                         })
+                )
+                .Many()
+                // ReSharper disable once PossibleMultipleEnumeration
+                .Select(groupedPerType => groupedPerType.SelectMany(t => t));
+        }
+
+        /// <summary>
+        /// Creates the type list (name)
+        /// </summary>
+        /// <returns>Parser&lt;IEnumerable&lt;IObject&gt;&gt;.</returns>
+        [NotNull]
+        private static Parser<IEnumerable<IObject>> CreateTypedListOfObject()
+        {
+            return (
+                from names in CommonGrammar.NameNonToken.Token().AtLeastOnce()
+                from t in Parse.Char('-').Token().Then(_ => CommonGrammar.Type).Token().Optional()
+                select names.Select(vn => new Object(vn, t.IsDefined ? t.Get() : DefaultType.Default))
                 )
                 .Many()
                 // ReSharper disable once PossibleMultipleEnumeration
