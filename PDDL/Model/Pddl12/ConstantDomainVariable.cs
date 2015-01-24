@@ -18,10 +18,9 @@ namespace PDDL.Model.PDDL12
         /// Initializes a new instance of the <see cref="ConstantDomainVariable" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
-        /// <param name="type">The type.</param>
         /// <param name="value">The value.</param>
         /// <exception cref="System.ArgumentNullException">value</exception>
-        /// <exception cref="ArgumentNullException">The value of 'value' cannot be null.</exception>
+        /// <exception cref="ArgumentNullException">value</exception>
         public ConstantDomainVariable([NotNull] IName name, IValue value)
             : base(name)
         {

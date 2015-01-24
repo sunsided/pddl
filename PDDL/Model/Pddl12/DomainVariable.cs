@@ -41,7 +41,6 @@ namespace PDDL.Model.PDDL12
         /// Initializes a new instance of the <see cref="DomainVariable" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
-        /// <param name="type">The type.</param>
         /// <exception cref="System.ArgumentNullException">name</exception>
         public DomainVariable([NotNull] IName name)
         {

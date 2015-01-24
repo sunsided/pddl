@@ -78,15 +78,14 @@ namespace PDDL.Model.PDDL12
         public IReadOnlyList<IGoalDescription> Goals { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Problem"/> class.
+        /// Initializes a new instance of the <see cref="Problem" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="domain">The domain.</param>
-        /// <exception cref="System.ArgumentNullException">
-        /// name;name must not be null
+        /// <param name="goals">The goals.</param>
+        /// <exception cref="System.ArgumentNullException">name;name must not be null
         /// or
-        /// domain;domain name must not be null
-        /// </exception>
+        /// domain;domain name must not be null</exception>
         public Problem([NotNull] IName name, [NotNull] IName domain, IReadOnlyList<IGoalDescription> goals)
         {
             if (ReferenceEquals(name, null)) throw new ArgumentNullException("name", "name must not be null");

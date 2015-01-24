@@ -21,7 +21,7 @@ namespace PDDL.Model.PDDL12
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AtomicFormula" /> class.
+        /// Initializes a new instance of the <see cref="Literal{T}" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="positive">if set to <see langword="true" />, the atomic formula is positive.</param>
