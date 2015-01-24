@@ -7,7 +7,7 @@ namespace PDDL.Model.PDDL12
     /// <summary>
     /// Class Problem. This class cannot be inherited.
     /// </summary>
-    internal sealed class Problem : IProblem
+    public class Problem : IProblem
     {
         private IReadOnlyList<IRequirement> _requirements = new IRequirement[0];
         private IReadOnlyList<IObject> _objects = new IObject[0];

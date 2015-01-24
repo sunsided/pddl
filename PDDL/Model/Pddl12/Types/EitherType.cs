@@ -6,7 +6,7 @@ namespace PDDL.Model.PDDL12.Types
     /// <summary>
     /// Class EitherType. This class cannot be inherited.
     /// </summary>
-    internal sealed class EitherType : IEitherType
+    public class EitherType : IEitherType
     {
         /// <summary>
         /// Gets the options.

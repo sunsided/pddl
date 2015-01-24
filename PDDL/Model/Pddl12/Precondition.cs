@@ -6,7 +6,7 @@ namespace PDDL.Model.PDDL12
     /// <summary>
     /// Class Preconditions.
     /// </summary>
-    internal sealed class Precondition : IPrecondition
+    public class Precondition : IPrecondition
     {
         /// <summary>
         /// Gets the preconditions.

@@ -7,7 +7,7 @@ namespace PDDL.Model.PDDL12
     /// <summary>
     /// Class Axiom.
     /// </summary>
-    internal sealed class Axiom : IAxiom
+    public class Axiom : IAxiom
     {
         /// <summary>
         /// Gets the variables.

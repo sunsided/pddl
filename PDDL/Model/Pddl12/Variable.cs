@@ -6,7 +6,7 @@ namespace PDDL.Model.PDDL12
     /// <summary>
     /// Class Variable. This class cannot be inherited.
     /// </summary>
-    internal sealed class Variable : IVariable
+    public class Variable : IVariable
     {
         /// <summary>
         /// Gets the name.

@@ -8,7 +8,7 @@ namespace PDDL.Model.PDDL12
     /// <summary>
     /// Class ProblemFactory. This class cannot be inherited.
     /// </summary>
-    internal sealed class ProblemFactory
+    public sealed class ProblemFactory
     {
         /// <summary>
         /// Creates a <see cref="ProblemFactory" /> instance from a mixed sequence of parsed domain structure elements.

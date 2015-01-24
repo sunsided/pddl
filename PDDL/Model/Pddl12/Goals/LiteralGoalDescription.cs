@@ -6,7 +6,7 @@ namespace PDDL.Model.PDDL12.Goals
     /// <summary>
     /// Class LiteralGoalDescription.
     /// </summary>
-    internal sealed class LiteralGoalDescription : GoalBase, ILiteralGoalDescription
+    public class LiteralGoalDescription : GoalBase, ILiteralGoalDescription
     {
         /// <summary>
         /// Gets the condition.

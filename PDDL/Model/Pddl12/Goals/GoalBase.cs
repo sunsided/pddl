@@ -3,7 +3,7 @@
     /// <summary>
     /// Class GoalBase.
     /// </summary>
-    internal abstract class GoalBase : IGoalDescription
+    public abstract class GoalBase : IGoalDescription
     {
     }
 }

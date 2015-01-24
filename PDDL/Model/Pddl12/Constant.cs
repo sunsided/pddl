@@ -6,7 +6,7 @@ namespace PDDL.Model.PDDL12
     /// <summary>
     /// Class Constant.
     /// </summary>
-    internal sealed class Constant : IConstant
+    public class Constant : IConstant
     {
         /// <summary>
         /// Gets the name.

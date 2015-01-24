@@ -9,7 +9,7 @@ namespace PDDL.Model.PDDL12
     ///     Names a requirement for a <see cref="IDomain"/>.
     /// </para>
     /// </summary>
-    internal sealed class Requirement : IRequirement
+    public class Requirement : IRequirement
     {
         /// <summary>
         /// Gets the value.

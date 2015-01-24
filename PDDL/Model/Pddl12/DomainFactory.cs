@@ -8,7 +8,7 @@ namespace PDDL.Model.PDDL12
     /// <summary>
     /// Class Pddl12DomainStructure. This class cannot be inherited.
     /// </summary>
-    internal sealed class DomainFactory
+    public sealed class DomainFactory
     {
         /// <summary>
         /// Creates a <see cref="DomainFactory" /> instance from a mixed sequence of parsed domain structure elements.

@@ -6,7 +6,7 @@ namespace PDDL.Model.PDDL12.Types
     /// <summary>
     /// Class CustomType. This class cannot be inherited.
     /// </summary>
-    internal sealed class CustomType : TypeBase, ICustomType
+    public class CustomType : TypeBase, ICustomType
     {
         /// <summary>
         /// Gets or sets the parent type.

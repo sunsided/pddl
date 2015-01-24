@@ -3,7 +3,7 @@
     /// <summary>
     /// Class EffectBase.
     /// </summary>
-    internal abstract class EffectBase : IEffect
+    public abstract class EffectBase : IEffect
     {
         /// <summary>
         /// Gets the list type.

@@ -6,7 +6,7 @@ namespace PDDL.Model.PDDL12
     /// <summary>
     /// Class Literal.
     /// </summary>
-    internal sealed class Literal<T> : AtomicFormula<T>, ILiteral<T>
+    public class Literal<T> : AtomicFormula<T>, ILiteral<T>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Literal{T}" /> class.

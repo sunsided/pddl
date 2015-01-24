@@ -7,7 +7,7 @@ namespace PDDL.Model.PDDL12
     /// <summary>
     /// Class DomainVariable.
     /// </summary>
-    internal class DomainVariable : IDomainVariable
+    public class DomainVariable : IDomainVariable
     {
         /// <summary>
         /// The type

@@ -7,7 +7,7 @@ namespace PDDL.Model.PDDL12.Goals
     /// <summary>
     /// Class ConjunctionGoalDescription.
     /// </summary>
-    internal sealed class ConjunctionGoalDescription : GoalBase, IConjunctionGoalDescription
+    public class ConjunctionGoalDescription : GoalBase, IConjunctionGoalDescription
     {
         /// <summary>
         /// Gets the goals.

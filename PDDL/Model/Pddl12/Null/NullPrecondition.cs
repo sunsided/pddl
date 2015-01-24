@@ -5,7 +5,7 @@ namespace PDDL.Model.PDDL12.Null
     /// <summary>
     /// Class Preconditions.
     /// </summary>
-    internal sealed class NullPrecondition : IPrecondition
+    public sealed class NullPrecondition : IPrecondition
     {
         /// <summary>
         /// Gets the preconditions.

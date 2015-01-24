@@ -6,7 +6,7 @@ namespace PDDL.Model.PDDL12.Types
     /// <summary>
     /// Class TypeBase.
     /// </summary>
-    internal abstract class TypeBase : IType
+    public abstract class TypeBase : IType
     {
         /// <summary>
         /// Gets the value.
