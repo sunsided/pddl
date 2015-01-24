@@ -6,7 +6,7 @@ namespace PDDL.Model.Pddl12
     /// <summary>
     /// Interface IProblem
     /// </summary>
-    public interface IProblem
+    public interface IProblem : IDefinition
     {
         // TODO: add situation
         // TODO: add length
@@ -37,7 +37,7 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <value>The objects.</value>
         [NotNull]
-        IReadOnlyList<ILiteral<IName>> Objects { get; }
+        IReadOnlyList<IObject> Objects { get; }
 
         /// <summary>
         /// Gets the initial state or, should a situation be set,

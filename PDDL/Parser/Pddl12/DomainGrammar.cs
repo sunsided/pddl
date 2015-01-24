@@ -13,37 +13,6 @@ namespace PDDL.Parser.Pddl12
     internal static class DomainGrammar
     {
         /// <summary>
-        /// The valid requirements
-        /// </summary>
-        [NotNull]
-        public static Parser<IRequirement> ValidRequirements =
-                (from value in
-                     Parse.String(":strips")
-                     .Or(Parse.String(":typing"))
-                     .Or(Parse.String(":disjunctive-preconditions"))
-                     .Or(Parse.String(":equality"))
-                     .Or(Parse.String(":existential-preconditions"))
-                     .Or(Parse.String(":universal-preconditions"))
-                     .Or(Parse.String(":quantified-preconditions"))
-                     .Or(Parse.String(":conditional-effects"))
-                     .Or(Parse.String(":action-expansions"))
-                     .Or(Parse.String(":foreach-expansions"))
-                     .Or(Parse.String(":dag-expaeinsions"))
-                     .Or(Parse.String(":domain-axioms"))
-
-                     .Or(Parse.String(":subgoal-through-axioms"))
-                     .Or(Parse.String(":safety-constraints"))
-                     .Or(Parse.String(":expression-evaluation"))
-                     .Or(Parse.String(":fluents"))
-                     .Or(Parse.String(":open-world"))
-                     .Or(Parse.String(":true-negation"))
-                     .Or(Parse.String(":adl"))
-                     .Or(Parse.String(":ucpop"))
-                     .Text()
-                 select new Requirement(value)
-                ).Token();
-
-        /// <summary>
         /// The predicates definition
         /// </summary>
         [NotNull] 
@@ -241,7 +210,7 @@ namespace PDDL.Parser.Pddl12
             return (
                 from open in CommonGrammar.OpeningParenthesis
                 from keyword in Keywords.CRequirements
-                from keys in ValidRequirements.Many()
+                from keys in RequirementsGrammar.ValidRequirements.Many()
                 from close in CommonGrammar.ClosingParenthesis
                 select new RequirementsDefinition(keys.ToList())
                 ).Token();

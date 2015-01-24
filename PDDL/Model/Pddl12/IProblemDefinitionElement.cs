@@ -34,7 +34,7 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <value>The initial state.</value>
         [NotNull]
-        IReadOnlyList<ITyped<IName>> State { get; }
+        IReadOnlyList<ILiteral<IName>> State { get; }
     }
 
     /// <summary>
@@ -47,7 +47,7 @@ namespace PDDL.Model.Pddl12
         /// </summary>
         /// <value>The objects.</value>
         [NotNull]
-        IReadOnlyList<ILiteral<IName>> Objects { get; }
+        IReadOnlyList<IObject> Objects { get; }
     }
 
     /// <summary>

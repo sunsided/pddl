@@ -46,7 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\Pddl12\Axiom.cs" />
+    <Compile Include="Model\Pddl12\IDefinition.cs" />
+    <Compile Include="Model\Pddl12\Object.cs" />
     <Compile Include="Model\Pddl12\ConstantDomainVariable.cs" />
+    <Compile Include="Model\Pddl12\IObject.cs" />
+    <Compile Include="Model\Pddl12\Problem.cs" />
+    <Compile Include="Model\Pddl12\ProblemFactory.cs" />
     <Compile Include="Model\Pddl12\DomainVariable.cs" />
     <Compile Include="Model\Pddl12\IProblemDefinitionElement.cs" />
     <Compile Include="Model\Pddl12\IProblem.cs" />
@@ -128,6 +133,8 @@
     <Compile Include="Parser\Pddl12\GoalGrammar.cs" />
     <Compile Include="Parser\Pddl12\Keywords.cs" />
     <Compile Include="Parser\Pddl12\ParserInjector.cs" />
+    <Compile Include="Parser\Pddl12\ProblemGrammar.cs" />
+    <Compile Include="Parser\Pddl12\RequirementsGrammar.cs" />
     <Compile Include="Parser\Pddl12\TypedLists.cs" />
     <Compile Include="Parser\Pddl12\VarsGrammar.cs" />
     <Compile Include="Parser\Pddl12\SpracheExtensions.cs" />

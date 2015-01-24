@@ -29,11 +29,6 @@ namespace PDDL.Model.Pddl12
         /// or
         /// :timeless definition occured more than once
         /// </exception>
-        /// <exception cref="System.NotImplementedException">
-        /// :vars
-        /// or
-        /// :safety
-        /// </exception>
         /// <exception cref="System.ArgumentException">Sequence contained unrecognized element</exception>
         /// <exception cref="ArgumentException">Sequence contained unrecognized element</exception>
         [NotNull]

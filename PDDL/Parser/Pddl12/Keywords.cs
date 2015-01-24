@@ -100,13 +100,6 @@ namespace PDDL.Parser.Pddl12
             Parse.String("problem").Text().Token();
 
         /// <summary>
-        /// The keyword <c>:domain</c>
-        /// </summary>
-        [NotNull]
-        public static readonly Parser<string> CDomain =
-            Parse.String(":domain").Text().Token();
-
-        /// <summary>
         /// The keyword <c>:predicates</c>
         /// </summary>
         [NotNull]
@@ -160,5 +153,54 @@ namespace PDDL.Parser.Pddl12
         [NotNull]
         public static readonly Parser<string> CDomainVariables =
             Parse.String(":domain-variables").Text().Token();
+
+        /// <summary>
+        /// The keyword <c>:domain</c>
+        /// </summary>
+        [NotNull]
+        public static readonly Parser<string> CDomain =
+            Parse.String(":domain").Text().Token();
+
+        /// <summary>
+        /// The keyword <c>:situation</c>
+        /// </summary>
+        [NotNull]
+        public static readonly Parser<string> CSituation =
+            Parse.String(":situation").Text().Token();
+
+        /// <summary>
+        /// The keyword <c>:objects</c>
+        /// </summary>
+        [NotNull]
+        public static readonly Parser<string> CObjects =
+            Parse.String(":objects").Text().Token();
+
+        /// <summary>
+        /// The keyword <c>:init</c>
+        /// </summary>
+        [NotNull]
+        public static readonly Parser<string> CInit =
+            Parse.String(":init").Text().Token();
+
+        /// <summary>
+        /// The keyword <c>:goal</c>
+        /// </summary>
+        [NotNull]
+        public static readonly Parser<string> CGoal =
+            Parse.String(":goal").Text().Token();
+
+        /// <summary>
+        /// The keyword <c>:length</c>
+        /// </summary>
+        [NotNull]
+        public static readonly Parser<string> CLength =
+            Parse.String(":length").Text().Token();
+
+        /// <summary>
+        /// The keyword <c>:expansion</c>
+        /// </summary>
+        [NotNull]
+        public static readonly Parser<string> CExpansion =
+            Parse.String(":expansion").Text().Token();
     }
 }

@@ -3,7 +3,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using PDDL.Parser;
 using PDDL.Parser.Pddl12;
 using Sprache;
 
@@ -32,8 +31,14 @@ namespace PDDL.Tests
             string domainFileName = resources.FirstOrDefault(fileName => fileName.Contains("DWR-operators.pddl"));
             string domainDefinition = LoadNamedResourceString(assembly, domainFileName);
 
+            string problemFileName = resources.FirstOrDefault(fileName => fileName.Contains("DWR-pb1.pddl"));
+            string problemDefinition = LoadNamedResourceString(assembly, problemFileName);
+
             domainDefinition = RemoveAllComments(domainDefinition);
-            var result = DefineGrammar.DefineDefinition.Parse(domainDefinition);
+            var domain = DefineGrammar.DefineDefinition.Parse(domainDefinition);
+
+            problemDefinition = RemoveAllComments(problemDefinition);
+            var problem = DefineGrammar.DefineDefinition.Parse(problemDefinition);
         }
 
         /// <summary>
