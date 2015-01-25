@@ -17,10 +17,35 @@ namespace PDDL.Parser
         /// <summary>
         /// Parses the specified definition.
         /// </summary>
+        /// <param name="reader">The reader.</param>
+        /// <returns>IReadOnlyList&lt;IDefinition&gt;.</returns>
+        /// <exception cref="PDDLSyntaxException">A syntax error or internal parser error occurred. </exception>
+        [NotNull] 
+        public IReadOnlyList<IDefinition> Parse([NotNull] StringReader reader)
+        {
+            // strip all comments
+            var definition = RemoveAllComments(reader);
+
+            // run the actual parsers
+            try
+            {
+                var enumeration = DefineGrammar.MultiDefineDefinition.Parse(definition);
+                return enumeration.ToList();
+            }
+            catch (ParseException e)
+            {
+                throw new PDDLSyntaxException(e.Message, e);
+            }
+        }
+
+        /// <summary>
+        /// Parses the specified definition.
+        /// </summary>
         /// <param name="definition">The definition.</param>
         /// <returns>IReadOnlyList&lt;IDefinition&gt;.</returns>
         /// <exception cref="PDDLSyntaxException">A syntax error or internal parser error occurred. </exception>
-        public IReadOnlyList<IDefinition> Parse(string definition)
+        [NotNull]
+        public IReadOnlyList<IDefinition> Parse([NotNull] string definition)
         {
             // strip all comments
             definition = RemoveAllComments(definition);
