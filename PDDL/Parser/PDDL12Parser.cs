@@ -20,8 +20,8 @@ namespace PDDL.Parser
         /// <param name="reader">The reader.</param>
         /// <returns>IReadOnlyList&lt;IDefinition&gt;.</returns>
         /// <exception cref="PDDLSyntaxException">A syntax error or internal parser error occurred. </exception>
-        [NotNull] 
-        public IReadOnlyList<IDefinition> Parse([NotNull] StringReader reader)
+        [NotNull]
+        public IReadOnlyList<IDefinition> Parse([NotNull] TextReader reader)
         {
             // strip all comments
             var definition = RemoveAllComments(reader);
@@ -80,7 +80,7 @@ namespace PDDL.Parser
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <returns>System.String.</returns>
-        private static string RemoveAllComments([NotNull] StringReader reader)
+        private static string RemoveAllComments([NotNull] TextReader reader)
         {
             var sb = new StringBuilder();
 
