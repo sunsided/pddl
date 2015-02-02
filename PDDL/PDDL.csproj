@@ -45,6 +45,7 @@
     <Compile Include="Model\PDDL12\Axiom.cs" />
     <Compile Include="Model\PDDL12\GoalKind.cs" />
     <Compile Include="Model\PDDL12\IDefinition.cs" />
+    <Compile Include="Model\PDDL12\ISubstitution.cs" />
     <Compile Include="Model\PDDL12\Object.cs" />
     <Compile Include="Model\PDDL12\ConstantDomainVariable.cs" />
     <Compile Include="Model\PDDL12\IObject.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="Model\PDDL12\ProblemElements\ProblemGoalDefinition.cs" />
     <Compile Include="Model\PDDL12\ProblemElements\ProblemObjectsDefinition.cs" />
     <Compile Include="Model\PDDL12\ProblemElements\ProblemRequireDefinition.cs" />
+    <Compile Include="Model\PDDL12\Substitution.cs" />
     <Compile Include="Model\PDDL12\TypeKind.cs" />
     <Compile Include="Model\PDDL12\Value\DecimalValue.cs" />
     <Compile Include="Model\PDDL12\DomainElements\AxiomDefinition.cs" />
