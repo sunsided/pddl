@@ -50,6 +50,11 @@ Fully understood concepts are:
 * `:typing`
 * `:safety-constraints`
 
+## PDDL Specifications
+
+- [A PDDL Reference Guide](https://github.com/jan-dolejsi/pddl-reference) (specifically [PDDL 1.2](https://github.com/jan-dolejsi/pddl-reference/blob/master/docs/reference/PDDL/main.md))
+- [PDDL 1.2](https://planning.wiki/ref/pddl) at [planning.wiki](https://planning.wiki/)
+
 ### License
 
 The project is licensed under the [EUPL v.1.1](https://joinup.ec.europa.eu/software/page/eupl/licence-eupl), a copy of which can be found in [LICENSE.md](LICENSE.md).
