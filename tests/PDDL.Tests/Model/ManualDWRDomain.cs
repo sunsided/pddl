@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using JetBrains.Annotations;
-using PDDL.Model.PDDL12;
-using PDDL.Model.PDDL12.Types;
+using PDDL.PDDL12.Abstractions;
+using PDDL.PDDL12.Model;
+using PDDL.PDDL12.Model.Types;
 
 namespace PDDL.Tests.Model
 {
@@ -45,7 +45,7 @@ namespace PDDL.Tests.Model
                                                            CreatePredicate("attached", "?r", robot, "?l", location),
                                                            CreatePredicate("belong", "?k", crane, "?l", location),
                                                            CreatePredicate("belong", "?k", crane, "?l", location),
-                                                           
+
                                                            CreatePredicate("at", "?r", robot, "?l", location),
                                                            CreatePredicate("occupied", "?l", location),
                                                            CreatePredicate("loaded", "?r", robot, "?c", container),
@@ -80,11 +80,11 @@ namespace PDDL.Tests.Model
         /// <param name="param2">The param2.</param>
         /// <param name="type2">The type2.</param>
         /// <returns>AtomicFormula.</returns>
-        private static AtomicFormulaSkeleton CreatePredicate([NotNull] string name, [NotNull]  string param1, [NotNull] IType type1, [NotNull] string param2, [NotNull] IType type2)
+        private static AtomicFormulaSkeleton CreatePredicate(string name,  string param1, IType type1, string param2, IType type2)
         {
             return new AtomicFormulaSkeleton(new Predicate(name), new[]
                                                      {
-                                                         new VariableDefinition(new Variable(new Name(param1)), type1), 
+                                                         new VariableDefinition(new Variable(new Name(param1)), type1),
                                                          new VariableDefinition(new Variable(new Name(param2)), type2),
                                                      });
         }
@@ -96,7 +96,7 @@ namespace PDDL.Tests.Model
         /// <param name="param1">The param1.</param>
         /// <param name="type1">The type1.</param>
         /// <returns>AtomicFormula.</returns>
-        private static AtomicFormulaSkeleton CreatePredicate([NotNull] string name, [NotNull]  string param1, [NotNull] IType type1)
+        private static AtomicFormulaSkeleton CreatePredicate(string name,  string param1, IType type1)
         {
             return new AtomicFormulaSkeleton(new Predicate(name), new[]
                                                      {

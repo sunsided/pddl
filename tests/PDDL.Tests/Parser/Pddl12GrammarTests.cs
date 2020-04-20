@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using FluentAssertions;
-using PDDL.Model.PDDL12;
-using PDDL.Model.PDDL12.Goals;
-using PDDL.Model.PDDL12.Types;
-using PDDL.Parser.PDDL12;
+using PDDL.PDDL12.Abstractions.Goals;
+using PDDL.PDDL12.Abstractions.Types;
+using PDDL.PDDL12.Model.Types;
+using PDDL.PDDL12.Parsing;
 using Sprache;
 using Xunit;
 
@@ -152,9 +152,9 @@ namespace PDDL.Tests.Parser
 
             ((ICustomType)type[0]).Name.Value.Should().Be("something");
 
-            ((ICustomType)type[0]).Parent.Should().BeAssignableTo<IEitherType>();
+            type[0].Parent.Should().BeAssignableTo<IEitherType>();
 
-            ((IEitherType)((ICustomType)type[0]).Parent).Types.Count.Should().Be(3);
+            ((IEitherType)type[0].Parent).Types.Count.Should().Be(3);
         }
 
         [Fact]

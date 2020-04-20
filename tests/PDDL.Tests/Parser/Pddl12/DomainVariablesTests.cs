@@ -1,8 +1,10 @@
 ﻿using System.Linq;
 using FluentAssertions;
-using PDDL.Model.PDDL12;
-using PDDL.Model.PDDL12.Types;
-using PDDL.Parser.PDDL12;
+using PDDL.PDDL12.Abstractions.Types;
+using PDDL.PDDL12.Abstractions.Values;
+using PDDL.PDDL12.Abstractions.Variables;
+using PDDL.PDDL12.Model.Types;
+using PDDL.PDDL12.Parsing;
 using Sprache;
 using Xunit;
 
