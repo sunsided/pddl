@@ -6,7 +6,7 @@ namespace PDDL.Model.PDDL12.Types
     /// <summary>
     /// Class CustomType. This class cannot be inherited.
     /// </summary>
-    public class CustomType : TypeBase, ICustomType
+    internal sealed class CustomType : TypeBase, ICustomType
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomType" /> class.

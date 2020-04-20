@@ -5,7 +5,7 @@ namespace PDDL.Model.PDDL12
     /// <summary>
     /// Class Constant.
     /// </summary>
-    public class Constant : IConstant
+    internal sealed class Constant : IConstant
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Constant"/> class.

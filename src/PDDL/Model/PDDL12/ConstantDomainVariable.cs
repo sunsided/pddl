@@ -6,7 +6,7 @@ namespace PDDL.Model.PDDL12
     /// <summary>
     /// Class ConstantDomainVariable.
     /// </summary>
-    public class ConstantDomainVariable : DomainVariable, IConstantDomainVariable
+    internal sealed class ConstantDomainVariable : DomainVariable, IConstantDomainVariable
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ConstantDomainVariable" /> class.

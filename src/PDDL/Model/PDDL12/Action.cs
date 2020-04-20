@@ -8,7 +8,7 @@ namespace PDDL.Model.PDDL12
     /// <summary>
     /// Class Action.
     /// </summary>
-    public class Action : IAction
+    internal sealed class Action : IAction
     {
         /// <summary>
         /// The variables (<c>:vars</c>)

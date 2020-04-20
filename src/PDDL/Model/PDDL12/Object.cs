@@ -5,7 +5,7 @@ namespace PDDL.Model.PDDL12
     /// <summary>
     /// Class Object.
     /// </summary>
-    public class Object : IObject
+    internal sealed class Object : IObject
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Object"/> class.

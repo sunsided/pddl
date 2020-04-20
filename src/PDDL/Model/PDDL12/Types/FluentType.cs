@@ -6,7 +6,7 @@ namespace PDDL.Model.PDDL12.Types
     /// <summary>
     /// Class FluentType. This class cannot be inherited.
     /// </summary>
-    public class FluentType : IFluentType
+    internal sealed class FluentType : IFluentType
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FluentType" /> class.

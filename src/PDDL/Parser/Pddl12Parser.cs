@@ -12,7 +12,7 @@ namespace PDDL.Parser
     /// <summary>
     /// Class PDDL12Parser. This class cannot be inherited.
     /// </summary>
-    public sealed class PDDL12Parser
+    public sealed class Pddl12Parser
     {
         /// <summary>
         /// Parses the specified definition.

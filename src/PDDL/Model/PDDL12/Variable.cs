@@ -5,7 +5,7 @@ namespace PDDL.Model.PDDL12
     /// <summary>
     /// Class Variable. This class cannot be inherited.
     /// </summary>
-    public class Variable : IVariable
+    internal sealed class Variable : IVariable
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Variable"/> class.

@@ -7,7 +7,7 @@ namespace PDDL.Model.PDDL12
     /// <summary>
     /// Class AtomicFormula.
     /// </summary>
-    public class AtomicFormula<T> : IAtomicFormula<T>
+    internal class AtomicFormula<T> : IAtomicFormula<T>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AtomicFormulaSkeleton"/> class.
@@ -48,7 +48,7 @@ namespace PDDL.Model.PDDL12
         /// </summary>
         /// <param name="other">The object to compare with the current object.</param>
         /// <returns><see langword="true" /> if the specified <see cref="AtomicFormulaSkeleton" /> is equal to this instance; otherwise, <see langword="false" />.</returns>
-        protected bool Equals([NotNull] AtomicFormula<T> other) => Name.Equals(other.Name) && Parameters.Equals(other.Parameters);
+        private bool Equals([NotNull] AtomicFormula<T> other) => Name.Equals(other.Name) && Parameters.Equals(other.Parameters);
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.

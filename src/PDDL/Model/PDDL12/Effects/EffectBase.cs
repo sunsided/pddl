@@ -3,7 +3,7 @@
     /// <summary>
     /// Class EffectBase.
     /// </summary>
-    public abstract class EffectBase : IEffect
+    internal abstract class EffectBase : IEffect
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="EffectBase"/> class.

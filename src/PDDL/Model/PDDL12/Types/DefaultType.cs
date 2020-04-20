@@ -9,7 +9,7 @@ namespace PDDL.Model.PDDL12.Types
     ///     other type is explicitly defined.
     /// </para>
     /// </summary>
-    public class DefaultType : TypeBase
+    internal sealed class DefaultType : TypeBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultType"/> class.

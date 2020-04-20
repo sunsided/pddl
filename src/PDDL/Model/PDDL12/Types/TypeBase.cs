@@ -6,7 +6,7 @@ namespace PDDL.Model.PDDL12.Types
     /// <summary>
     /// Class TypeBase.
     /// </summary>
-    public abstract class TypeBase : IType
+    internal abstract class TypeBase : IType
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomType"/> class.

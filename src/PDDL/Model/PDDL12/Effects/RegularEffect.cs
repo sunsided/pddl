@@ -6,7 +6,7 @@ namespace PDDL.Model.PDDL12.Effects
     /// <summary>
     /// Class RegularEffect.
     /// </summary>
-    public class RegularEffect : EffectBase, IRegularEffect
+    internal sealed class RegularEffect : EffectBase, IRegularEffect
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RegularEffect"/> class.

@@ -6,7 +6,7 @@ namespace PDDL.Model.PDDL12
     /// <summary>
     /// Class Preconditions.
     /// </summary>
-    public class Precondition : IPrecondition
+    internal sealed class Precondition : IPrecondition
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Precondition"/> class.

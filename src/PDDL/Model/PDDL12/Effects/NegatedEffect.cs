@@ -6,7 +6,7 @@ namespace PDDL.Model.PDDL12.Effects
     /// <summary>
     /// Class NegativeEffect.
     /// </summary>
-    public class NegatedEffect : EffectBase, INegatedEffect
+    internal sealed class NegatedEffect : EffectBase, INegatedEffect
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="NegatedEffect"/> class.

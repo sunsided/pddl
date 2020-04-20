@@ -6,7 +6,7 @@ namespace PDDL.Model.PDDL12
     /// <summary>
     /// Class Predicate. This class cannot be inherited.
     /// </summary>
-    public class Predicate : Name, IPredicate
+    internal sealed class Predicate : Name, IPredicate
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Predicate"/> class.

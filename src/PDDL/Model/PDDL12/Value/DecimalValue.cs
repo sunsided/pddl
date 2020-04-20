@@ -5,7 +5,7 @@ namespace PDDL.Model.PDDL12.Value
     /// <summary>
     /// Class DecimalValue. This class cannot be inherited.
     /// </summary>
-    public class DecimalValue : IDecimalValue
+    internal sealed class DecimalValue : IDecimalValue
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="DecimalValue"/> class.

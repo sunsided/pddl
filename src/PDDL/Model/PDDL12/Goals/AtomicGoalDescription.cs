@@ -6,7 +6,7 @@ namespace PDDL.Model.PDDL12.Goals
     /// <summary>
     /// Class AtomicGoalDescription.
     /// </summary>
-    public class AtomicGoalDescription : GoalBase, IAtomicGoalDescription
+    internal sealed class AtomicGoalDescription : GoalBase, IAtomicGoalDescription
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AtomicGoalDescription" /> class.

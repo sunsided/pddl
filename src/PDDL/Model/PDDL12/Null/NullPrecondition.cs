@@ -5,7 +5,7 @@ namespace PDDL.Model.PDDL12.Null
     /// <summary>
     /// Class Preconditions.
     /// </summary>
-    public sealed class NullPrecondition : IPrecondition
+    internal sealed class NullPrecondition : IPrecondition
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="NullPrecondition" /> class.

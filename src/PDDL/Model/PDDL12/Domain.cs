@@ -8,7 +8,7 @@ namespace PDDL.Model.PDDL12
     /// <summary>
     /// Class Domain.
     /// </summary>
-    public class Domain : IDomain
+    internal sealed class Domain : IDomain
     {
         private IReadOnlyList<IRequirement> _requirements = new IRequirement[0];
         private IReadOnlyList<IType> _types = new IType[0];
@@ -64,7 +64,7 @@ namespace PDDL.Model.PDDL12
                 Update(_requirements);
             }
         }
-        
+
         /// <summary>
         /// Gets the type definitions.
         /// </summary>

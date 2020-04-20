@@ -7,7 +7,7 @@ namespace PDDL.Model.PDDL12
     /// <summary>
     /// Class Axiom.
     /// </summary>
-    public class Axiom : IAxiom
+    internal sealed class Axiom : IAxiom
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Axiom"/> class.

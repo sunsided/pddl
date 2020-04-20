@@ -6,7 +6,7 @@ namespace PDDL.Model.PDDL12.Goals
     /// <summary>
     /// Class LiteralGoalDescription.
     /// </summary>
-    public class LiteralGoalDescription : GoalBase, ILiteralGoalDescription
+    internal sealed class LiteralGoalDescription : GoalBase, ILiteralGoalDescription
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="LiteralGoalDescription" /> class.

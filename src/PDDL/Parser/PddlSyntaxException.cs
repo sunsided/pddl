@@ -20,16 +20,16 @@ namespace PDDL.Parser
         /// Initializes a new instance of the <see cref="PddlSyntaxException" /> class with a specified error message.
         /// </summary>
         /// <param name="message">The message that describes the error.</param>
-        public PddlSyntaxException(string message) : base(message)
+        public PddlSyntaxException(string? message) : base(message)
         {
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PddlSyntaxException"/> class.
         /// </summary>
-        /// <param name="message">The message.</param>
-        /// <param name="inner">The inner.</param>
-        public PddlSyntaxException(string message, Exception inner) : base(message, inner)
+        /// <param name="message">The message that describes the error.</param>
+        /// <param name="inner">The inner exception.</param>
+        public PddlSyntaxException(string? message, Exception? inner) : base(message, inner)
         {
         }
 
