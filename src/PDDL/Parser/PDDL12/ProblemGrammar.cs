@@ -47,9 +47,6 @@ namespace PDDL.Parser.PDDL12
         [NotNull]
         public static readonly Parser<IProblem> ProblemDefinition
             = CreateProblemDefinition();
-        
-
-        #region Factory Functions
 
         /// <summary>
         /// Creates the domain definition element parser.
@@ -60,8 +57,8 @@ namespace PDDL.Parser.PDDL12
             from matches in
                 RequirementsDefinition
                     .Or<IProblemDefinitionElement>(InitDefinition)
-                    .Or<IProblemDefinitionElement>(ObjectsDefinition)
-                    .Or<IProblemDefinitionElement>(GoalDefinition)
+                    .Or(ObjectsDefinition)
+                    .Or(GoalDefinition)
                     .Many()
             select matches.ToList()
         );
@@ -131,13 +128,13 @@ namespace PDDL.Parser.PDDL12
         {
             var definition = CreateProblemDefinitionElementParser();
 
-            return (
+            return
                 // header
                 from open in CommonGrammar.OpeningParenthesis
                 from problemKeyword in Keywords.Problem
                 from problemName in CommonGrammar.NameNonToken.Token()
                 from close in CommonGrammar.ClosingParenthesis
-                
+
                 from dopen in CommonGrammar.OpeningParenthesis
                 from domainKeyword in Keywords.CDomain
                 from domainName in CommonGrammar.NameNonToken.Token()
@@ -147,10 +144,7 @@ namespace PDDL.Parser.PDDL12
                 from body in definition
 
                 // bundle and go
-                select ProblemFactory.FromSequence(problemName, domainName, body)
-                );
+                select ProblemFactory.FromSequence(problemName, domainName, body);
         }
-
-        #endregion Factory Functions
     }
 }

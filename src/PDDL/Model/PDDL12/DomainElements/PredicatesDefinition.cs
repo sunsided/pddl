@@ -10,12 +10,6 @@ namespace PDDL.Model.PDDL12.DomainElements
     internal sealed class PredicatesDefinition : IDomainPredicatesDefinition
     {
         /// <summary>
-        /// Gets the predicate definitions.
-        /// </summary>
-        /// <value>The predicate.</value>
-        public IReadOnlyList<IAtomicFormulaSkeleton> Predicates { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="PredicatesDefinition"/> class.
         /// </summary>
         /// <param name="predicates">The types.</param>
@@ -24,5 +18,11 @@ namespace PDDL.Model.PDDL12.DomainElements
         {
             Predicates = predicates ?? throw new ArgumentNullException(nameof(predicates), "The value cannot be null.");
         }
+
+        /// <summary>
+        /// Gets the predicate definitions.
+        /// </summary>
+        /// <value>The predicate.</value>
+        public IReadOnlyList<IAtomicFormulaSkeleton> Predicates { get; }
     }
 }

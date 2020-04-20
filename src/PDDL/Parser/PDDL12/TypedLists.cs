@@ -48,8 +48,6 @@ namespace PDDL.Parser.PDDL12
         public static readonly Parser<IEnumerable<IDomainVariable>> TypedListOfDomainVariable
             = CreateTypedListOfDomainVariable();
 
-        #region Factory Functions
-
         /// <summary>
         /// Creates the typed list (variable)
         /// </summary>
@@ -57,10 +55,10 @@ namespace PDDL.Parser.PDDL12
         private static Parser<IEnumerable<IVariableDefinition>> CreateTypedListOfVariable()
         {
             return (
-                from vns in CommonGrammar.VariableName.AtLeastOnce()
-                from t in Parse.Char('-').Token().Then(_ => CommonGrammar.Type).Token().Optional()
-                let type = t.IsDefined ? t.Get() : DefaultType.Default
-                select vns.Select(vn => new VariableDefinition(new Variable(vn), type))
+                    from vns in CommonGrammar.VariableName.AtLeastOnce()
+                    from t in Parse.Char('-').Token().Then(_ => CommonGrammar.Type).Token().Optional()
+                    let type = t.IsDefined ? t.Get() : DefaultType.Default
+                    select vns.Select(vn => new VariableDefinition(new Variable(vn), type))
                 )
                 .Many()
                 // ReSharper disable once PossibleMultipleEnumeration
@@ -75,9 +73,9 @@ namespace PDDL.Parser.PDDL12
         private static Parser<IEnumerable<CustomType>> CreateTypedListOfType()
         {
             return (
-                from names in CommonGrammar.NameNonToken.Token().AtLeastOnce()
-                from t in Parse.Char('-').Token().Then(_ => CommonGrammar.Type).Token().Optional()
-                select names.Select(vn => new CustomType(vn, t.IsDefined ? t.Get() : DefaultType.Default))
+                    from names in CommonGrammar.NameNonToken.Token().AtLeastOnce()
+                    from t in Parse.Char('-').Token().Then(_ => CommonGrammar.Type).Token().Optional()
+                    select names.Select(vn => new CustomType(vn, t.IsDefined ? t.Get() : DefaultType.Default))
                 )
                 .Many()
                 // ReSharper disable once PossibleMultipleEnumeration
@@ -92,9 +90,9 @@ namespace PDDL.Parser.PDDL12
         private static Parser<IEnumerable<IConstant>> CreateTypedListOfConstant()
         {
             return (
-                from names in CommonGrammar.NameNonToken.Token().AtLeastOnce()
-                from t in Parse.Char('-').Token().Then(_ => CommonGrammar.Type).Token().Optional()
-                select names.Select(vn => new Constant(vn, t.IsDefined ? t.Get() : DefaultType.Default))
+                    from names in CommonGrammar.NameNonToken.Token().AtLeastOnce()
+                    from t in Parse.Char('-').Token().Then(_ => CommonGrammar.Type).Token().Optional()
+                    select names.Select(vn => new Constant(vn, t.IsDefined ? t.Get() : DefaultType.Default))
                 )
                 .Many()
                 // ReSharper disable once PossibleMultipleEnumeration
@@ -109,14 +107,14 @@ namespace PDDL.Parser.PDDL12
         private static Parser<IEnumerable<IDomainVariable>> CreateTypedListOfDomainVariable()
         {
             return (
-                from variables in DomainVariableGrammar.DomainVariable.Token().AtLeastOnce()
-                from t in Parse.Char('-').Token().Then(_ => CommonGrammar.Type).Token().Optional()
-                select variables.Select(var =>
-                                        {
-                                            // bind the optional type
-                                            if (t.IsDefined) var.Type = t.Get();
-                                            return var;
-                                        })
+                    from variables in DomainVariableGrammar.DomainVariable.Token().AtLeastOnce()
+                    from t in Parse.Char('-').Token().Then(_ => CommonGrammar.Type).Token().Optional()
+                    select variables.Select(var =>
+                    {
+                        // bind the optional type
+                        if (t.IsDefined) var.Type = t.Get();
+                        return var;
+                    })
                 )
                 .Many()
                 // ReSharper disable once PossibleMultipleEnumeration
@@ -131,15 +129,13 @@ namespace PDDL.Parser.PDDL12
         private static Parser<IEnumerable<IObject>> CreateTypedListOfObject()
         {
             return (
-                from names in CommonGrammar.NameNonToken.Token().AtLeastOnce()
-                from t in Parse.Char('-').Token().Then(_ => CommonGrammar.Type).Token().Optional()
-                select names.Select(vn => new Object(vn, t.IsDefined ? t.Get() : DefaultType.Default))
+                    from names in CommonGrammar.NameNonToken.Token().AtLeastOnce()
+                    from t in Parse.Char('-').Token().Then(_ => CommonGrammar.Type).Token().Optional()
+                    select names.Select(vn => new Object(vn, t.IsDefined ? t.Get() : DefaultType.Default))
                 )
                 .Many()
                 // ReSharper disable once PossibleMultipleEnumeration
                 .Select(groupedPerType => groupedPerType.SelectMany(t => t));
         }
-
-        #endregion Factory Functions
     }
 }

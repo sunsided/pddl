@@ -10,12 +10,6 @@ namespace PDDL.Model.PDDL12
     public class Name : IName
     {
         /// <summary>
-        /// Gets the value.
-        /// </summary>
-        /// <value>The value.</value>
-        public string Value { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Name"/> class.
         /// </summary>
         /// <param name="value">The value.</param>
@@ -28,6 +22,12 @@ namespace PDDL.Model.PDDL12
             if (!IsValid(value)) throw new ArgumentException("value contained invalid characters", nameof(value));
             Value = value;
         }
+
+        /// <summary>
+        /// Gets the value.
+        /// </summary>
+        /// <value>The value.</value>
+        public string Value { get; }
 
         /// <summary>
         /// Determines whether the specified value is valid.

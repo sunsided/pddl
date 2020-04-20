@@ -9,23 +9,18 @@ namespace PDDL.Model.PDDL12.Null
     public sealed class NullEffect : EffectBase
     {
         /// <summary>
-        /// The default instance
+        /// Initializes a new instance of the <see cref="NullEffect"/> class.
         /// </summary>
-        [NotNull]
-        private static readonly NullEffect _default = new NullEffect();
+        public NullEffect()
+            : base(EffectKind.None)
+        {
+        }
 
         /// <summary>
         /// Returns the default instance of the <see cref="NullEffect"/>
         /// </summary>
         /// <value>The default.</value>
         [NotNull]
-        public static NullEffect Default => _default;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NullEffect"/> class.
-        /// </summary>
-        public NullEffect() : base(EffectKind.None)
-        {
-        }
+        public static NullEffect Default { get; } = new NullEffect();
     }
 }

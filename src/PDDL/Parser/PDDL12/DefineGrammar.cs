@@ -14,17 +14,15 @@ namespace PDDL.Parser.PDDL12
         /// The define definition
         /// </summary>
         [NotNull]
-        public static readonly Parser<IDefinition> DefineDefinition
+        private static readonly Parser<IDefinition> DefineDefinition
             = CreateDefineDefinition();
 
         /// <summary>
         /// Multiple defines
         /// </summary>
-        [NotNull] public static readonly Parser<IEnumerable<IDefinition>> MultiDefineDefinition
+        [NotNull]
+        public static readonly Parser<IEnumerable<IDefinition>> MultiDefineDefinition
             = DefineDefinition.AtLeastOnce();
-
-
-        #region Factory Functions
 
         /// <summary>
         /// Creates the define definition.
@@ -39,7 +37,5 @@ namespace PDDL.Parser.PDDL12
             from closeDefine in CommonGrammar.ClosingParenthesis
             select definition
         );
-
-        #endregion
     }
 }

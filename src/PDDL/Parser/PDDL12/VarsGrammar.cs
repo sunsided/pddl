@@ -13,11 +13,9 @@ namespace PDDL.Parser.PDDL12
         /// <summary>
         /// The vars
         /// </summary>
-        [NotNull] 
+        [NotNull]
         public static readonly Parser<IEnumerable<IVariableDefinition>> VarsDefinition
             = CreateVarsDefinition();
-
-        #region Factory Functions
 
         /// <summary>
         /// Creates the vars.
@@ -32,7 +30,5 @@ namespace PDDL.Parser.PDDL12
             from close in CommonGrammar.ClosingParenthesis
             select variables
         ).Token();
-
-        #endregion Factory Functions
     }
 }

@@ -10,12 +10,6 @@ namespace PDDL.Model.PDDL12.ProblemElements
     internal sealed class ProblemInitialStateDefinition : IProblemInitialStateDefinition
     {
         /// <summary>
-        /// Gets the initial state.
-        /// </summary>
-        /// <value>The initial state.</value>
-        public IReadOnlyList<ILiteral<IName>> State { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ProblemInitialStateDefinition"/> class.
         /// </summary>
         /// <param name="value">The value.</param>
@@ -24,5 +18,11 @@ namespace PDDL.Model.PDDL12.ProblemElements
         {
             State = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        /// <summary>
+        /// Gets the initial state.
+        /// </summary>
+        /// <value>The initial state.</value>
+        public IReadOnlyList<ILiteral<IName>> State { get; }
     }
 }

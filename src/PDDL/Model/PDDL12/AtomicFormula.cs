@@ -10,18 +10,6 @@ namespace PDDL.Model.PDDL12
     public class AtomicFormula<T> : IAtomicFormula<T>
     {
         /// <summary>
-        /// Gets the name.
-        /// </summary>
-        /// <value>The name.</value>
-        public IName Name { get; }
-
-        /// <summary>
-        /// Gets the parameters.
-        /// </summary>
-        /// <value>The parameters.</value>
-        public IReadOnlyList<T> Parameters { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="AtomicFormulaSkeleton"/> class.
         /// </summary>
         /// <param name="name">The name.</param>
@@ -42,6 +30,18 @@ namespace PDDL.Model.PDDL12
             : this(name, new T[0])
         {
         }
+
+        /// <summary>
+        /// Gets the name.
+        /// </summary>
+        /// <value>The name.</value>
+        public IName Name { get; }
+
+        /// <summary>
+        /// Gets the parameters.
+        /// </summary>
+        /// <value>The parameters.</value>
+        public IReadOnlyList<T> Parameters { get; }
 
         /// <summary>
         /// Determines whether the specified <see cref="AtomicFormulaSkeleton" /> is equal to this instance.

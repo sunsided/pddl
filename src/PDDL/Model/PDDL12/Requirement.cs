@@ -12,12 +12,6 @@ namespace PDDL.Model.PDDL12
     public class Requirement : IRequirement
     {
         /// <summary>
-        /// Gets the value.
-        /// </summary>
-        /// <value>The value.</value>
-        public string Value { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Requirement"/> class.
         /// </summary>
         /// <param name="value">The value.</param>
@@ -26,6 +20,12 @@ namespace PDDL.Model.PDDL12
         {
             Value = value ?? throw new ArgumentNullException(nameof(value), "value must not be null");
         }
+
+        /// <summary>
+        /// Gets the value.
+        /// </summary>
+        /// <value>The value.</value>
+        public string Value { get; }
 
         /// <summary>
         /// Determines whether the specified <see cref="Requirement" /> is equal to this instance.

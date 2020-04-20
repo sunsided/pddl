@@ -9,12 +9,6 @@ namespace PDDL.Model.PDDL12.Goals
     public class AtomicGoalDescription : GoalBase, IAtomicGoalDescription
     {
         /// <summary>
-        /// Gets the condition.
-        /// </summary>
-        /// <value>The condition.</value>
-        public IAtomicFormula<ITerm> Condition { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="AtomicGoalDescription" /> class.
         /// </summary>
         /// <param name="condition">The condition.</param>
@@ -24,6 +18,12 @@ namespace PDDL.Model.PDDL12.Goals
         {
             Condition = condition ?? throw new ArgumentNullException(nameof(condition), "condition must not be null");
         }
+
+        /// <summary>
+        /// Gets the condition.
+        /// </summary>
+        /// <value>The condition.</value>
+        public IAtomicFormula<ITerm> Condition { get; }
 
         /// <summary>
         /// Gets the kind of goal.

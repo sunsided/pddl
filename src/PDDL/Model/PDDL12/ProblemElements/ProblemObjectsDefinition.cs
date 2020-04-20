@@ -10,12 +10,6 @@ namespace PDDL.Model.PDDL12.ProblemElements
     internal sealed class ProblemObjectsDefinition : IProblemObjectsDefinition
     {
         /// <summary>
-        /// Gets the requirements.
-        /// </summary>
-        /// <value>The requirements.</value>
-        public IReadOnlyList<IObject> Objects { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ProblemObjectsDefinition"/> class.
         /// </summary>
         /// <param name="value">The value.</param>
@@ -24,5 +18,11 @@ namespace PDDL.Model.PDDL12.ProblemElements
         {
             Objects = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        /// <summary>
+        /// Gets the requirements.
+        /// </summary>
+        /// <value>The requirements.</value>
+        public IReadOnlyList<IObject> Objects { get; }
     }
 }

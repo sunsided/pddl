@@ -8,18 +8,6 @@ namespace PDDL.Model.PDDL12
     public class Object : IObject
     {
         /// <summary>
-        /// Gets the name.
-        /// </summary>
-        /// <value>The name.</value>
-        public IName Value { get; }
-
-        /// <summary>
-        /// Gets the type.
-        /// </summary>
-        /// <value>The type.</value>
-        public IType Type { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Object"/> class.
         /// </summary>
         /// <param name="name">The name.</param>
@@ -40,6 +28,18 @@ namespace PDDL.Model.PDDL12
             : this(name, Types.DefaultType.Default)
         {
         }
+
+        /// <summary>
+        /// Gets the name.
+        /// </summary>
+        /// <value>The name.</value>
+        public IName Value { get; }
+
+        /// <summary>
+        /// Gets the type.
+        /// </summary>
+        /// <value>The type.</value>
+        public IType Type { get; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

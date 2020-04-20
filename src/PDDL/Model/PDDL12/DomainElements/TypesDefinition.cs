@@ -10,13 +10,6 @@ namespace PDDL.Model.PDDL12.DomainElements
     internal sealed class TypesDefinition : IDomainTypesDefinition
     {
         /// <summary>
-        /// Gets the type definitions.
-        /// </summary>
-        /// <remarks>Uses the <c>:typing</c> requirement.</remarks>
-        /// <value>The types.</value>
-        public IReadOnlyList<IType> Types { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="TypesDefinition"/> class.
         /// </summary>
         /// <param name="types">The types.</param>
@@ -25,5 +18,12 @@ namespace PDDL.Model.PDDL12.DomainElements
         {
             Types = types ?? throw new ArgumentNullException(nameof(types), "The value cannot be null.");
         }
+
+        /// <summary>
+        /// Gets the type definitions.
+        /// </summary>
+        /// <remarks>Uses the <c>:typing</c> requirement.</remarks>
+        /// <value>The types.</value>
+        public IReadOnlyList<IType> Types { get; }
     }
 }

@@ -9,12 +9,6 @@ namespace PDDL.Model.PDDL12.DomainElements
     internal sealed class AxiomDefinition : IDomainAxiomElement
     {
         /// <summary>
-        /// Gets the axiom definition.
-        /// </summary>
-        /// <value>The axiom.</value>
-        public IAxiom Axiom { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ActionDefinition"/> class.
         /// </summary>
         /// <param name="axiom">The axiom.</param>
@@ -23,5 +17,11 @@ namespace PDDL.Model.PDDL12.DomainElements
         {
             Axiom = axiom ?? throw new ArgumentNullException(nameof(axiom), "The value cannot be null.");
         }
+
+        /// <summary>
+        /// Gets the axiom definition.
+        /// </summary>
+        /// <value>The axiom.</value>
+        public IAxiom Axiom { get; }
     }
 }

@@ -13,7 +13,7 @@ namespace PDDL.Parser.PDDL12
         /// The valid requirements
         /// </summary>
         [NotNull]
-        public static Parser<IRequirement> ValidRequirements =
+        public static readonly Parser<IRequirement> ValidRequirements =
                 (from value in
                      Parse.String(":strips")
                      .Or(Parse.String(":typing"))
@@ -25,7 +25,7 @@ namespace PDDL.Parser.PDDL12
                      .Or(Parse.String(":conditional-effects"))
                      .Or(Parse.String(":action-expansions"))
                      .Or(Parse.String(":foreach-expansions"))
-                     .Or(Parse.String(":dag-expaeinsions"))
+                     .Or(Parse.String(":dag-expansions"))
                      .Or(Parse.String(":domain-axioms"))
 
                      .Or(Parse.String(":subgoal-through-axioms"))

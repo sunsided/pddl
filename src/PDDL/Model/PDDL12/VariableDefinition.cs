@@ -8,18 +8,6 @@ namespace PDDL.Model.PDDL12
     public class VariableDefinition : IVariableDefinition
     {
         /// <summary>
-        /// Gets the name.
-        /// </summary>
-        /// <value>The name.</value>
-        public IVariable Value { get; }
-
-        /// <summary>
-        /// Gets the type.
-        /// </summary>
-        /// <value>The type.</value>
-        public IType Type { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="VariableDefinition"/> class.
         /// </summary>
         /// <param name="name">The name.</param>
@@ -40,6 +28,18 @@ namespace PDDL.Model.PDDL12
             : this(name, Types.DefaultType.Default)
         {
         }
+
+        /// <summary>
+        /// Gets the name.
+        /// </summary>
+        /// <value>The name.</value>
+        public IVariable Value { get; }
+
+        /// <summary>
+        /// Gets the type.
+        /// </summary>
+        /// <value>The type.</value>
+        public IType Type { get; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

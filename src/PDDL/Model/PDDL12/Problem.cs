@@ -14,6 +14,22 @@ namespace PDDL.Model.PDDL12
         private IReadOnlyList<ILiteral<IName>> _initial = new ILiteral<IName>[0];
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="Problem" /> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <param name="domain">The domain.</param>
+        /// <param name="goals">The goals.</param>
+        /// <exception cref="System.ArgumentNullException">name;name must not be null
+        /// or
+        /// domain;domain name must not be null</exception>
+        public Problem([NotNull] IName name, [NotNull] IName domain, IReadOnlyList<IGoalDescription> goals)
+        {
+            Name = name ?? throw new ArgumentNullException(nameof(name), "name must not be null");
+            Domain = domain ?? throw new ArgumentNullException(nameof(domain), "domain name must not be null");
+            Goals = goals ?? throw new ArgumentNullException(nameof(goals), "goals must not be null");
+        }
+
+        /// <summary>
         /// Gets the name of the problem.
         /// </summary>
         /// <value>The problem.</value>
@@ -64,21 +80,5 @@ namespace PDDL.Model.PDDL12
         /// </summary>
         /// <value>The goals.</value>
         public IReadOnlyList<IGoalDescription> Goals { get; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Problem" /> class.
-        /// </summary>
-        /// <param name="name">The name.</param>
-        /// <param name="domain">The domain.</param>
-        /// <param name="goals">The goals.</param>
-        /// <exception cref="System.ArgumentNullException">name;name must not be null
-        /// or
-        /// domain;domain name must not be null</exception>
-        public Problem([NotNull] IName name, [NotNull] IName domain, IReadOnlyList<IGoalDescription> goals)
-        {
-            Name = name ?? throw new ArgumentNullException(nameof(name), "name must not be null");
-            Domain = domain ?? throw new ArgumentNullException(nameof(domain), "domain name must not be null");
-            Goals = goals ?? throw new ArgumentNullException(nameof(goals), "goals must not be null");
-        }
     }
 }

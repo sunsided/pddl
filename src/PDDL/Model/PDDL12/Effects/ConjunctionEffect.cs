@@ -10,12 +10,6 @@ namespace PDDL.Model.PDDL12.Effects
     public class ConjunctionEffect : EffectBase, IConjunctionEffect
     {
         /// <summary>
-        /// Gets the effects.
-        /// </summary>
-        /// <value>The effects.</value>
-        public IReadOnlyList<IEffect> Effects { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ConjunctionEffect"/> class.
         /// </summary>
         /// <param name="effects">The effects.</param>
@@ -25,5 +19,11 @@ namespace PDDL.Model.PDDL12.Effects
         {
             Effects = effects ?? throw new ArgumentNullException(nameof(effects), "effects must not be null");
         }
+
+        /// <summary>
+        /// Gets the effects.
+        /// </summary>
+        /// <value>The effects.</value>
+        public IReadOnlyList<IEffect> Effects { get; }
     }
 }

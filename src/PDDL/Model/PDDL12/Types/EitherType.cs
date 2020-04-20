@@ -9,12 +9,6 @@ namespace PDDL.Model.PDDL12.Types
     public class EitherType : IEitherType
     {
         /// <summary>
-        /// Gets the options.
-        /// </summary>
-        /// <value>The options.</value>
-        public IReadOnlyList<IType> Types { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="EitherType"/> class.
         /// </summary>
         /// <param name="types">The types.</param>
@@ -26,6 +20,12 @@ namespace PDDL.Model.PDDL12.Types
             if (types.Count < 1) throw new ArgumentException("the type lust must contain of at least one type", nameof(types));
             Types = types;
         }
+
+        /// <summary>
+        /// Gets the options.
+        /// </summary>
+        /// <value>The options.</value>
+        public IReadOnlyList<IType> Types { get; }
 
         /// <summary>
         /// Gets the type flavor.

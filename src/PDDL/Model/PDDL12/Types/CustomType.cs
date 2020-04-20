@@ -9,12 +9,6 @@ namespace PDDL.Model.PDDL12.Types
     public class CustomType : TypeBase, ICustomType
     {
         /// <summary>
-        /// Gets or sets the parent type.
-        /// </summary>
-        /// <value>The parent type.</value>
-        public IType Parent { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="CustomType" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
@@ -35,6 +29,12 @@ namespace PDDL.Model.PDDL12.Types
             : this(name, DefaultType.Default)
         {
         }
+
+        /// <summary>
+        /// Gets or sets the parent type.
+        /// </summary>
+        /// <value>The parent type.</value>
+        public IType Parent { get; }
 
         /// <summary>
         /// Gets the type flavor.

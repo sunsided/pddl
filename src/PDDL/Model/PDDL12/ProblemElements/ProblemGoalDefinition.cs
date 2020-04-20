@@ -9,12 +9,6 @@ namespace PDDL.Model.PDDL12.ProblemElements
     internal sealed class ProblemGoalDefinition : IProblemGoalDefinition
     {
         /// <summary>
-        /// Gets the goal.
-        /// </summary>
-        /// <value>The goal.</value>
-        public IGoalDescription Goal{ get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ProblemGoalDefinition"/> class.
         /// </summary>
         /// <param name="value">The value.</param>
@@ -23,5 +17,11 @@ namespace PDDL.Model.PDDL12.ProblemElements
         {
             Goal = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        /// <summary>
+        /// Gets the goal.
+        /// </summary>
+        /// <value>The goal.</value>
+        public IGoalDescription Goal{ get; }
     }
 }

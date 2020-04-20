@@ -12,23 +12,17 @@ namespace PDDL.Model.PDDL12.Types
     public class DefaultType : TypeBase
     {
         /// <summary>
-        /// The default instance
+        /// Initializes a new instance of the <see cref="DefaultType"/> class.
         /// </summary>
-        [NotNull]
-        private static readonly DefaultType _default = new DefaultType();
+        public DefaultType() : base(new Name("object"))
+        { }
 
         /// <summary>
         /// Returns the default instance of the <see cref="DefaultType"/>
         /// </summary>
         /// <value>The default.</value>
         [NotNull]
-        public static DefaultType Default => _default;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DefaultType"/> class.
-        /// </summary>
-        public DefaultType() : base(new Name("object"))
-        { }
+        public static DefaultType Default { get; } = new DefaultType();
 
         /// <summary>
         /// Gets the type flavor.

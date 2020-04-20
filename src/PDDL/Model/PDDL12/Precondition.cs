@@ -9,12 +9,6 @@ namespace PDDL.Model.PDDL12
     public class Precondition : IPrecondition
     {
         /// <summary>
-        /// Gets the preconditions.
-        /// </summary>
-        /// <value>The preconditions.</value>
-        public IGoalDescription Preconditions { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Precondition"/> class.
         /// </summary>
         /// <param name="preconditions">The preconditions.</param>
@@ -23,5 +17,11 @@ namespace PDDL.Model.PDDL12
         {
             Preconditions = preconditions ?? throw new ArgumentNullException(nameof(preconditions), "preconditions must not be null");
         }
+
+        /// <summary>
+        /// Gets the preconditions.
+        /// </summary>
+        /// <value>The preconditions.</value>
+        public IGoalDescription Preconditions { get; }
     }
 }

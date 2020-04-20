@@ -9,12 +9,6 @@ namespace PDDL.Model.PDDL12.Types
     public abstract class TypeBase : IType
     {
         /// <summary>
-        /// Gets the value.
-        /// </summary>
-        /// <value>The value.</value>
-        public IName Name { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="CustomType"/> class.
         /// </summary>
         /// <param name="name">The name.</param>
@@ -23,6 +17,12 @@ namespace PDDL.Model.PDDL12.Types
         {
             Name = name ?? throw new ArgumentNullException(nameof(name), "type name must not be null");
         }
+
+        /// <summary>
+        /// Gets the value.
+        /// </summary>
+        /// <value>The value.</value>
+        public IName Name { get; }
 
         /// <summary>
         /// Determines whether the specified <see cref="CustomType" /> is equal to this instance.

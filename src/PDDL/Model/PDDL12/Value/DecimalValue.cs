@@ -8,12 +8,6 @@ namespace PDDL.Model.PDDL12.Value
     public class DecimalValue : IDecimalValue
     {
         /// <summary>
-        /// Gets the value.
-        /// </summary>
-        /// <value>The value.</value>
-        public decimal Value { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="DecimalValue"/> class.
         /// </summary>
         /// <param name="value">The value.</param>
@@ -21,6 +15,12 @@ namespace PDDL.Model.PDDL12.Value
         {
             Value = value;
         }
+
+        /// <summary>
+        /// Gets the value.
+        /// </summary>
+        /// <value>The value.</value>
+        public decimal Value { get; }
 
         /// <summary>
         /// Determines whether the specified <see cref="DecimalValue" /> is equal to this instance.

@@ -6,12 +6,6 @@
     public abstract class EffectBase : IEffect
     {
         /// <summary>
-        /// Gets the list type.
-        /// </summary>
-        /// <value>The list type.</value>
-        public EffectKind Type { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="EffectBase"/> class.
         /// </summary>
         /// <param name="type">The type.</param>
@@ -19,5 +13,11 @@
         {
             Type = type;
         }
+
+        /// <summary>
+        /// Gets the list type.
+        /// </summary>
+        /// <value>The list type.</value>
+        public EffectKind Type { get; }
     }
 }

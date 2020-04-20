@@ -10,12 +10,6 @@ namespace PDDL.Model.PDDL12.DomainElements
     internal sealed class ExtensionDefinition : IDomainExtensionDefinition
     {
         /// <summary>
-        /// Gets the name definitions.
-        /// </summary>
-        /// <value>The names.</value>
-        public IReadOnlyList<IName> Names { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ExtensionDefinition"/> class.
         /// </summary>
         /// <param name="names">The names.</param>
@@ -24,5 +18,11 @@ namespace PDDL.Model.PDDL12.DomainElements
         {
             Names = names ?? throw new ArgumentNullException(nameof(names), "The value cannot be null.");
         }
+
+        /// <summary>
+        /// Gets the name definitions.
+        /// </summary>
+        /// <value>The names.</value>
+        public IReadOnlyList<IName> Names { get; }
     }
 }

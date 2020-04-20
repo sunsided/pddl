@@ -10,12 +10,6 @@ namespace PDDL.Model.PDDL12.DomainElements
     internal sealed class TimelessDefinition : IDomainTimelessDefinition
     {
         /// <summary>
-        /// Gets the timeless definitions.
-        /// </summary>
-        /// <value>The timeless.</value>
-        public IReadOnlyList<ILiteral<IName>> Timeless { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="TimelessDefinition"/> class.
         /// </summary>
         /// <param name="timeless">The timeless literals.</param>
@@ -24,5 +18,11 @@ namespace PDDL.Model.PDDL12.DomainElements
         {
             Timeless = timeless ?? throw new ArgumentNullException(nameof(timeless), "The value cannot be null.");
         }
+
+        /// <summary>
+        /// Gets the timeless definitions.
+        /// </summary>
+        /// <value>The timeless.</value>
+        public IReadOnlyList<ILiteral<IName>> Timeless { get; }
     }
 }

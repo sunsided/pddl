@@ -9,12 +9,6 @@ namespace PDDL.Model.PDDL12.DomainElements
     internal sealed class ActionDefinition : IDomainActionElement
     {
         /// <summary>
-        /// Gets the action definition.
-        /// </summary>
-        /// <value>The action.</value>
-        public IAction Action { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ActionDefinition"/> class.
         /// </summary>
         /// <param name="action">The action.</param>
@@ -23,5 +17,11 @@ namespace PDDL.Model.PDDL12.DomainElements
         {
             Action = action ?? throw new ArgumentNullException(nameof(action), "The value cannot be null.");
         }
+
+        /// <summary>
+        /// Gets the action definition.
+        /// </summary>
+        /// <value>The action.</value>
+        public IAction Action { get; }
     }
 }

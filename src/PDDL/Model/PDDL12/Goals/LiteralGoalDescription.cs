@@ -9,12 +9,6 @@ namespace PDDL.Model.PDDL12.Goals
     public class LiteralGoalDescription : GoalBase, ILiteralGoalDescription
     {
         /// <summary>
-        /// Gets the condition.
-        /// </summary>
-        /// <value>The condition.</value>
-        public ILiteral<ITerm> Literal { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="LiteralGoalDescription" /> class.
         /// </summary>
         /// <param name="literal">The literal.</param>
@@ -23,6 +17,12 @@ namespace PDDL.Model.PDDL12.Goals
         {
             Literal = literal ?? throw new ArgumentNullException(nameof(literal), "literal must not be null");
         }
+
+        /// <summary>
+        /// Gets the condition.
+        /// </summary>
+        /// <value>The condition.</value>
+        public ILiteral<ITerm> Literal { get; }
 
         /// <summary>
         /// Gets the kind of goal.

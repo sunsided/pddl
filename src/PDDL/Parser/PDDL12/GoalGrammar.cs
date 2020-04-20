@@ -11,16 +11,6 @@ namespace PDDL.Parser.PDDL12
     /// </summary>
     internal static class GoalGrammar
     {
-        #region Internal Helpers
-
-        /// <summary>
-        /// The goal parser injector
-        /// </summary>
-        [NotNull]
-        private static readonly ParserInjector<IGoalDescription> _goalParserInjector = new ParserInjector<IGoalDescription>();
-
-        #endregion
-
         /// <summary>
         /// The goal description
         /// </summary>
@@ -28,8 +18,12 @@ namespace PDDL.Parser.PDDL12
         public static readonly Parser<IGoalDescription> GoalDescription =
             CreateGoalDescription();
 
-        #region Factory Functions
-        
+        /// <summary>
+        /// The goal parser injector
+        /// </summary>
+        [NotNull]
+        private static readonly ParserInjector<IGoalDescription> GoalParserInjector = new ParserInjector<IGoalDescription>();
+
         /// <summary>
         /// Creates the goal description.
         /// </summary>
@@ -49,16 +43,14 @@ namespace PDDL.Parser.PDDL12
                 (
                     from open in CommonGrammar.OpeningParenthesis
                     from keyword in Keywords.And
-                    from goals in _goalParserInjector.Parser.Many()
+                    from goals in GoalParserInjector.Parser.Many()
                     from close in CommonGrammar.ClosingParenthesis
                     select new ConjunctionGoalDescription(goals.ToArray())
                     ).Token();
 
             var goalDescription = literalGoalDesccription.Or(atomicGoalDescription).Or(conjunctionGoalDescription);
-            _goalParserInjector.Parser = goalDescription;
+            GoalParserInjector.Parser = goalDescription;
             return goalDescription;
         }
-
-        #endregion Factory Functions
     }
 }

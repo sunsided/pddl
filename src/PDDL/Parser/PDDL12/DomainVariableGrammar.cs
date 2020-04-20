@@ -15,8 +15,8 @@ namespace PDDL.Parser.PDDL12
         /// <summary>
         /// The value
         /// </summary>
-        [NotNull] 
-        public static Parser<IDecimalValue> IntegerValue = (
+        [NotNull]
+        public static readonly Parser<IDecimalValue> IntegerValue = (
             from value in Parse.Digit.AtLeastOnce().Text()
             let number = Decimal.Parse(value)
             select new DecimalValue(number)
@@ -26,7 +26,7 @@ namespace PDDL.Parser.PDDL12
         /// The value
         /// </summary>
         [NotNull]
-        public static Parser<IDecimalValue> FloatingPointValue = (
+        public static readonly Parser<IDecimalValue> FloatingPointValue = (
             from integer in Parse.Digit.Many().Text()
             from point in Parse.Char('.')
             from fraction in Parse.Digit.AtLeastOnce().Text()
@@ -39,7 +39,7 @@ namespace PDDL.Parser.PDDL12
         /// The value
         /// </summary>
         [NotNull]
-        public static Parser<IValue> Value =
+        public static readonly Parser<IValue> Value =
             FloatingPointValue.Or(IntegerValue);
 
             /// <summary>

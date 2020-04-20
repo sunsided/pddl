@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using PDDL.Model.PDDL12;
@@ -12,16 +13,6 @@ namespace PDDL.Parser.PDDL12
     /// </summary>
     internal static class CommonGrammar
     {
-        #region Internal Helpers
-
-        /// <summary>
-        /// This injector is used to fake-decouple the left recursive grammar construction
-        /// </summary>
-        [NotNull]
-        private readonly static ParserInjector<IType> _typeParserInjector = new ParserInjector<IType>();
-
-        #endregion
-
         /// <summary>
         /// Comments start with a semicolon and run until the end-of-line
         /// </summary>
@@ -49,7 +40,7 @@ namespace PDDL.Parser.PDDL12
         /// </para>
         /// </summary>
         [NotNull]
-        public static readonly Parser<string> NameDefinition = 
+        public static readonly Parser<string> NameDefinition =
             Parse.Letter.AtLeastOnce()
             .Concat(Parse.Char('-')
             .Or(Parse.Char('_'))
@@ -70,7 +61,7 @@ namespace PDDL.Parser.PDDL12
         [NotNull]
         public static readonly Parser<IType> Type =
             CreateTypeDefinition();
-        
+
         /// <summary>
         /// The variable name token
         /// </summary>
@@ -89,7 +80,6 @@ namespace PDDL.Parser.PDDL12
                 select new Variable(n)
                 ).Token();
 
-
         /// <summary>
         /// The predicate
         /// </summary>
@@ -103,14 +93,14 @@ namespace PDDL.Parser.PDDL12
         /// The term
         /// </summary>
         [NotNull]
-        public static readonly Parser<ITerm> Term = 
+        public static readonly Parser<ITerm> Term =
             NameNonToken.Token().Or<ITerm>(Variable);
 
         /// <summary>
         /// The atomic formula of term
         /// </summary>
         [NotNull]
-        internal static Parser<IAtomicFormula<ITerm>> AtomicFormulaOfTerm = (
+        internal static readonly Parser<IAtomicFormula<ITerm>> AtomicFormulaOfTerm = (
                 from open in OpeningParenthesis
                 from p in Predicate
                 from terms in Term.Many()
@@ -122,7 +112,7 @@ namespace PDDL.Parser.PDDL12
         /// The atomic formula of name
         /// </summary>
         [NotNull]
-        internal static Parser<IAtomicFormula<IName>> AtomicFormulaOfName = (
+        internal static readonly Parser<IAtomicFormula<IName>> AtomicFormulaOfName = (
                 from open in OpeningParenthesis
                 from p in Predicate
                 from names in NameNonToken.Token().Many()
@@ -141,7 +131,7 @@ namespace PDDL.Parser.PDDL12
         /// The literal of name
         /// </summary>
         [NotNull]
-        public static readonly Parser<ILiteral<IName>> LiteralOfName = 
+        public static readonly Parser<ILiteral<IName>> LiteralOfName =
             CreateLiteralOfName();
 
         /// <summary>
@@ -151,8 +141,37 @@ namespace PDDL.Parser.PDDL12
         public static readonly Parser<ILiteral<ITerm>> LiteralOfTerm =
             CreateLiteralOfTerm();
 
-        #region Factory Functions
-        
+        /// <summary>
+        /// This injector is used to fake-decouple the left recursive grammar construction
+        /// </summary>
+        [NotNull]
+        private static readonly ParserInjector<IType> TypeParserInjector = new ParserInjector<IType>();
+
+        /// <summary>
+        /// Wraps the specified option.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="option">The option.</param>
+        /// <returns>IReadOnlyList&lt;T&gt;.</returns>
+        [NotNull]
+        internal static IReadOnlyList<T> Wrap<T>([NotNull] IOption<IEnumerable<T>> option) =>
+            option.IsDefined
+                ? option.Get().ToList().AsReadOnly()
+                : (IReadOnlyList<T>) ArraySegment<T>.Empty;
+
+        /// <summary>
+        /// Wraps the specified option.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="option">The option.</param>
+        /// <param name="defaultValue">The default value.</param>
+        /// <returns>IReadOnlyList&lt;T&gt;.</returns>
+        [NotNull]
+        internal static T Wrap<T>([NotNull] IOption<T> option, T defaultValue) =>
+            option.IsDefined
+                ? option.Get()
+                : defaultValue;
+
         /// <summary>
         /// Creates the type definition.
         /// </summary>
@@ -170,7 +189,7 @@ namespace PDDL.Parser.PDDL12
             Parser<IType> eitherTypeDefinition = (
                 from open in OpeningParenthesis
                 from keyword in Parse.String("either").Token()
-                from types in _typeParserInjector.Parser.AtLeastOnce().Token()
+                from types in TypeParserInjector.Parser.AtLeastOnce().Token()
                 from close in ClosingParenthesis
                 select new EitherType(types.ToList())
                 ).Token();
@@ -179,14 +198,14 @@ namespace PDDL.Parser.PDDL12
             Parser<IType> fluentTypeDefinition = (
                 from open in OpeningParenthesis
                 from keyword in Parse.String("fluent").Token()
-                from t in _typeParserInjector.Parser
+                from t in TypeParserInjector.Parser
                 from close in ClosingParenthesis
                 select new FluentType(t)
                 ).Token();
 
             // final parser for types
             Parser<IType> type = typeDefinition.Or(eitherTypeDefinition).Or(fluentTypeDefinition);
-            _typeParserInjector.Parser = type;
+            TypeParserInjector.Parser = type;
 
             return type;
         }
@@ -252,30 +271,5 @@ namespace PDDL.Parser.PDDL12
                 from close in ClosingParenthesis
                 select new AtomicFormulaSkeleton(p, variables.ToList()))
             .Token();
-
-        #endregion Factory Functions
-
-        #region Helper Functions
-
-        /// <summary>
-        /// Wraps the specified option.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="option">The option.</param>
-        /// <returns>IReadOnlyList&lt;T&gt;.</returns>
-        [NotNull]
-        internal static IReadOnlyList<T> Wrap<T>([NotNull] IOption<IEnumerable<T>> option) => option.IsDefined ? option.Get().ToList().AsReadOnly() : (IReadOnlyList<T>)new T[0];
-
-        /// <summary>
-        /// Wraps the specified option.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="option">The option.</param>
-        /// <param name="defaultValue">The default value.</param>
-        /// <returns>IReadOnlyList&lt;T&gt;.</returns>
-        [NotNull]
-        internal static T Wrap<T>([NotNull] IOption<T> option, T defaultValue) => option.IsDefined ? option.Get() : defaultValue;
-
-        #endregion
     }
 }

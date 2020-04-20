@@ -19,8 +19,6 @@ namespace PDDL.Parser.PDDL12
         public static readonly Parser<IDomainAxiomElement> AxiomDefinition =
             CreateAxiomDefinition();
 
-        #region Factory Functions
-
         /// <summary>
         /// Creates the axiom definition.
         /// </summary>
@@ -40,7 +38,5 @@ namespace PDDL.Parser.PDDL12
                 select new AxiomDefinition(axiom)
                 ).Token();
         }
-
-        #endregion
     }
 }

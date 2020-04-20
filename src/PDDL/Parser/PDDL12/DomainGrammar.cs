@@ -15,7 +15,7 @@ namespace PDDL.Parser.PDDL12
         /// <summary>
         /// The predicates definition
         /// </summary>
-        [NotNull] 
+        [NotNull]
         public static readonly Parser<IDomainPredicatesDefinition> PredicatesDefinition
             = CreatePredicatesDefinition();
 
@@ -29,21 +29,21 @@ namespace PDDL.Parser.PDDL12
         /// <summary>
         /// The requirements definition
         /// </summary>
-        [NotNull] 
+        [NotNull]
         public static readonly Parser<IDomainRequireDefinition> RequirementsDefinition
             = CreateRequirementsDefinition();
 
         /// <summary>
         /// The types definition
         /// </summary>
-        [NotNull] 
+        [NotNull]
         public static readonly Parser<IDomainTypesDefinition> TypesDefinition
             = CreateTypesDefinition();
 
         /// <summary>
         /// The constants definition
         /// </summary>
-        [NotNull] 
+        [NotNull]
         public static readonly Parser<IDomainConstantsDefinition> ConstantsDefinition
             = CreateConstantsDefinition();
 
@@ -71,29 +71,27 @@ namespace PDDL.Parser.PDDL12
         /// <summary>
         /// The domain definition
         /// </summary>
-        [NotNull] 
+        [NotNull]
         public static readonly Parser<IDomain> DomainDefinition
             = CreateDomainDefinition();
-        
-        #region Factory Functions
-        
+
         /// <summary>
         /// Creates the domain definition element parser.
         /// </summary>
         /// <returns>Parser&lt;IReadOnlyList&lt;IDomainDefinitionElement&gt;&gt;.</returns>
         private static Parser<IReadOnlyList<IDomainDefinitionElement>> CreateDomainDefinitionElementParser() =>
         (
-            from matches in 
+            from matches in
                 ExtensionDefinition
                     .Or<IDomainDefinitionElement>(RequirementsDefinition)
-                    .Or<IDomainDefinitionElement>(TypesDefinition)
-                    .Or<IDomainDefinitionElement>(ConstantsDefinition)
-                    .Or<IDomainDefinitionElement>(VariablesDefinition)
-                    .Or<IDomainDefinitionElement>(PredicatesDefinition)
-                    .Or<IDomainDefinitionElement>(TimelessDefinition)
-                    .Or<IDomainDefinitionElement>(SafetyDefinition)
-                    .Or<IDomainDefinitionElement>(ActionGrammar.ActionDefinition)
-                    .Or<IDomainDefinitionElement>(AxiomGrammar.AxiomDefinition)
+                    .Or(TypesDefinition)
+                    .Or(ConstantsDefinition)
+                    .Or(VariablesDefinition)
+                    .Or(PredicatesDefinition)
+                    .Or(TimelessDefinition)
+                    .Or(SafetyDefinition)
+                    .Or(ActionGrammar.ActionDefinition)
+                    .Or(AxiomGrammar.AxiomDefinition)
                     .Many()
             select matches.ToList()
         );
@@ -107,7 +105,7 @@ namespace PDDL.Parser.PDDL12
         {
             var definition = CreateDomainDefinitionElementParser();
 
-            return (
+            return
                 // header
                 from open in CommonGrammar.OpeningParenthesis
                 from domainKeyword in Keywords.Domain
@@ -116,8 +114,7 @@ namespace PDDL.Parser.PDDL12
                 // definition body
                 from body in definition
                 // bundle and go
-                select DomainFactory.FromSequence(domainName, body)
-                );
+                select DomainFactory.FromSequence(domainName, body);
         }
 
         /// <summary>
@@ -229,7 +226,5 @@ namespace PDDL.Parser.PDDL12
             from close in CommonGrammar.ClosingParenthesis
             select new PredicatesDefinition(skeletons.ToList())
         ).Token();
-
-        #endregion
     }
 }

@@ -10,12 +10,6 @@ namespace PDDL.Model.PDDL12.DomainElements
     internal sealed class SafetyDefinition : IDomainSafetyDefinition
     {
         /// <summary>
-        /// Gets the safety constraints.
-        /// </summary>
-        /// <value>The safety constraints.</value>
-        public IReadOnlyList<IGoalDescription> Safety { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="SafetyDefinition"/> class.
         /// </summary>
         /// <param name="safety">The safety.</param>
@@ -24,5 +18,11 @@ namespace PDDL.Model.PDDL12.DomainElements
         {
             Safety = safety ?? throw new ArgumentNullException(nameof(safety), "The value of 'requirements' cannot be null.");
         }
+
+        /// <summary>
+        /// Gets the safety constraints.
+        /// </summary>
+        /// <value>The safety constraints.</value>
+        public IReadOnlyList<IGoalDescription> Safety { get; }
     }
 }

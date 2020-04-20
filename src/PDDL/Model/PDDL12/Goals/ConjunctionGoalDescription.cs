@@ -10,12 +10,6 @@ namespace PDDL.Model.PDDL12.Goals
     public class ConjunctionGoalDescription : GoalBase, IConjunctionGoalDescription
     {
         /// <summary>
-        /// Gets the goals.
-        /// </summary>
-        /// <value>The goals.</value>
-        public IReadOnlyList<IGoalDescription> Goals { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ConjunctionGoalDescription"/> class.
         /// </summary>
         /// <param name="goals">The goals.</param>
@@ -24,6 +18,12 @@ namespace PDDL.Model.PDDL12.Goals
         {
             Goals = goals ?? throw new ArgumentNullException(nameof(goals), "goals must not be null");
         }
+
+        /// <summary>
+        /// Gets the goals.
+        /// </summary>
+        /// <value>The goals.</value>
+        public IReadOnlyList<IGoalDescription> Goals { get; }
 
         /// <summary>
         /// Gets the kind of goal.

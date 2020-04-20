@@ -10,12 +10,6 @@ namespace PDDL.Model.PDDL12.DomainElements
     internal sealed class RequirementsDefinition : IDomainRequireDefinition, IProblemRequireDefinition
     {
         /// <summary>
-        /// Gets the requirements.
-        /// </summary>
-        /// <value>The requirements.</value>
-        public IReadOnlyList<IRequirement> Requirements { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="RequirementsDefinition"/> class.
         /// </summary>
         /// <param name="requirements">The requirements.</param>
@@ -24,5 +18,11 @@ namespace PDDL.Model.PDDL12.DomainElements
         {
             Requirements = requirements ?? throw new ArgumentNullException(nameof(requirements), "The value of 'requirements' cannot be null.");
         }
+
+        /// <summary>
+        /// Gets the requirements.
+        /// </summary>
+        /// <value>The requirements.</value>
+        public IReadOnlyList<IRequirement> Requirements { get; }
     }
 }

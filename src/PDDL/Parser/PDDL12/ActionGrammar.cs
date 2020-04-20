@@ -10,7 +10,7 @@ namespace PDDL.Parser.PDDL12
     /// <summary>
     /// Class ActionGrammar. This class cannot be inherited.
     /// </summary>
-    internal sealed class ActionGrammar
+    internal static class ActionGrammar
     {
         /// <summary>
         /// The action definition
@@ -18,8 +18,6 @@ namespace PDDL.Parser.PDDL12
         [NotNull]
         public static readonly Parser<IDomainActionElement> ActionDefinition =
             CreateActionDefinition();
-
-        #region Factory Functions
 
         /// <summary>
         /// Creates the action definition.
@@ -70,7 +68,5 @@ namespace PDDL.Parser.PDDL12
 
             return actionDef;
         }
-
-        #endregion Factory Functions
     }
 }

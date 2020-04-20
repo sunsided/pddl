@@ -9,27 +9,21 @@ namespace PDDL.Parser.PDDL12
     /// <summary>
     /// Class EffectGrammar. This class cannot be inherited.
     /// </summary>
-    internal sealed class EffectGrammar
+    internal static class EffectGrammar
     {
-        #region Internal Helpers
-
         /// <summary>
         /// The effect parser injector
         /// </summary>
         [NotNull]
-        private static readonly ParserInjector<IEffect> _effectParserInjector = new ParserInjector<IEffect>();
-
-        #endregion
+        private static readonly ParserInjector<IEffect> EffectParserInjector = new ParserInjector<IEffect>();
 
         /// <summary>
         /// The action definition
         /// </summary>
-        [NotNull] 
+        [NotNull]
         public static readonly Parser<IEffect> Effect =
             CreateEffect();
 
-        #region Factory Functions
-        
         /// <summary>
         /// Creates the effect.
         /// </summary>
@@ -53,16 +47,14 @@ namespace PDDL.Parser.PDDL12
                 (
                     from open in CommonGrammar.OpeningParenthesis
                     from keyword in Keywords.And
-                    from effects in _effectParserInjector.Parser.Many()
+                    from effects in EffectParserInjector.Parser.Many()
                     from close in CommonGrammar.ClosingParenthesis
                     select new ConjunctionEffect(effects.ToArray())
                     ).Token();
 
             var effect = positiveEffect.Or(negativeEffect).Or(conjunctionEffect);
-            _effectParserInjector.Parser = effect;
+            EffectParserInjector.Parser = effect;
             return effect;
         }
-
-        #endregion Factory Functions
     }
 }

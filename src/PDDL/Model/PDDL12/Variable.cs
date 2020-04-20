@@ -8,12 +8,6 @@ namespace PDDL.Model.PDDL12
     public class Variable : IVariable
     {
         /// <summary>
-        /// Gets the name.
-        /// </summary>
-        /// <value>The name.</value>
-        public IName Name { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Variable"/> class.
         /// </summary>
         /// <param name="name">The name.</param>
@@ -22,6 +16,12 @@ namespace PDDL.Model.PDDL12
         {
             Name = name ?? throw new ArgumentNullException(nameof(name), "name must not be null");
         }
+
+        /// <summary>
+        /// Gets the name.
+        /// </summary>
+        /// <value>The name.</value>
+        public IName Name { get; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

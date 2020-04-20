@@ -9,12 +9,6 @@ namespace PDDL.Model.PDDL12
     public class ConstantDomainVariable : DomainVariable, IConstantDomainVariable
     {
         /// <summary>
-        /// Gets the value.
-        /// </summary>
-        /// <value>The value.</value>
-        public IValue Value { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="ConstantDomainVariable" /> class.
         /// </summary>
         /// <param name="name">The name.</param>
@@ -26,6 +20,12 @@ namespace PDDL.Model.PDDL12
         {
             Value = value ?? throw new ArgumentNullException(nameof(value));
         }
+
+        /// <summary>
+        /// Gets the value.
+        /// </summary>
+        /// <value>The value.</value>
+        public IValue Value { get; }
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

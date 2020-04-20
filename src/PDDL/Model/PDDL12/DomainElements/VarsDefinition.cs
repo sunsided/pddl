@@ -10,12 +10,6 @@ namespace PDDL.Model.PDDL12.DomainElements
     internal sealed class VarsDefinition : IDomainVarsDefinition
     {
         /// <summary>
-        /// Gets the safety constraints.
-        /// </summary>
-        /// <value>The safety constraints.</value>
-        public IReadOnlyList<IDomainVariable> Variables { get; }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="VarsDefinition"/> class.
         /// </summary>
         /// <param name="variables">The safety.</param>
@@ -24,5 +18,11 @@ namespace PDDL.Model.PDDL12.DomainElements
         {
             Variables = variables ?? throw new ArgumentNullException(nameof(variables), "The value of 'variables' cannot be null.");
         }
+
+        /// <summary>
+        /// Gets the safety constraints.
+        /// </summary>
+        /// <value>The safety constraints.</value>
+        public IReadOnlyList<IDomainVariable> Variables { get; }
     }
 }

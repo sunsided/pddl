@@ -16,41 +16,6 @@ namespace PDDL.Model.PDDL12
         private IReadOnlyList<IVariableDefinition> _variables = new IVariableDefinition[0];
 
         /// <summary>
-        /// Gets the functor.
-        /// </summary>
-        /// <value>The functor.</value>
-        public IName Functor { get; }
-
-        /// <summary>
-        /// Gets the parameters.
-        /// </summary>
-        /// <value>The parameters.</value>
-        public IReadOnlyList<IVariableDefinition> Parameters { get; }
-
-        /// <summary>
-        /// Gets the precondition.
-        /// </summary>
-        /// <value>The precondition.</value>
-        public IPrecondition Precondition { get; }
-
-        /// <summary>
-        /// Gets the effect.
-        /// </summary>
-        /// <value>The effect.</value>
-        public IEffect Effect { get; }
-
-        /// <summary>
-        /// Gets or sets the variables (<c>:vars</c>).
-        /// </summary>
-        /// <value>The variables.</value>
-        /// <exception cref="ArgumentNullException">The value of 'value' cannot be null. </exception>
-        public IReadOnlyList<IVariableDefinition> Variables
-        {
-            get => _variables;
-            set => _variables = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="Action" /> class.
         /// </summary>
         /// <param name="functor">The functor.</param>
@@ -108,6 +73,41 @@ namespace PDDL.Model.PDDL12
         public Action([NotNull] IName functor, [NotNull] IEffect effect)
             : this(functor, NullPrecondition.Default, effect)
         {
+        }
+
+        /// <summary>
+        /// Gets the functor.
+        /// </summary>
+        /// <value>The functor.</value>
+        public IName Functor { get; }
+
+        /// <summary>
+        /// Gets the parameters.
+        /// </summary>
+        /// <value>The parameters.</value>
+        public IReadOnlyList<IVariableDefinition> Parameters { get; }
+
+        /// <summary>
+        /// Gets the precondition.
+        /// </summary>
+        /// <value>The precondition.</value>
+        public IPrecondition Precondition { get; }
+
+        /// <summary>
+        /// Gets the effect.
+        /// </summary>
+        /// <value>The effect.</value>
+        public IEffect Effect { get; }
+
+        /// <summary>
+        /// Gets or sets the variables (<c>:vars</c>).
+        /// </summary>
+        /// <value>The variables.</value>
+        /// <exception cref="ArgumentNullException">The value of 'value' cannot be null. </exception>
+        public IReadOnlyList<IVariableDefinition> Variables
+        {
+            get => _variables;
+            set => _variables = value ?? throw new ArgumentNullException(nameof(value));
         }
     }
 }

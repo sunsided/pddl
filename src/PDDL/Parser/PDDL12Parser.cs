@@ -19,7 +19,7 @@ namespace PDDL.Parser
         /// </summary>
         /// <param name="reader">The reader.</param>
         /// <returns>IReadOnlyList&lt;IDefinition&gt;.</returns>
-        /// <exception cref="PDDLSyntaxException">A syntax error or internal parser error occurred. </exception>
+        /// <exception cref="PddlSyntaxException">A syntax error or internal parser error occurred. </exception>
         [NotNull]
         public IReadOnlyList<IDefinition> Parse([NotNull] TextReader reader)
         {
@@ -34,7 +34,7 @@ namespace PDDL.Parser
             }
             catch (ParseException e)
             {
-                throw new PDDLSyntaxException(e.Message, e);
+                throw new PddlSyntaxException(e.Message, e);
             }
         }
 
@@ -43,7 +43,7 @@ namespace PDDL.Parser
         /// </summary>
         /// <param name="definition">The definition.</param>
         /// <returns>IReadOnlyList&lt;IDefinition&gt;.</returns>
-        /// <exception cref="PDDLSyntaxException">A syntax error or internal parser error occurred. </exception>
+        /// <exception cref="PddlSyntaxException">A syntax error or internal parser error occurred. </exception>
         [NotNull]
         public IReadOnlyList<IDefinition> Parse([NotNull] string definition)
         {
@@ -58,7 +58,7 @@ namespace PDDL.Parser
             }
             catch (ParseException e)
             {
-                throw new PDDLSyntaxException(e.Message, e);
+                throw new PddlSyntaxException(e.Message, e);
             }
         }
 

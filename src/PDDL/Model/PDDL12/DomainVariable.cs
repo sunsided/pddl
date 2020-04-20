@@ -16,6 +16,17 @@ namespace PDDL.Model.PDDL12
         private IType _type = DefaultType.Default;
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="DomainVariable" /> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <exception cref="System.ArgumentNullException">name</exception>
+        public DomainVariable([NotNull] IName name)
+        {
+            Name = name ?? throw new ArgumentNullException(nameof(name));
+        }
+
+
+        /// <summary>
         /// Gets the name.
         /// </summary>
         /// <value>The name.</value>
@@ -30,16 +41,6 @@ namespace PDDL.Model.PDDL12
         {
             get => _type;
             set => _type = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="DomainVariable" /> class.
-        /// </summary>
-        /// <param name="name">The name.</param>
-        /// <exception cref="System.ArgumentNullException">name</exception>
-        public DomainVariable([NotNull] IName name)
-        {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
         }
 
         /// <summary>
