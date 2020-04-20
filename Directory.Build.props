@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+
+    <PropertyGroup>
+        <Title>PDDL#</Title>
+        <Description>A Planning Domain Definition Language parser.</Description>
+        <Authors>Markus Mayer</Authors>
+        <Product>PDDL#</Product>
+        <PackageProjectUrl>https://github.com/sunsided/pddl</PackageProjectUrl>
+        <PackageTags>PDDL;Planning;Parser</PackageTags>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Nullable>enable</Nullable>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <RepositoryUrl>https://github.com/sunsided/pddl</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="ErrorProne.NET" Version="0.1.5898.41180" PrivateAssets="All" />
+        <PackageReference Include="ErrorProne.NET.Structs" Version="0.1.2" PrivateAssets="All" />
+        <PackageReference Include="ErrorProne.NET.CoreAnalyzers" Version="0.1.2" PrivateAssets="All" />
+    </ItemGroup>
+
+</Project>

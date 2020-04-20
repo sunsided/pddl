@@ -1,1 +1,0 @@
-nuget pack PDDL.0.1.0.nuspec -symbols
