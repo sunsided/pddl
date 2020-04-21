@@ -8,7 +8,7 @@ namespace PDDL.PDDL12.Abstractions
     ///     Contains the name of an object, domain, problem, etc.
     /// </para>
     /// </summary>
-    public interface IName : ITerm, IEquatable<string>
+    public interface IName : ITerm, IEquatable<string>, IEquatable<IName>
     {
         /// <summary>
         /// Gets the value.

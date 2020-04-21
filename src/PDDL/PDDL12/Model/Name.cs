@@ -61,7 +61,7 @@ namespace PDDL.PDDL12.Model
         /// </summary>
         /// <param name="other">The object to compare with the current object.</param>
         /// <returns><see langword="true" /> if the specified <see cref="Name" /> is equal to this instance; otherwise, <see langword="false" />.</returns>
-        private bool Equals(Name other) => string.Equals(Value, other.Value, StringComparison.OrdinalIgnoreCase);
+        public bool Equals(IName other) => Equals(other.Value);
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -72,7 +72,7 @@ namespace PDDL.PDDL12.Model
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj is Name && Equals((Name) obj);
+            return obj is IName name && Equals(name);
         }
 
         /// <summary>
