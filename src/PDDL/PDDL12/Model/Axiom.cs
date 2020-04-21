@@ -19,16 +19,16 @@ namespace PDDL.PDDL12.Model
         /// <exception cref="ArgumentNullException">The value of 'variables', 'context' and 'implication' cannot be null.</exception>
         public Axiom(IReadOnlyList<IVariableDefinition> variables, IGoalDescription context, ILiteral<ITerm> implication)
         {
-            Variables = variables ?? throw new ArgumentNullException(nameof(variables));
+            VariableDefinitions = variables ?? throw new ArgumentNullException(nameof(variables));
             Context = context ?? throw new ArgumentNullException(nameof(context));
             Implication = implication ?? throw new ArgumentNullException(nameof(implication));
         }
 
         /// <summary>
-        /// Gets the variables.
+        /// Gets the variable definitions.
         /// </summary>
-        /// <value>The variables.</value>
-        public IReadOnlyList<IVariableDefinition> Variables { get; }
+        /// <value>The variable definitions.</value>
+        public IReadOnlyList<IVariableDefinition> VariableDefinitions { get; }
 
         /// <summary>
         /// Gets the context.

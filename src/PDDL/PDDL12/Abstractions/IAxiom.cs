@@ -10,10 +10,10 @@ namespace PDDL.PDDL12.Abstractions
     public interface IAxiom : IDomainStructureElement
     {
         /// <summary>
-        /// Gets the variables.
+        /// Gets the variables definitions.
         /// </summary>
-        /// <value>The variables.</value>
-        IReadOnlyList<IVariableDefinition> Variables { get; }
+        /// <value>The variable definitions.</value>
+        IReadOnlyList<IVariableDefinition> VariableDefinitions { get; }
 
         /// <summary>
         /// Gets the context.

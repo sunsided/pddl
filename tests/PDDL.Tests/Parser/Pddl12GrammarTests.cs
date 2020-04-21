@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
 using FluentAssertions;
+using PDDL.PDDL12.Abstractions;
 using PDDL.PDDL12.Abstractions.Goals;
 using PDDL.PDDL12.Abstractions.Types;
+using PDDL.PDDL12.Abstractions.Variables;
 using PDDL.PDDL12.Model.Types;
 using PDDL.PDDL12.Parsing;
 using Sprache;
@@ -18,174 +20,233 @@ namespace PDDL.Tests.Parser
         [Fact]
         public void CommentsAreRecognized()
         {
-            var result = CommonGrammar.Comment.Parse("; one two three" + Environment.NewLine + "this is not a comment");
+            var result = CommonGrammar.Comment.Parse(
+                @"; one two three
+                this is not a comment");
             result.Should().Be("; one two three");
         }
 
         [Fact]
         public void NonCommentsCannotBeParsedAsAComment()
         {
-            System.Action parse = () => CommonGrammar.Comment.Parse("not a comment");
+            Action parse = () => CommonGrammar.Comment.Parse("not a comment");
             parse.Should().Throw<ParseException>();
         }
 
-        [Fact]
-        public void OpeningParenthesisIsParsed()
+        [Theory]
+        [InlineData("(")]
+        [InlineData("   ( ")]
+        public void OpeningParenthesisIsParsed(string input)
         {
-            CommonGrammar.OpeningParenthesis.Parse("(").ToString().Should().Be("(");
-            CommonGrammar.OpeningParenthesis.Parse("   ( ").ToString().Should().Be("(");
+            CommonGrammar.OpeningParenthesis.Parse(input).Should().Be('(');
         }
 
-        [Fact]
-        public void ClosingParenthesisIsParsed()
+        [Theory]
+        [InlineData(")")]
+        [InlineData("   ) ")]
+        public void ClosingParenthesisIsParsed(string input)
         {
-            CommonGrammar.ClosingParenthesis.Parse(")").ToString().Should().Be(")");
-            CommonGrammar.ClosingParenthesis.Parse("   ) ").ToString().Should().Be(")");
+            CommonGrammar.ClosingParenthesis.Parse(input).Should().Be(')');
         }
 
-        [Fact]
-        public void NamesAreCorrectlyParsed()
+        [Theory]
+        [InlineData("robot-worker-domain")]
+        [InlineData("robot3")]
+        [InlineData("robot_")]
+        [InlineData("kneel-b4__-__our__-__robot_overlords")]
+        public void ValidNamesAreCorrectlyParsed(string input)
         {
-            CommonGrammar.NameDefinition.Parse("robot-worker-domain").Should().Be("robot-worker-domain");
-            CommonGrammar.NameDefinition.Parse("robot-3").Should().Be("robot-3");
-            CommonGrammar.NameDefinition.Parse("robot_").Should().Be("robot_");
-
-            Assert.Throws<ParseException>(() => CommonGrammar.NameDefinition.Parse("-robot"));
-            Assert.Throws<ParseException>(() => CommonGrammar.NameDefinition.Parse("3robot"));
-            Assert.Throws<ParseException>(() => CommonGrammar.NameDefinition.Parse("_robot"));
+            CommonGrammar.NameDefinition.Parse(input).Should().Be(input);
         }
 
-        [Fact]
-        public void NameNonTokensAreCorrectlyParsed()
+        [Theory]
+        [InlineData("-robot")]
+        [InlineData("3robot")]
+        [InlineData("_robot")]
+        public void InvalidNamesFailParsing(string input)
         {
-            CommonGrammar.NameNonToken.Parse("robot-worker-domain").Value.Should().Be("robot-worker-domain");
-            CommonGrammar.NameNonToken.Parse("robot-3").Value.Should().Be("robot-3");
-            CommonGrammar.NameNonToken.Parse("robot_").Value.Should().Be("robot_");
-            CommonGrammar.NameNonToken.Parse("a").Value.Should().Be("a");
+            Action parse = () => CommonGrammar.NameDefinition.Parse(input);
+            parse.Should().Throw<ParseException>();
+        }
 
-            Assert.Throws<ParseException>(() => CommonGrammar.NameNonToken.Parse("-robot"));
-            Assert.Throws<ParseException>(() => CommonGrammar.NameNonToken.Parse("3robot"));
-            Assert.Throws<ParseException>(() => CommonGrammar.NameNonToken.Parse("_robot"));
+        [Theory]
+        [InlineData("robot-worker-domain")]
+        [InlineData("robot3")]
+        [InlineData("robot_")]
+        [InlineData("a")]
+        public void ValidNameNonTokensAreCorrectlyParsed(string input)
+        {
+            CommonGrammar.NameNonToken.Parse(input).Value.Should().Be(input);
+        }
+
+        [Theory]
+        [InlineData("-robot")]
+        [InlineData("3robot")]
+        [InlineData("_robot")]
+        public void InvalidNameNonTokensFailParsing(string input)
+        {
+            Action parse = () => CommonGrammar.NameDefinition.Parse(input);
+            parse.Should().Throw<ParseException>();
         }
 
         [Fact]
         public void TypeNamesAreCorrectlyParsed()
         {
             var type = CommonGrammar.Type.Parse("integer - number");
-            type.Should().BeAssignableTo<ICustomType>();
-            ((ICustomType)type).Name.Value.Should().Be("integer");
+
+            type.Should().BeAssignableTo<ICustomType>()
+                .Subject.Name.Value.Should().Be("integer");
 
             type.Kind.Should().Be(TypeKind.UserDefined);
-
-            ((ICustomType)type).Parent.Should().BeOfType<DefaultType>();
+            type.As<ICustomType>().Parent.Should().BeOfType<DefaultType>();
         }
 
         [Fact]
         public void TypeListsAreCorrectlyParsed()
         {
+            // The following type definition is to be understood as follows:
+            // - "float" and "integer" are both of type "number"
+            // - "moon" is of type "rock"
+            // - "something" is of an unspecified type, which defaults to "object"
             var type = TypedLists.TypedListOfType.Parse("float integer - number moon - rock something").ToArray();
-            type.Length.Should().Be(4);
+            type.Should().HaveCount(4);
 
-            type[0].Should().BeAssignableTo<ICustomType>();
-            type[1].Should().BeAssignableTo<ICustomType>();
-            type[2].Should().BeAssignableTo<ICustomType>();
-            type[3].Should().BeAssignableTo<ICustomType>();
+            type[0].Should().BeAssignableTo<ICustomType>()
+                .Subject.Name.Value.Should().Be("float");
+            type[0].Parent.Should().BeAssignableTo<ICustomType>()
+                .Subject.Name.Value.Should().Be("number");
 
-            ((ICustomType)type[0]).Name.Value.Should().Be("float");
-            ((ICustomType)type[1]).Name.Value.Should().Be("integer");
-            ((ICustomType)type[2]).Name.Value.Should().Be("moon");
-            ((ICustomType)type[3]).Name.Value.Should().Be("something");
+            type[1].Should().BeAssignableTo<ICustomType>()
+                .Subject.Name.Value.Should().Be("integer");
+            type[1].Parent.Should().BeAssignableTo<ICustomType>()
+                .Subject.Name.Value.Should().Be("number");
 
-            type[0].Parent.Should().BeAssignableTo<ICustomType>();
-            type[1].Parent.Should().BeAssignableTo<ICustomType>();
-            type[2].Parent.Should().BeAssignableTo<ICustomType>();
+            type[2].Should().BeAssignableTo<ICustomType>()
+                .Subject.Name.Value.Should().Be("moon");
+            type[2].Parent.Should().BeAssignableTo<ICustomType>()
+                .Subject.Name.Value.Should().Be("rock");
 
-            ((ICustomType)type[0].Parent).Name.Value.Should().Be("number");
-            ((ICustomType)type[1].Parent).Name.Value.Should().Be("number");
-            ((ICustomType)type[2].Parent).Name.Value.Should().Be("rock");
-
-            type[3].Parent.Should().BeOfType<DefaultType>();
-            type[3].Parent.Kind.Should().Be(TypeKind.Default);
+            type[3].Should().BeAssignableTo<ICustomType>()
+                .Subject.Name.Value.Should().Be("something");
+            type[3].Parent.Should().BeOfType<DefaultType>()
+                .Subject.Name.Value.Should().Be("object");
+            type[3].Parent.Should().BeOfType<DefaultType>()
+                .Subject.Kind.Should().Be(TypeKind.Default);
         }
 
         [Fact]
-        public void EitherTypeIsCorrectlyParsed()
+        public void EitherTypeIsParsed()
         {
             var type = CommonGrammar.Type.Parse("(either rocket something)");
 
-            type.Should().BeAssignableTo<IEitherType>();
+            type.Should().BeAssignableTo<IEitherType>()
+                .Subject.Types.Should().HaveCount(2);
 
-            var either = ((IEitherType) type).Types;
-            either.Count.Should().Be(2);
+            var either = type.As<IEitherType>().Types;
 
-            either[0].Should().BeAssignableTo<ICustomType>();
-            either[1].Should().BeAssignableTo<ICustomType>();
+            either[0].Should().BeAssignableTo<ICustomType>()
+                .Subject.Name.Value.Should().Be("rocket");
 
-            ((ICustomType)either[0]).Name.Value.Should().Be("rocket");
-            ((ICustomType)either[1]).Name.Value.Should().Be("something");
+            either[1].Should().BeAssignableTo<ICustomType>()
+                .Subject.Name.Value.Should().Be("something");
 
             // these are only type names, so default base type is implied
-            ((ICustomType)either[0]).Parent.Should().BeOfType<DefaultType>();
-            ((ICustomType)either[1]).Parent.Should().BeOfType<DefaultType>();
+            either[0].As<ICustomType>().Parent.Should().BeOfType<DefaultType>();
+            either[1].As<ICustomType>().Parent.Should().BeOfType<DefaultType>();
         }
 
         [Fact]
-        public void FluentTypeIsCorrectlyParsed()
+        public void FluentTypeIsParsed()
         {
             var type = CommonGrammar.Type.Parse("(fluent speaker)");
 
-            type.Should().BeAssignableTo<IFluentType>();
-
-            var fluent = ((IFluentType)type);
-
-            fluent.Type.Should().BeAssignableTo<ICustomType>();
-            ((ICustomType)fluent.Type).Name.Value.Should().Be("speaker");
+            type.Should().BeAssignableTo<IFluentType>()
+                .Subject.Type.Should().BeAssignableTo<ICustomType>()
+                .Subject.Name.Value.Should().Be("speaker");
         }
 
         [Fact]
         public void TypedListsWithEitherBaseType()
         {
             var type = TypedLists.TypedListOfType.Parse("something - (either rock paper scissor)").ToArray();
-            type.Length.Should().Be(1);
+            type.Should().HaveCount(1);
 
-            type[0].Should().BeAssignableTo<ICustomType>();
+            type[0].Should().BeAssignableTo<ICustomType>()
+                .Subject.Name.Value.Should().Be("something");
 
-            ((ICustomType)type[0]).Name.Value.Should().Be("something");
+            type[0].Parent.Should().BeAssignableTo<IEitherType>()
+                .Subject.Types.Should().HaveCount(3);
+        }
 
-            type[0].Parent.Should().BeAssignableTo<IEitherType>();
+        [Theory]
+        [InlineData("(in house person)", true, "in", 2)]
+        [InlineData("(not (at home person))", false, "at", 2)]
+        public void LiteralGoalDescriptionIsParsed(string description, bool isPositive, string literalName, int numParameters)
+        {
+            var gd = GoalGrammar.GoalDescription.Parse(description);
 
-            ((IEitherType)type[0].Parent).Types.Count.Should().Be(3);
+            gd.Should().BeAssignableTo<ILiteralGoalDescription>();
+            var literal = gd.As<ILiteralGoalDescription>().Literal;
+
+            literal.Positive.Should().Be(isPositive);
+            literal.Name.Value.Should().Be(literalName);
+            literal.Parameters.Should().HaveCount(numParameters);
         }
 
         [Fact]
-        public void GoalDescription()
+        public void ConjunctionGoalDescriptionIsParsed()
         {
-            var gd = GoalGrammar.GoalDescription.Parse("(in house person)");
-            gd.Should().BeAssignableTo<ILiteralGoalDescription>();
-            ((ILiteralGoalDescription)gd).Literal.Name.Value.Should().Be("in");
-            ((ILiteralGoalDescription)gd).Literal.Parameters.Count.Should().Be(2);
-
-            gd = GoalGrammar.GoalDescription.Parse("(not (at home person))");
-            gd.Should().BeAssignableTo<ILiteralGoalDescription>();
-            ((ILiteralGoalDescription)gd).Literal.Positive.Should().Be(false);
-            ((ILiteralGoalDescription)gd).Literal.Name.Value.Should().Be("at");
-            ((ILiteralGoalDescription)gd).Literal.Parameters.Count.Should().Be(2);
-
-            gd = GoalGrammar.GoalDescription.Parse("(and (in house person) (not (at home person)) (on street person))");
-            gd.Should().BeAssignableTo<IConjunctionGoalDescription>();
-            ((IConjunctionGoalDescription)gd).Goals.Count.Should().Be(3);
+            var gd = GoalGrammar.GoalDescription.Parse("(and (in house person) (not (at home person)) (on street person))");
+            gd.Should().BeAssignableTo<IConjunctionGoalDescription>()
+                .Subject.Goals.Should().HaveCount(3);
         }
 
         [Fact]
-        public void Axiom()
+        public void AxiomIsParsed()
         {
-            var axd = AxiomGrammar.AxiomDefinition.Parse("(:axiom :vars (?x ?y - physob) :context (on ?x ?y) :implies (above ?x ?y))");
-            var ax = axd.Axiom;
+            var axiomDefinition = AxiomGrammar.AxiomDefinition.Parse(@"
+                (:axiom 
+                    :vars (?x ?y - physob) 
+                    :context (on ?x ?y) 
+                    :implies (not (above ?x ?y)))");
+            
+            var axiom = axiomDefinition.Axiom;
 
-            ax.Variables.Count.Should().Be(2);
-            ax.Context.Should().BeAssignableTo<ILiteralGoalDescription>();
-            ((ILiteralGoalDescription)ax.Context).Literal.Name.Value.Should().Be("on");
-            ax.Implication.Name.Value.Should().Be("above");
+            axiom.VariableDefinitions.Should().HaveCount(2);
+            var variableDefinitions = axiom.VariableDefinitions;
+
+            variableDefinitions[0].Should().BeAssignableTo<IVariableDefinition>()
+                .Subject.Value.Name.Value.Should().Be("x");
+            variableDefinitions[0].As<IVariableDefinition>()
+                .Type.Should().BeAssignableTo<ICustomType>()
+                .Subject.Name.Value.Should().Be("physob");
+
+            variableDefinitions[1].Should().BeAssignableTo<IVariableDefinition>()
+                .Subject.Value.Name.Value.Should().Be("y");
+            variableDefinitions[1].As<IVariableDefinition>()
+                .Type.Should().BeAssignableTo<ICustomType>()
+                .Subject.Name.Value.Should().Be("physob");
+
+            axiom.Context.Should().BeAssignableTo<ILiteralGoalDescription>()
+                .Subject.Literal.Name.Value.Should().Be("on");
+            axiom.Context.As<ILiteralGoalDescription>()
+                .Literal.Parameters.Should().HaveCount(2);
+
+            var contextParameters = axiom.Context.As<ILiteralGoalDescription>().Literal.Parameters;
+            contextParameters[0].Should().BeAssignableTo<IVariable>()
+                .Subject.Name.Value.Should().Be("x");
+            contextParameters[1].Should().BeAssignableTo<IVariable>()
+                .Subject.Name.Value.Should().Be("y");
+
+            axiom.Implication.Positive.Should().BeFalse();
+            axiom.Implication.Name.Value.Should().Be("above");
+            axiom.Implication.Parameters.Should().HaveCount(2);
+
+            var implicationParameters = axiom.Implication.Parameters;
+            implicationParameters[0].Should().BeAssignableTo<IVariable>()
+                .Subject.Name.Value.Should().Be("x");
+            implicationParameters[1].Should().BeAssignableTo<IVariable>()
+                .Subject.Name.Value.Should().Be("y");
         }
     }
 }
