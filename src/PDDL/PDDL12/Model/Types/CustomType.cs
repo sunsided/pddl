@@ -12,22 +12,21 @@ namespace PDDL.PDDL12.Model.Types
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomType" /> class.
         /// </summary>
-        /// <param name="name">The name.</param>
-        /// <param name="parent">The parent.</param>
-        /// <exception cref="ArgumentNullException">The value of 'name' cannot be null.</exception>
-        public CustomType(IName name, IType parent)
+        /// <param name="name">The name of the type.</param>
+        /// <param name="parent">The parent type.</param>
+        public CustomType(IName name, IType? parent = null)
             : base(name)
         {
-            Parent = parent ?? throw new ArgumentNullException(nameof(parent), "parent type must not be null");
+            Parent = parent ?? DefaultType.Default;
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CustomType" /> class.
         /// </summary>
-        /// <param name="name">The name.</param>
-        /// <exception cref="ArgumentNullException">The value of 'name' cannot be null. </exception>
-        public CustomType(IName name)
-            : this(name, DefaultType.Default)
+        /// <param name="name">The name of the type.</param>
+        /// <param name="parent">The parent type.</param>
+        public CustomType(string name, IType? parent = null)
+            : this(new Name(name), parent)
         {
         }
 
