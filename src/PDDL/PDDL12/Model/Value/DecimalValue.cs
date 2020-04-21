@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using PDDL.PDDL12.Abstractions;
 using PDDL.PDDL12.Abstractions.Values;
 
 namespace PDDL.PDDL12.Model.Value
@@ -28,7 +29,21 @@ namespace PDDL.PDDL12.Model.Value
         /// </summary>
         /// <param name="other">The object to compare with the current object.</param>
         /// <returns><see langword="true" /> if the specified <see cref="DecimalValue" /> is equal to this instance; otherwise, <see langword="false" />.</returns>
-        private bool Equals(DecimalValue other) => Value == other.Value;
+        public bool Equals(decimal other) => Value.Equals(other);
+
+        /// <summary>
+        /// Determines whether the specified <see cref="DecimalValue" /> is equal to this instance.
+        /// </summary>
+        /// <param name="other">The object to compare with the current object.</param>
+        /// <returns><see langword="true" /> if the specified <see cref="DecimalValue" /> is equal to this instance; otherwise, <see langword="false" />.</returns>
+        public bool Equals(IDecimalValue other) => Equals(other.Value);
+
+        /// <summary>
+        /// Determines whether the specified <see cref="IValue" /> is equal to this instance.
+        /// </summary>
+        /// <param name="other">The object to compare with the current object.</param>
+        /// <returns><see langword="true" /> if the specified <see cref="DecimalValue" /> is equal to this instance; otherwise, <see langword="false" />.</returns>
+        public bool Equals(IValue other) => Equals((object) other);
 
         /// <summary>
         /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
@@ -39,7 +54,7 @@ namespace PDDL.PDDL12.Model.Value
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj is DecimalValue && Equals((DecimalValue) obj);
+            return obj is IDecimalValue value && Equals(value);
         }
 
         /// <summary>
