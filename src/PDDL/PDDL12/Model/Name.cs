@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
-using System.Linq;
 using PDDL.PDDL12.Abstractions;
 
 namespace PDDL.PDDL12.Model
@@ -36,25 +35,8 @@ namespace PDDL.PDDL12.Model
         /// <param name="value">The value.</param>
         /// <returns><see langword="true" /> if the specified value is valid; otherwise, <see langword="false" />.</returns>
         [Pure]
-        private static bool IsValid(string value)
-        {
-            if (string.IsNullOrWhiteSpace(value)) return false;
-
-            // first character must be a letter
-            // following characters may be either letter, digit, hyphen or underscore
-            return char.IsLetter(value.First())
-                   && value.Skip(1).All(c => char.IsLetterOrDigit(c) || c == '-' || c == '_');
-        }
-
-        /// <summary>
-        /// Determines whether the specified value is valid.
-        /// </summary>
-        /// <param name="value">The value.</param>
-        /// <returns><see langword="true" /> if the specified value is valid; otherwise, <see langword="false" />.</returns>
-        [Pure]
         private static bool IsValid(in ReadOnlySpan<char> value)
         {
-            // TODO: Re-enable this check
             if (value.Length == 0) return false;
 
             var isValid = char.IsLetter(value[0]);
