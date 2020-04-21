@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using FluentAssertions;
 using PDDL.PDDL12.Abstractions;
 using PDDL.PDDL12.Model;
 using PDDL.PDDL12.Model.Types;
+using Xunit;
 
 namespace PDDL.Tests.Model
 {
@@ -10,98 +12,94 @@ namespace PDDL.Tests.Model
     /// </summary>
     public class ManualDwrDomain
     {
-        /// <summary>
-        /// Constructs the domain.
-        /// </summary>
-        public void DomainConstruction()
+        [Fact]
+        public void DomainCanBeCreated()
         {
-            IName name = new Name("dock-worker-robot");
+            var name = new Name("dock-worker-robot");
 
-            IReadOnlyList<IRequirement> requirements = new[]
-                                                       {
-                                                           new Requirement(":strips"),
-                                                           new Requirement(":typing")
-                                                       };
+            var requirements = new[]
+            {
+                new Requirement(":strips"),
+                new Requirement(":typing")
+            };
 
-            var location = new CustomType(new Name("location"));
-            var pile = new CustomType(new Name("pile"));
-            var robot = new CustomType(new Name("robot"));
-            var crane = new CustomType(new Name("crane"));
-            var container = new CustomType(new Name("container"));
-            IReadOnlyList<IType> types = new[]
-                                         {
-                                             location,
-                                             pile,
-                                             robot,
-                                             crane,
-                                             container
-                                         };
+            var location = new CustomType("location");
+            var pile = new CustomType("pile");
+            var robot = new CustomType("robot");
+            var crane = new CustomType("crane");
+            var container = new CustomType("container");
+            var types = new[]
+            {
+                location,
+                pile,
+                robot,
+                crane,
+                container
+            };
 
-            IReadOnlyList<IConstant> constants = new IConstant[0];
+            var constants = new IConstant[0];
 
-            IReadOnlyList<IAtomicFormulaSkeleton> predicates = new[]
-                                                       {
-                                                           CreatePredicate("adjacent", "?l1", location, "?l2", location),
-                                                           CreatePredicate("attached", "?r", robot, "?l", location),
-                                                           CreatePredicate("belong", "?k", crane, "?l", location),
-                                                           CreatePredicate("belong", "?k", crane, "?l", location),
+            var predicates = new[]
+            {
+                Predicate("adjacent", "?l1", location, "?l2", location),
+                Predicate("attached", "?r", robot, "?l", location),
+                Predicate("belong", "?k", crane, "?l", location),
+                Predicate("belong", "?k", crane, "?l", location),
 
-                                                           CreatePredicate("at", "?r", robot, "?l", location),
-                                                           CreatePredicate("occupied", "?l", location),
-                                                           CreatePredicate("loaded", "?r", robot, "?c", container),
-                                                           CreatePredicate("unloaded", "?r", robot),
+                Predicate("at", "?r", robot, "?l", location),
+                Predicate("occupied", "?l", location),
+                Predicate("loaded", "?r", robot, "?c", container),
+                Predicate("unloaded", "?r", robot),
 
-                                                           CreatePredicate("holding", "?k", crane, "?c", container),
-                                                           CreatePredicate("empty", "?k", crane),
+                Predicate("holding", "?k", crane, "?c", container),
+                Predicate("empty", "?k", crane),
 
-                                                           CreatePredicate("in", "?c", container, "?p", pile),
-                                                           CreatePredicate("top", "?c", container, "?p", pile),
-                                                           CreatePredicate("top", "?k1", container, "?k2", container),
-                                                       };
+                Predicate("in", "?c", container, "?p", pile),
+                Predicate("top", "?c", container, "?p", pile),
+                Predicate("top", "?k1", container, "?k2", container),
+            };
 
-            IReadOnlyList<ILiteral<IName>> timeless = new ILiteral<IName>[0];
+            var timeless = new ILiteral<IName>[0];
 
-            var domain = new Domain(name)
-                         {
-                             Requirements = requirements,
-                             Types = types,
-                             Constants = constants,
-                             Predicates = predicates,
-                             Timeless = timeless
-                         };
+            Func<Domain> create = () => new Domain(name)
+            {
+                Requirements = requirements,
+                Types = types,
+                Constants = constants,
+                Predicates = predicates,
+                Timeless = timeless
+            };
+
+            create.Should().NotThrow();
         }
 
         /// <summary>
-        /// Creates the predicate.
+        /// Creates a predicate with one parameter.
         /// </summary>
-        /// <param name="name">The name.</param>
-        /// <param name="param1">The param1.</param>
-        /// <param name="type1">The type1.</param>
-        /// <param name="param2">The param2.</param>
-        /// <param name="type2">The type2.</param>
-        /// <returns>AtomicFormula.</returns>
-        private static AtomicFormulaSkeleton CreatePredicate(string name,  string param1, IType type1, string param2, IType type2)
-        {
-            return new AtomicFormulaSkeleton(new Predicate(name), new[]
-                                                     {
-                                                         new VariableDefinition(new Variable(new Name(param1)), type1),
-                                                         new VariableDefinition(new Variable(new Name(param2)), type2),
-                                                     });
-        }
+        /// <param name="name">The name of the predicate.</param>
+        /// <param name="param">The name of the parameter.</param>
+        /// <param name="type">The type of the parameter.</param>
+        /// <returns>The atomic formula skeleton.</returns>
+        private static AtomicFormulaSkeleton Predicate(string name, string param, IType type) =>
+            new AtomicFormulaSkeleton(new Predicate(name), new[]
+            {
+                new VariableDefinition(new Variable(new Name(param.TrimStart('?'))), type)
+            });
 
         /// <summary>
-        /// Creates the predicate.
+        /// Creates the predicate with two parameters
         /// </summary>
-        /// <param name="name">The name.</param>
-        /// <param name="param1">The param1.</param>
-        /// <param name="type1">The type1.</param>
-        /// <returns>AtomicFormula.</returns>
-        private static AtomicFormulaSkeleton CreatePredicate(string name,  string param1, IType type1)
-        {
-            return new AtomicFormulaSkeleton(new Predicate(name), new[]
-                                                     {
-                                                         new VariableDefinition(new Variable(new Name(param1)), type1)
-                                                     });
-        }
+        /// <param name="name">The name of the predicate.</param>
+        /// <param name="param1">The name of the first parameter.</param>
+        /// <param name="type1">The type of the first parameter.</param>
+        /// <param name="param2">The name of the second parameter.</param>
+        /// <param name="type2">The type of the second parameter.</param>
+        /// <returns>The atomic formula skeleton.</returns>
+        private static AtomicFormulaSkeleton Predicate(string name, string param1, IType type1, string param2, IType type2) =>
+            new AtomicFormulaSkeleton(new Predicate(name), new[]
+            {
+                new VariableDefinition(new Variable(new Name(param1.TrimStart('?'))), type1),
+                new VariableDefinition(new Variable(new Name(param2.TrimStart('?'))), type2),
+            });
     }
 }
