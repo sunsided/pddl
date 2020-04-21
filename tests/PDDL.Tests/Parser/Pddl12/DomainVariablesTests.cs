@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using FluentAssertions;
+using PDDL.PDDL12;
 using PDDL.PDDL12.Abstractions.Types;
 using PDDL.PDDL12.Abstractions.Values;
 using PDDL.PDDL12.Abstractions.Variables;
@@ -10,12 +11,19 @@ using Xunit;
 
 namespace PDDL.Tests.Parser.Pddl12
 {
-    public class DomainVariablesTests
+    public class DomainVariablesTests : IClassFixture<GrammarFixture>
     {
+        private readonly PDDL12Grammar _grammar;
+
+        public DomainVariablesTests(GrammarFixture grammarFixture)
+        {
+            _grammar = grammarFixture.Grammar;
+        }
+
         [Fact]
         public void CanParseIntegerValue()
         {
-            var result = DomainVariableGrammar.Value.Parse("12");
+            var result = _grammar.DomainVariableParser.Value.Parse("12");
             result.Should().BeAssignableTo<IDecimalValue>()
                 .Subject.Value.Should().Be(12);
         }
@@ -23,7 +31,7 @@ namespace PDDL.Tests.Parser.Pddl12
         [Fact]
         public void CanParseFloatingValue()
         {
-            var result = DomainVariableGrammar.Value.Parse("12.34");
+            var result = _grammar.DomainVariableParser.Value.Parse("12.34");
             result.Should().BeAssignableTo<IDecimalValue>()
                 .Subject.Value.Should().Be(12.34M);
         }
@@ -31,7 +39,7 @@ namespace PDDL.Tests.Parser.Pddl12
         [Fact]
         public void CanParseVariable()
         {
-            var result = DomainVariableGrammar.Variable.Parse("something");
+            var result = _grammar.DomainVariableParser.Variable.Parse("something");
             result.Name.Value.Should().Be("something");
             result.Type.Should().Be(DefaultType.Default);
         }
@@ -39,7 +47,7 @@ namespace PDDL.Tests.Parser.Pddl12
         [Fact]
         public void CanParseVariableWithValue()
         {
-            var result = DomainVariableGrammar.VariableWithValue.Parse("(value 42)");
+            var result = _grammar.DomainVariableParser.VariableWithValue.Parse("(value 42)");
 
             result.Name.Value.Should().Be("value");
             result.Type.Should().Be(DefaultType.Default);
@@ -51,7 +59,7 @@ namespace PDDL.Tests.Parser.Pddl12
         [Fact]
         public void CanParseTypedList()
         {
-            var results = TypedLists.TypedListOfDomainVariable.Parse("alice - person (num-legs 2) - integer");
+            var results = _grammar.TypedListOfDomainVariableParser.Parse("alice - person (num-legs 2) - integer");
             var list = results.ToList();
             list.Should().HaveCount(2)
                 .And.ContainItemsAssignableTo<IDomainVariable>();
@@ -73,7 +81,7 @@ namespace PDDL.Tests.Parser.Pddl12
         [Fact]
         public void CanParseDomainVariablesDefinition()
         {
-            var results = DomainGrammar.VariablesDefinition.Parse("(:domain-variables alice - person (num-legs 2) - integer)");
+            var results = _grammar.VariablesDefinitionParser.Parse("(:domain-variables alice - person (num-legs 2) - integer)");
             results.Variables.Should().HaveCount(2)
                 .And.ContainItemsAssignableTo<IDomainVariable>();
         }

@@ -13,6 +13,22 @@ namespace PDDL.PDDL12
     /// </summary>
     public sealed class PDDL12Parser
     {
+        private readonly DefineDefinitionParser _defineDefinitionParser;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PDDL12Parser"/> class.
+        /// </summary>
+        private PDDL12Parser(PDDL12Grammar pddl12Grammar)
+        {
+            _defineDefinitionParser = pddl12Grammar.DefineDefinitionParser;
+        }
+
+        public static PDDL12Parser Create()
+        {
+            var grammar = new PDDL12Grammar();
+            return new PDDL12Parser(grammar);
+        }
+
         /// <summary>
         /// Parses the specified definition.
         /// </summary>
@@ -27,7 +43,7 @@ namespace PDDL.PDDL12
             // run the actual parsers
             try
             {
-                var enumeration = DefineGrammar.MultiDefineDefinition.Parse(definition);
+                var enumeration = _defineDefinitionParser.AtLeastOnce().Parse(definition);
                 return enumeration.ToList();
             }
             catch (ParseException e)
@@ -50,7 +66,7 @@ namespace PDDL.PDDL12
             // run the actual parsers
             try
             {
-                var enumeration = DefineGrammar.MultiDefineDefinition.Parse(definition);
+                var enumeration = _defineDefinitionParser.AtLeastOnce().Parse(definition);
                 return enumeration.ToList();
             }
             catch (ParseException e)
