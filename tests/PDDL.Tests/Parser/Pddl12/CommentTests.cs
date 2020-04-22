@@ -1,8 +1,6 @@
-﻿using System;
-using FluentAssertions;
+﻿using FluentAssertions;
 using PDDL.PDDL12;
 using PDDL.PDDL12.Parsing;
-using Sprache;
 using Xunit;
 
 namespace PDDL.Tests.Parser.Pddl12
@@ -22,14 +20,15 @@ namespace PDDL.Tests.Parser.Pddl12
             var result = _grammar.CommentParser.Parse(
                 @"; one two three
                 this is not a comment");
-            result.Should().Be("; one two three");
+            result.Should().Contain(" one two three")
+                .And.HaveCount(1);
         }
 
         [Fact]
         public void NonCommentsCannotBeParsedAsAComment()
         {
-            Action parse = () => _grammar.CommentParser.Parse("not a comment");
-            parse.Should().Throw<ParseException>();
+            var result = _grammar.CommentParser.Parse("not a comment");
+            result.Should().HaveCount(0);
         }
     }
 }
