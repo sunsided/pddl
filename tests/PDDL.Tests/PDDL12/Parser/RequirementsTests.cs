@@ -2,7 +2,6 @@
 using FluentAssertions;
 using PDDL.PDDL12;
 using PDDL.PDDL12.Parsing;
-using Sprache;
 using Xunit;
 
 namespace PDDL.Tests.PDDL12.Parser
@@ -38,7 +37,7 @@ namespace PDDL.Tests.PDDL12.Parser
         [Theory]
         [InlineData("(:requirements :strips)")]
         [InlineData("(:requirements :strips :typing)")]
-        [InlineData("(:requirements :strips :typing :disjuntive-preconditions)")]
+        [InlineData("(:requirements :strips :typing :disjunctive-preconditions)")]
         public void ProblemRequirementDefinitionsAreParsedCorrectly(string input)
         {
             Action parse = () => _grammar.ProblemRequirementDefinitionParser.Parse(input);

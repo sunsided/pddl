@@ -9,14 +9,14 @@ namespace PDDL.PDDL12.Model
     ///     Names a requirement for a <see cref="IDomain"/>.
     /// </para>
     /// </summary>
-    internal sealed class Requirement : IRequirement
+    internal class Requirement : IRequirement
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Requirement"/> class.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <exception cref="ArgumentNullException">The value of 'value' cannot be null. </exception>
-        public Requirement(string value)
+        protected internal Requirement(string value)
         {
             Value = value ?? throw new ArgumentNullException(nameof(value), "value must not be null");
         }
