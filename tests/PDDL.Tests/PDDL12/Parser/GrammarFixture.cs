@@ -1,6 +1,6 @@
 using PDDL.PDDL12;
 
-namespace PDDL.Tests.Parser
+namespace PDDL.Tests.PDDL12.Parser
 {
     public sealed class GrammarFixture
     {

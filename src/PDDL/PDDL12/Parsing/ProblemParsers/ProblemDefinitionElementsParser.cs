@@ -11,14 +11,14 @@ namespace PDDL.PDDL12.Parsing.ProblemParsers
     internal sealed class ProblemDefinitionElementsParser : ParserBase<IReadOnlyList<IProblemDefinitionElement>>
     {
         public ProblemDefinitionElementsParser(
-            RequirementsDefinitionParser requirementsDefinitionParser,
+            ProblemRequirementsDefinitionParser problemRequirementsDefinitionParser,
             InitialStateDefinitionParser initialStateDefinitionParser,
             ObjectsDefinitionParser objectsDefinitionParser,
             GoalDefinitionParser goalDefinitionParser
             )
         {
             Parser = from matches in
-                    requirementsDefinitionParser.Parser
+                    problemRequirementsDefinitionParser.Parser
                         .Or<IProblemDefinitionElement>(initialStateDefinitionParser)
                         .Or(objectsDefinitionParser)
                         .Or(goalDefinitionParser)

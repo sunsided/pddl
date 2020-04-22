@@ -3,7 +3,7 @@ using PDDL.PDDL12;
 using PDDL.PDDL12.Parsing;
 using Xunit;
 
-namespace PDDL.Tests.Parser.Pddl12
+namespace PDDL.Tests.PDDL12.Parser
 {
     public class CommentTests : IClassFixture<GrammarFixture>
     {

@@ -12,7 +12,7 @@ namespace PDDL.PDDL12.Parsing.DomainParsers
     {
         public DomainDefinitionElementsParser(
             ExtensionDefinitionParser extensionDefinitionParser,
-            RequirementsDefinitionParser requirementsDefinitionParser,
+            DomainRequirementsDefinitionParser domainRequirementsDefinitionParser,
             TypesDefinitionParser typesDefinitionParser,
             ConstantsDefinitionParser constantsDefinitionParser,
             VariablesDefinitionParser variablesDefinitionParser,
@@ -23,8 +23,8 @@ namespace PDDL.PDDL12.Parsing.DomainParsers
             AxiomParser axiomParser)
         {
             Parser = from matches in
-                    extensionDefinitionParser.Parser
-                        .Or<IDomainDefinitionElement>(requirementsDefinitionParser)
+                    domainRequirementsDefinitionParser.Parser
+                        .Or<IDomainDefinitionElement>(extensionDefinitionParser)
                         .Or(typesDefinitionParser)
                         .Or(constantsDefinitionParser)
                         .Or(variablesDefinitionParser)

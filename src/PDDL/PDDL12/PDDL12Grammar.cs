@@ -3,7 +3,6 @@ using PDDL.PDDL12.Parsing.CommonParsers;
 using PDDL.PDDL12.Parsing.DomainParsers;
 using PDDL.PDDL12.Parsing.ProblemParsers;
 using PDDL.PDDL12.Parsing.TypedListParsers;
-using RequirementsDefinitionParser = PDDL.PDDL12.Parsing.DomainParsers.RequirementsDefinitionParser;
 
 namespace PDDL.PDDL12
 {
@@ -47,9 +46,9 @@ namespace PDDL.PDDL12
             VarsParser = new VarsParser(ParenthesisParser, KeywordParsers, TypedListOfVariableParser);
             EffectParser = new EffectParser(ParenthesisParser, KeywordParsers, AtomicFormulaOfTermParser);
 
-            RequirementsParser = new RequirementsParser();
+            RequirementParser = new RequirementParser();
             ExtensionDefinitionParser = new ExtensionDefinitionParser(ParenthesisParser, KeywordParsers, NameNonTokenParser);
-            DomainRequirementDefinitionParser = new RequirementsDefinitionParser(ParenthesisParser, KeywordParsers, RequirementsParser);
+            DomainRequirementDefinitionParser = new DomainRequirementsDefinitionParser(ParenthesisParser, KeywordParsers, RequirementParser);
             TypesDefinitionParser = new TypesDefinitionParser(ParenthesisParser, KeywordParsers, TypedListOfTypeParser);
             ConstantsDefinitionParser = new ConstantsDefinitionParser(ParenthesisParser, KeywordParsers, TypedListOfConstantParser);
             VariablesDefinitionParser = new VariablesDefinitionParser(ParenthesisParser, KeywordParsers, TypedListOfDomainVariableParser);
@@ -61,7 +60,7 @@ namespace PDDL.PDDL12
             DomainDefinitionElementsParser = new DomainDefinitionElementsParser(ExtensionDefinitionParser, DomainRequirementDefinitionParser, TypesDefinitionParser, ConstantsDefinitionParser, VariablesDefinitionParser, PredicatesDefinitionParser, TimelessDefinitionParser, SafetyDefinitionParser, ActionDefinitionParser, AxiomParser);
             DomainDefinitionParser = new DomainDefinitionParser(ParenthesisParser, KeywordParsers, NameNonTokenParser, DomainDefinitionElementsParser);
 
-            ProblemRequirementDefinitionParser = new Parsing.ProblemParsers.RequirementsDefinitionParser(ParenthesisParser, KeywordParsers, RequirementsParser);
+            ProblemRequirementDefinitionParser = new Parsing.ProblemParsers.ProblemRequirementsDefinitionParser(ParenthesisParser, KeywordParsers, RequirementParser);
             InitialStateDefinitionParser = new InitialStateDefinitionParser(ParenthesisParser, KeywordParsers, LiteralOfNameParser);
             ObjectsDefinitionParser = new ObjectsDefinitionParser(ParenthesisParser, KeywordParsers, TypedListOfObjectParser);
             GoalDefinitionParser = new GoalDefinitionParser(ParenthesisParser, KeywordParsers, GoalDescriptionParser);
@@ -69,6 +68,7 @@ namespace PDDL.PDDL12
             ProblemDefinitionParser = new ProblemDefinitionParser(ParenthesisParser, KeywordParsers, NameNonTokenParser, ProblemDefinitionElementsParser);
 
             DefineDefinitionParser = new DefineDefinitionParser(ParenthesisParser, KeywordParsers, DomainDefinitionParser, ProblemDefinitionParser);
+            DefinesParser = new DefinesParser(DefineDefinitionParser);
         }
 
         public CommentParser CommentParser { get; }
@@ -95,9 +95,9 @@ namespace PDDL.PDDL12
         public GoalDescriptionParser GoalDescriptionParser { get; }
         public VarsParser VarsParser { get; }
         public EffectParser EffectParser { get; }
-        public RequirementsParser RequirementsParser { get; }
+        public RequirementParser RequirementParser { get; }
         public ExtensionDefinitionParser ExtensionDefinitionParser { get; }
-        public RequirementsDefinitionParser DomainRequirementDefinitionParser { get; }
+        public DomainRequirementsDefinitionParser DomainRequirementDefinitionParser { get; }
         public TypesDefinitionParser TypesDefinitionParser { get; }
         public ConstantsDefinitionParser ConstantsDefinitionParser { get; }
         public VariablesDefinitionParser VariablesDefinitionParser { get; }
@@ -108,12 +108,13 @@ namespace PDDL.PDDL12
         public AxiomParser AxiomParser { get; }
         public DomainDefinitionElementsParser DomainDefinitionElementsParser { get; }
         public DomainDefinitionParser DomainDefinitionParser { get; }
-        public Parsing.ProblemParsers.RequirementsDefinitionParser ProblemRequirementDefinitionParser { get; }
+        public ProblemRequirementsDefinitionParser ProblemRequirementDefinitionParser { get; }
         public InitialStateDefinitionParser InitialStateDefinitionParser { get; }
         public ObjectsDefinitionParser ObjectsDefinitionParser { get; }
         public GoalDefinitionParser GoalDefinitionParser { get; }
         public ProblemDefinitionElementsParser ProblemDefinitionElementsParser { get; }
         public ProblemDefinitionParser ProblemDefinitionParser { get; }
         public DefineDefinitionParser DefineDefinitionParser { get; }
+        public DefinesParser DefinesParser { get; }
     }
 }

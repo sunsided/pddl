@@ -9,7 +9,7 @@ using PDDL.PDDL12.Parsing;
 using Sprache;
 using Xunit;
 
-namespace PDDL.Tests.Parser.Pddl12
+namespace PDDL.Tests.PDDL12.Parser
 {
     public class DomainVariablesTests : IClassFixture<GrammarFixture>
     {

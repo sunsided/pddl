@@ -22,7 +22,7 @@ namespace PDDL.PDDL12.Parsing.CommonParsers
             Parser<IType> eitherTypeDefinition = (
                 from open in parenthesisParser.Opening
                 from keyword in Parse.String("either").Token()
-                from types in Parser.AtLeastOnce().Token() // Recursive definition
+                from types in Parse.Ref(() => Parser).AtLeastOnce().Token() // Recursive definition
                 from close in parenthesisParser.Closing
                 select new EitherType(types.ToList())
             ).Token();
@@ -31,7 +31,7 @@ namespace PDDL.PDDL12.Parsing.CommonParsers
             Parser<IType> fluentTypeDefinition = (
                 from open in parenthesisParser.Opening
                 from keyword in Parse.String("fluent").Token()
-                from t in Parser // Recursive definition
+                from t in Parse.Ref(() => Parser) // Recursive definition
                 from close in parenthesisParser.Closing
                 select new FluentType(t)
             ).Token();

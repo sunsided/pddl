@@ -1,4 +1,5 @@
 ﻿using PDDL.PDDL12.Abstractions;
+using PDDL.PDDL12.Abstractions.Domains;
 using PDDL.PDDL12.Model;
 using PDDL.PDDL12.Parsing.CommonParsers;
 using Sprache;

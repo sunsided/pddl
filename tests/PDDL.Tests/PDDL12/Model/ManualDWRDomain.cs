@@ -5,7 +5,7 @@ using PDDL.PDDL12.Model;
 using PDDL.PDDL12.Model.Types;
 using Xunit;
 
-namespace PDDL.Tests.Model
+namespace PDDL.Tests.PDDL12.Model
 {
     /// <summary>
     /// Class ManualDwrDomain.

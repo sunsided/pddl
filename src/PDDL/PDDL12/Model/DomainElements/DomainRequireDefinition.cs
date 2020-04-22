@@ -9,14 +9,14 @@ namespace PDDL.PDDL12.Model.DomainElements
     /// <summary>
     /// Class RequirementsDefinition. This class cannot be inherited.
     /// </summary>
-    internal sealed class RequirementsDefinition : IDomainRequireDefinition, IProblemRequireDefinition
+    internal sealed class DomainRequireDefinition : IDomainRequireDefinition, IProblemRequireDefinition
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="RequirementsDefinition"/> class.
+        /// Initializes a new instance of the <see cref="DomainRequireDefinition"/> class.
         /// </summary>
         /// <param name="requirements">The requirements.</param>
         /// <exception cref="ArgumentNullException">The value of 'requirements' cannot be null. </exception>
-        public RequirementsDefinition(IReadOnlyList<IRequirement> requirements)
+        public DomainRequireDefinition(IReadOnlyList<IRequirement> requirements)
         {
             Requirements = requirements ?? throw new ArgumentNullException(nameof(requirements), "The value of 'requirements' cannot be null.");
         }

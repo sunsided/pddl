@@ -16,4 +16,13 @@
     <ProjectReference Include="..\..\src\PDDL\PDDL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="PDDL12\Data\Valid\DWR\domain.pddl" />
+    <EmbeddedResource Include="PDDL12\Data\Valid\DWR\problem-1.pddl" />
+    <EmbeddedResource Include="PDDL12\Data\Valid\DWR\problem-2.pddl" />
+    <EmbeddedResource Include="PDDL12\Data\Valid\Generic\domain-empty.pddl" />
+    <EmbeddedResource Include="PDDL12\Data\Valid\Generic\domain-requirements-only.pddl" />
+    <EmbeddedResource Include="PDDL12\Data\Valid\Generic\domain-types-only.pddl" />
+  </ItemGroup>
+
 </Project>

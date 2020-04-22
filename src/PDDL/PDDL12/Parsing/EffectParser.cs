@@ -29,7 +29,7 @@ namespace PDDL.PDDL12.Parsing
             (
                 from open in parenthesisParser.Opening
                 from keyword in keywordParsers.And
-                from effects in Parser.Many() // Recursive call
+                from effects in Parse.Ref(() => Parser).Many() // Recursive call
                 from close in parenthesisParser.Closing
                 select new ConjunctionEffect(effects.ToArray())
             ).Token();

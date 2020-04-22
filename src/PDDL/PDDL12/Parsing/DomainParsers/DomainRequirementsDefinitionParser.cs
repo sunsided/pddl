@@ -9,16 +9,16 @@ namespace PDDL.PDDL12.Parsing.DomainParsers
     /// <summary>
     /// Class RequirementsDefinitionParser.
     /// </summary>
-    internal sealed class RequirementsDefinitionParser : ParserBase<IDomainRequireDefinition>
+    internal sealed class DomainRequirementsDefinitionParser : ParserBase<IDomainRequireDefinition>
     {
-        public RequirementsDefinitionParser(ParenthesisParser parenthesis, KeywordParsers keywordParsers, RequirementsParser requirementsParser)
+        public DomainRequirementsDefinitionParser(ParenthesisParser parenthesis, KeywordParsers keywordParsers, RequirementParser requirementParser)
         {
             Parser = (
                 from open in parenthesis.Opening
                 from keyword in keywordParsers.CRequirements
-                from keys in requirementsParser.Many()
+                from keys in requirementParser.AtLeastOnce()
                 from close in parenthesis.Closing
-                select new RequirementsDefinition(keys.ToList())
+                select new DomainRequireDefinition(keys.ToList())
             ).Token();
         }
 

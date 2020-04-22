@@ -7,7 +7,7 @@ namespace PDDL.PDDL12.Parsing
     /// <summary>
     /// Class RequirementsGrammar.
     /// </summary>
-    internal sealed class RequirementsParser : ParserBase<IRequirement>
+    internal sealed class RequirementParser : ParserBase<IRequirement>
     {
         /// <summary>
         /// The valid requirements

@@ -13,11 +13,11 @@ namespace PDDL.PDDL12.Parsing
     {
         public DefineDefinitionParser(ParenthesisParser parenthesisParser, KeywordParsers keywordParsers, DomainDefinitionParser domainDefinitionParser, ProblemDefinitionParser problemDefinitionParser)
         {
-            Parser = (from openDefine in parenthesisParser.Opening
+            Parser = from openDefine in parenthesisParser.Opening
                 from defineKeyword in keywordParsers.Define
-                from definition in domainDefinitionParser.Parser.Or<IDefinition>(problemDefinitionParser.Parser)
+                from definition in domainDefinitionParser.Parser.Or<IDefinition>(problemDefinitionParser)
                 from closeDefine in parenthesisParser.Closing
-                select definition);
+                select definition;
         }
 
         /// <summary>

@@ -7,7 +7,7 @@ using PDDL.PDDL12.Abstractions.Variables;
 using PDDL.PDDL12.Parsing;
 using Xunit;
 
-namespace PDDL.Tests.Parser.Pddl12
+namespace PDDL.Tests.PDDL12.Parser
 {
     public class AxiomTests : IClassFixture<GrammarFixture>
     {

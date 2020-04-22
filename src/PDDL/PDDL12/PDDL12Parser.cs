@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -13,14 +14,14 @@ namespace PDDL.PDDL12
     /// </summary>
     public sealed class PDDL12Parser
     {
-        private readonly DefineDefinitionParser _defineDefinitionParser;
+        private readonly DefinesParser _definesParser;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PDDL12Parser"/> class.
         /// </summary>
         private PDDL12Parser(PDDL12Grammar pddl12Grammar)
         {
-            _defineDefinitionParser = pddl12Grammar.DefineDefinitionParser;
+            _definesParser = pddl12Grammar.DefinesParser;
         }
 
         public static PDDL12Parser Create()
@@ -32,18 +33,35 @@ namespace PDDL.PDDL12
         /// <summary>
         /// Parses the specified definition.
         /// </summary>
+        /// <param name="stream">The stream to read from.</param>
+        /// <returns>A list of definitions.</returns>
+        /// <exception cref="PddlSyntaxException">A syntax error or internal parser error occurred. </exception>
+        public IReadOnlyList<IDefinition> Parse(Stream stream)
+        {
+            if (stream == null) throw new ArgumentNullException(nameof(stream));
+            if (!stream.CanRead) throw new ArgumentException("Stream cannot be read from", nameof(stream));
+
+            using var reader = new StreamReader(stream);
+            return Parse(reader);
+        }
+
+        /// <summary>
+        /// Parses the specified definition.
+        /// </summary>
         /// <param name="reader">The text reader to read from.</param>
         /// <returns>A list of definitions.</returns>
         /// <exception cref="PddlSyntaxException">A syntax error or internal parser error occurred. </exception>
         public IReadOnlyList<IDefinition> Parse(TextReader reader)
         {
+            if (reader == null) throw new ArgumentNullException(nameof(reader));
+
             // strip all comments
             var definition = RemoveAllComments(reader);
 
             // run the actual parsers
             try
             {
-                var enumeration = _defineDefinitionParser.AtLeastOnce().Parse(definition);
+                var enumeration = _definesParser.Parse(definition);
                 return enumeration.ToList();
             }
             catch (ParseException e)
@@ -66,7 +84,7 @@ namespace PDDL.PDDL12
             // run the actual parsers
             try
             {
-                var enumeration = _defineDefinitionParser.AtLeastOnce().Parse(definition);
+                var enumeration = _definesParser.Parse(definition);
                 return enumeration.ToList();
             }
             catch (ParseException e)
